@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlobalBridge Careers - Login</title>
+  <link rel="stylesheet" href="style.css"> <!-- Shared stylesheet -->
+  <style>
+    /* Page-specific tweaks */
+    .login-section {
+      max-width: 400px;
+      margin: 3rem auto;
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    .login-section h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      background: var(--accent);
+      color: var(--primary);
+      padding: 0.8rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .signup-link a {
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .signup-link a:hover {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <h1>GlobalBridge Careers</h1>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="works.html">Works</a></li>
+        <li><a href="apply.html">Apply</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Login Section -->
+  <div class="login-section">
+    <h2>Login to GlobalBridge Careers</h2>
+    <form>
+      <label>Email Address</label>
+      <input type="email" name="email" required>
+
+      <label>Password</label>
+      <input type="password" name="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="signup-link">
+      <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 GlobalBridge Careers. All rights reserved.
+  </footer>
+</body>
+</html>

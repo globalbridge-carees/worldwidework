@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlobalBridge Careers - Home</title>
+  <style>
+    :root {
+      --primary: #0A1F44;
+      --accent: #F5B400;
+      --light: #F4F6F9;
+      --white: #ffffff;
+      --dark: #222;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    /* NAVIGATION */
+    header {
+      background: var(--primary);
+      padding: 1rem 1.5rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    nav h1 {
+      color: var(--white);
+      font-size: 1.4rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    nav ul li a:hover {
+      color: var(--accent);
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--primary);
+      color: var(--white);
+      text-align: center;
+      padding: 4rem 1.5rem;
+    }
+
+    .hero h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+    }
+
+    .btn-secondary {
+      border: 2px solid var(--white);
+      color: var(--white);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #081730;
+      color: var(--white);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <h1>GlobalBridge Careers</h1>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="works.html">Works</a></li>
+        <li><a href="apply.html">Apply</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Welcome to GlobalBridge Careers</h2>
+    <p>Connecting you to trusted jobs and tasks worldwide.</p>
+    <div class="hero-buttons">
+      <a href="jobs.html" class="btn btn-primary">Find Jobs</a>
+      <a href="apply.html" class="btn btn-secondary">Apply Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 GlobalBridge Careers. All rights reserved.
+  </footer>
+</body>
+</html>

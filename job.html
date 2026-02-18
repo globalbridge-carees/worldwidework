@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlobalBridge Careers - Jobs</title>
+
+  <style>
+    :root {
+      --primary: #0A1F44;
+      --accent: #F5B400;
+      --light: #F4F6F9; /* same background as homepage */
+      --white: #ffffff;
+      --dark: #222;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    /* NAVIGATION */
+    header {
+      background: var(--primary);
+      padding: 1rem 1.5rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    nav h1 {
+      color: var(--white);
+      font-size: 1.4rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    nav ul li a:hover {
+      color: var(--accent);
+    }
+
+    /* JOB SECTION */
+    .section {
+      padding: 3rem 1.5rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section h3 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      font-size: 1.6rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    .card h4 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .card a {
+      text-decoration: none;
+      background: var(--accent);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #081730;
+      color: var(--white);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>GlobalBridge Careers</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="job.html">Jobs</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="section">
+    <h3>Available Jobs</h3>
+    <div class="cards">
+      <div class="card">
+        <h4>Software Engineer</h4>
+        <p>Join our team to build global solutions.</p>
+        <a href="#">Apply Now</a>
+      </div>
+      <div class="card">
+        <h4>UI/UX Designer</h4>
+        <p>Help us craft professional, user‑friendly experiences.</p>
+        <a href="#">Apply Now</a>
+      </div>
+      <div class="card">
+        <h4>Project Manager</h4>
+        <p>Lead projects and ensure seamless delivery.</p>
+        <a href="#">Apply Now</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 GlobalBridge Careers. All rights reserved.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlobalBridge Careers - Sign Up</title>
+  <style>
+    :root {
+      --primary: #0A1F44;
+      --accent: #F5B400;
+      --light: #F4F6F9;
+      --white: #ffffff;
+      --dark: #222;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      margin: 0;
+    }
+
+    header {
+      background: var(--primary);
+      padding: 1rem 1.5rem;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .signup-container {
+      max-width: 400px;
+      margin: 3rem auto;
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--primary);
+      user-select: none; /* prevents highlight */
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--accent);
+      color: var(--primary);
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #e6a800;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #081730;
+      color: var(--white);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+  </style>
+  <!-- Load Font Awesome for eye icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>GlobalBridge Careers</h1>
+  </header>
+
+  <div class="signup-container">
+    <h2>Create Your Account</h2>
+    <form action="dashboard.html" method="post" onsubmit="return validateForm()">
+      <label for="name">Full Name</label>
+      <div class="input-group">
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <label for="email">Email Address</label>
+      <div class="input-group">
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <label for="password">Enter Password</label>
+      <div class="input-group">
+        <input type="password" id="password" name="password" required>
+        <i class="fa-solid fa-eye eye-icon" onclick="togglePassword('password', this)"></i>
+      </div>
+
+      <label for="confirm-password">Confirm Password</label>
+      <div class="input-group">
+        <input type="password" id="confirm-password" name="confirm-password" required>
+        <i class="fa-solid fa-eye eye-icon" onclick="togglePassword('confirm-password', this)"></i>
+      </div>
+
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2026 GlobalBridge Careers. All rights reserved.
+  </footer>
+
+  <script>
+    // Toggle show/hide password with eye icon
+    function togglePassword(fieldId, icon) {
+      const field = document.getElementById(fieldId);
+      if (field.type === "password") {
+        field.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        field.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    }
+
+    // Validate confirm password
+    function validateForm() {
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
