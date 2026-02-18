@@ -1,29 +1,251 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TrueJobs</title>
-<style>:root {--primary: #0A1F44;--accent: #F5B400;--light: #F4F6F9;--white: #ffffff;--dark: #222;}* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }body { background: var(--light); color: var(--dark); }/* NAVIGATION */header { background: var(--primary); padding: 1rem 1.5rem; }nav { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:auto; }nav h1 { color: var(--white); font-size:1.4rem; }nav ul { list-style:none; display:flex; gap:1.2rem; }nav ul li a { text-decoration:none; color:var(--white); font-weight:500; font-size:0.9rem; }nav ul li a:hover { color:var(--accent); }.menu-toggle { font-size:1.6rem; cursor:pointer; display:none; }@media(max-width:768px){nav ul { display:none; flex-direction:column; background:var(--primary); width:100%; }nav ul.show { display:flex; }nav ul li { border-top:1px solid #333; }nav ul li a { padding:1rem; display:block; }.menu-toggle { display:block; color:var(--white); }}/* HERO */.hero {background: linear-gradient(rgba(10,31,68,0.85), rgba(10,31,68,0.85)),url('https://images.unsplash.com/photo-1521791136064-7986c2920216') center/cover no-repeat;color: var(--white);text-align: center;padding: 6rem 1.5rem;}.hero h2 { font-size:2.5rem; margin-bottom:1rem; color: var(--accent); }.hero p { margin-bottom:1.5rem; }/* SEARCH */.search-box { display:flex; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem; }.search-box input {padding:0.8rem;width:300px;border:none;border-radius:30px 0 0 30px;outline:none;}.search-box button {padding:0.8rem 1.5rem;border:none;background:var(--accent);color:var(--primary);border-radius:0 30px 30px 0;font-weight:bold;cursor:pointer;}.btn { padding:0.8rem 1.5rem; border-radius:30px; text-decoration:none; font-weight:bold; font-size:0.9rem; }.btn-primary { background: var(--accent); color: var(--primary); }.btn-secondary { border:2px solid var(--white); color: var(--white); margin-left:1rem; }/* SECTIONS */.section { padding:3.5rem 1.5rem; max-width:1100px; margin:auto; }.section h3 { text-align:center; margin-bottom:2rem; color:var(--primary); }.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.5rem; }.card {background:var(--white);padding:1.5rem;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,0.08);transition:0.3s ease;}.card:hover { transform:translateY(-5px); }.card h4 { margin-bottom:0.5rem; color:var(--primary); }.card p { font-size:0.9rem; margin-bottom:1rem; }.card a {text-decoration:none;background:var(--accent);color:var(--primary);padding:0.5rem 1rem;border-radius:6px;font-weight:bold;font-size:0.85rem;}/* VERIFIED BADGE */.verified-badge {background:#1877F2;color:#fff;font-size:0.7rem;border-radius:50%;padding:0.3rem 0.5rem;margin-left:0.4rem;}/* CTA */.cta { background: var(--primary); color: var(--white); text-align:center; padding:3rem 1.5rem; }.cta h3 { margin-bottom:1rem; }/* FOOTER */footer { text-align:center; padding:1rem; background:#081730; color:var(--white); font-size:0.85rem; }</style>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrueJobs</title>
+
+<style>
+:root {
+  --primary: #0A1F44;
+  --accent: #F5B400;
+  --light: #F4F6F9;
+  --white: #ffffff;
+  --dark: #222;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+body { background: var(--light); color: var(--dark); }
+
+/* NAVIGATION */
+header { background: var(--primary); padding: 1rem 1.5rem; }
+nav { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:auto; }
+nav h1 { color: var(--white); font-size:1.4rem; }
+nav ul { list-style:none; display:flex; gap:1.2rem; }
+nav ul li a { text-decoration:none; color:var(--white); font-weight:500; font-size:0.9rem; }
+nav ul li a:hover { color:var(--accent); }
+.menu-toggle { font-size:1.6rem; cursor:pointer; display:none; }
+
+@media(max-width:768px){
+  nav ul { display:none; flex-direction:column; background:var(--primary); width:100%; }
+  nav ul.show { display:flex; }
+  nav ul li { border-top:1px solid #333; }
+  nav ul li a { padding:1rem; display:block; }
+  .menu-toggle { display:block; color:var(--white); }
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(rgba(10,31,68,0.85), rgba(10,31,68,0.85)),
+              url('https://images.unsplash.com/photo-1521791136064-7986c2920216') center/cover no-repeat;
+  color: var(--white);
+  text-align: center;
+  padding: 6rem 1.5rem;
+}
+.hero h2 { font-size:2.5rem; margin-bottom:1rem; color: var(--accent); }
+.hero p { margin-bottom:1.5rem; }
+
+/* SEARCH */
+.search-box { display:flex; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem; }
+.search-box input {
+  padding:0.8rem;
+  width:300px;
+  border:none;
+  border-radius:30px 0 0 30px;
+  outline:none;
+}
+.search-box button {
+  padding:0.8rem 1.5rem;
+  border:none;
+  background:var(--accent);
+  color:var(--primary);
+  border-radius:0 30px 30px 0;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn { padding:0.8rem 1.5rem; border-radius:30px; text-decoration:none; font-weight:bold; font-size:0.9rem; }
+.btn-primary { background: var(--accent); color: var(--primary); }
+.btn-secondary { border:2px solid var(--white); color: var(--white); margin-left:1rem; }
+
+/* SECTIONS */
+.section { padding:3.5rem 1.5rem; max-width:1100px; margin:auto; }
+.section h3 { text-align:center; margin-bottom:2rem; color:var(--primary); }
+
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.5rem; }
+.card {
+  background:var(--white);
+  padding:1.5rem;
+  border-radius:12px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+  transition:0.3s ease;
+}
+.card:hover { transform:translateY(-5px); }
+.card h4 { margin-bottom:0.5rem; color:var(--primary); }
+.card p { font-size:0.9rem; margin-bottom:1rem; }
+
+.card a {
+  text-decoration:none;
+  background:var(--accent);
+  color:var(--primary);
+  padding:0.5rem 1rem;
+  border-radius:6px;
+  font-weight:bold;
+  font-size:0.85rem;
+}
+
+/* VERIFIED BADGE */
+.verified-badge {
+  background:#1877F2;
+  color:#fff;
+  font-size:0.7rem;
+  border-radius:50%;
+  padding:0.3rem 0.5rem;
+  margin-left:0.4rem;
+}
+
+/* CTA */
+.cta { background: var(--primary); color: var(--white); text-align:center; padding:3rem 1.5rem; }
+.cta h3 { margin-bottom:1rem; }
+
+/* FOOTER */
+footer { text-align:center; padding:1rem; background:#081730; color:var(--white); font-size:0.85rem; }
+
+</style>
 </head>
+
 <body>
-<header><nav><h1>TrueJobs</h1><span class="menu-toggle" onclick="toggleMenu()">☰</span><ul id="menu"><li><a href="job.html">Jobs</a></li><li><a href="task.html">Tasks</a></li><li><a href="apply.html">Apply</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="about.html">About</a></li></ul></nav></header>
+
+<header>
+  <nav>
+    <h1>TrueJobs</h1>
+    <span class="menu-toggle" onclick="toggleMenu()">☰</span>
+    <ul id="menu">
+      <li><a href="job.html">Jobs</a></li>
+      <li><a href="task.html">Tasks</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+</header>
+
 <!-- HERO -->
-<section class="hero"><h2>Work Beyond Borders</h2><p>Connecting skilled professionals to verified global opportunities.</p>
-<div class="search-box"><input type="text" placeholder="Search jobs, skills, country..."><button>Search</button></div>
-<a href="signup.html" class="btn btn-primary">Find Jobs</a> <a href="signup.html" class="btn btn-secondary">Create Account</a>
+<section class="hero">
+  <h2>Job Opportunities</h2>
+  <p>Connecting Skilled Professionals To Verified Global Opportunities.</p>
+
+  <div class="search-box">
+    <input type="text" placeholder="Search jobs, skills, country...">
+    <button>Search</button>
+  </div>
+<a href="signup.html" class="btn btn-primary">Find Jobs</a>
+  <a href="signup.html" class="btn btn-secondary">Create Account</a>
 </section>
+
 <!-- INTRO -->
-<section class="section"><h3>Why Choose TrueJobs?</h3><div class="cards"><div class="card"><h4>Verified Employers</h4><p>Every employer is screened to ensure safe applications.</p></div><div class="card"><h4>Global Opportunities</h4><p>Work in Qatar, Egypt, Kenya and beyond.</p></div><div class="card"><h4>Secure Platform</h4><p>Your data and applications are fully protected.</p></div></div></section>
+<section class="section">
+  <h3>Why Choose TrueJobs?</h3>
+  <div class="cards">
+    <div class="card">
+      <h4>Verified Employers</h4>
+      <p>Every employer is screened to ensure safe applications.</p>
+    </div>
+    <div class="card">
+      <h4>Global Opportunities</h4>
+      <p>Work in Qatar, Egypt, Kenya and beyond.</p>
+    </div>
+    <div class="card">
+      <h4>Secure Platform</h4>
+      <p>Your data and applications are fully protected.</p>
+    </div>
+  </div>
+</section>
+
 <!-- CATEGORIES -->
-<section class="section"><h3>Browse By Category</h3><div class="cards"><div class="card"><h4>Healthcare</h4><p>Nursing, Doctors, Caregivers</p></div><div class="card"><h4>Education</h4><p>Teachers & Lecturers</p></div><div class="card"><h4>Technology</h4><p>Developers & IT Experts</p></div><div class="card"><h4>Remote Jobs</h4><p>Work From Anywhere</p></div></div></section>
+<section class="section">
+  <h3>Browse By Category</h3>
+  <div class="cards">
+    <div class="card"><h4>Healthcare</h4><p>Nursing, Doctors, Caregivers</p></div>
+    <div class="card"><h4>Education</h4><p>Teachers & Lecturers</p></div>
+    <div class="card"><h4>Technology</h4><p>Developers & IT Experts</p></div>
+    <div class="card"><h4>Remote Jobs</h4><p>Work From Anywhere</p></div>
+  </div>
+</section>
+
 <!-- FEATURED JOBS -->
-<section class="section"><h3>Featured Opportunities</h3><div class="cards"><div class="card"><h4>Nursing – Qatar <span class="verified-badge">✔</span></h4><p>Competitive salary and housing benefits.</p><a href="apply.html">Apply Now</a></div><div class="card"><h4>Teaching – Egypt <span class="verified-badge">✔</span></h4><p>Join a trusted institution in Cairo.</p><a href="apply.html">Apply Now</a></div><div class="card"><h4>Software Developer – Kenya <span class="verified-badge">✔</span></h4><p>Collaborate with a global IT firm.</p><a href="apply.html">Apply Now</a></div></div></section>
+<section class="section">
+  <h3>Featured Opportunities</h3>
+  <div class="cards">
+    <div class="card">
+      <h4>Nursing – Qatar <span class="verified-badge">✔</span></h4>
+      <p>Competitive salary and housing benefits.</p>
+      <a href="apply.html">Apply Now</a>
+    </div>
+    <div class="card">
+      <h4>Teaching – Egypt <span class="verified-badge">✔</span></h4>
+      <p>Join a trusted institution in Cairo.</p>
+      <a href="apply.html">Apply Now</a>
+    </div>
+    <div class="card">
+      <h4>Software Developer – Kenya <span class="verified-badge">✔</span></h4>
+      <p>Collaborate with a global IT firm.</p>
+      <a href="apply.html">Apply Now</a>
+    </div>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
-<section class="section"><h3>How It Works</h3><div class="cards"><div class="card"><h4>1. Create Account</h4><p>Register and complete your profile.</p></div><div class="card"><h4>2. Apply for Jobs</h4><p>Browse verified listings and apply.</p></div><div class="card"><h4>3. Get Hired</h4><p>Connect with employers worldwide.</p></div></div></section>
+<section class="section">
+  <h3>How It Works</h3>
+  <div class="cards">
+    <div class="card"><h4>1. Create Account</h4><p>Register and complete your profile.</p></div>
+    <div class="card"><h4>2. Apply for Jobs</h4><p>Browse verified listings and apply.</p></div>
+    <div class="card"><h4>3. Get Hired</h4><p>Connect with employers worldwide.</p></div>
+  </div>
+</section>
+
 <!-- TESTIMONIALS -->
-<section class="section"><h3>Success Stories</h3><div class="cards"><div class="card"><p>"TrueJobs helped me secure a job abroad safely."</p><h4>- Sarah K.</h4></div><div class="card"><p>"Professional and transparent platform."</p><h4>- David M.</h4></div></div></section>
+<section class="section">
+  <h3>Success Stories</h3>
+  <div class="cards">
+    <div class="card">
+      <p>"TrueJobs helped me secure a job abroad safely."</p>
+      <h4>- Sarah K.</h4>
+    </div>
+    <div class="card">
+      <p>"Professional and transparent platform."</p>
+      <h4>- David M.</h4>
+    </div>
+  </div>
+</section>
+
 <!-- STATS -->
-<section class="section"><h3>Our Impact</h3><div class="cards"><div class="card"><h4>10,000+</h4><p>Professionals</p></div><div class="card"><h4>500+</h4><p>Employers</p></div><div class="card"><h4>40+</h4><p>Countries</p></div></div></section>
+<section class="section">
+  <h3>Our Impact</h3>
+  <div class="cards">
+    <div class="card"><h4>10,000+</h4><p>Professionals</p></div>
+    <div class="card"><h4>500+</h4><p>Employers</p></div>
+    <div class="card"><h4>40+</h4><p>Countries</p></div>
+  </div>
+</section>
+
 <!-- CTA -->
-<section class="cta"><h3>Ready to Start Your Career Journey?</h3><a href="signup.html" class="btn btn-primary">Get Started Today</a></section>
-<footer>&copy; 2026 TrueJobs. All rights reserved.</footer>
-<script>function toggleMenu() {document.getElementById('menu').classList.toggle('show');}</script>
-</body></html>
+<section class="cta">
+  <h3>Ready to Start Your Career Journey?</h3>
+  <a href="signup.html" class="btn btn-primary">Get Started Today</a>
+</section>
+
+<footer>
+  &copy; 2026 TrueJobs. All rights reserved.
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('menu').classList.toggle('show');
+}
+</script>
+
+</body>
+</html>
 
