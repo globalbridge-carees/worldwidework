@@ -1,251 +1,1934 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TrueJobs</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueJobs - Find Your Dream Job</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
 
-<style>
-:root {
-  --primary: #0A1F44;
-  --accent: #F5B400;
-  --light: #F4F6F9;
-  --white: #ffffff;
-  --dark: #222;
-}
+        body {
+            background: #ffffff;
+            color: #333333;
+            line-height: 1.5;
+        }
 
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
-body { background: var(--light); color: var(--dark); }
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2b4c7c;
+            --accent: #f4a261;
+            --accent-light: #f8b47c;
+            --accent-dark: #e76f51;
+            --success: #2ecc71;
+            --info: #3498db;
+            --warning: #f1c40f;
+            --danger: #e74c3c;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
 
-/* NAVIGATION */
-header { background: var(--primary); padding: 1rem 1.5rem; }
-nav { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:auto; }
-nav h1 { color: var(--white); font-size:1.4rem; }
-nav ul { list-style:none; display:flex; gap:1.2rem; }
-nav ul li a { text-decoration:none; color:var(--white); font-weight:500; font-size:0.9rem; }
-nav ul li a:hover { color:var(--accent); }
-.menu-toggle { font-size:1.6rem; cursor:pointer; display:none; }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
-@media(max-width:768px){
-  nav ul { display:none; flex-direction:column; background:var(--primary); width:100%; }
-  nav ul.show { display:flex; }
-  nav ul li { border-top:1px solid #333; }
-  nav ul li a { padding:1rem; display:block; }
-  .menu-toggle { display:block; color:var(--white); }
-}
+        /* Moving Job Ticker at Top */
+        .job-ticker {
+            background: var(--primary);
+            padding: 0.8rem 0;
+            border-bottom: 3px solid var(--accent);
+            overflow: hidden;
+        }
 
-/* HERO */
-.hero {
-  background: linear-gradient(rgba(10,31,68,0.85), rgba(10,31,68,0.85)),
-              url('https://images.unsplash.com/photo-1521791136064-7986c2920216') center/cover no-repeat;
-  color: var(--white);
-  text-align: center;
-  padding: 6rem 1.5rem;
-}
-.hero h2 { font-size:2.5rem; margin-bottom:1rem; color: var(--accent); }
-.hero p { margin-bottom:1.5rem; }
+        .ticker-wrap {
+            overflow: hidden;
+            white-space: nowrap;
+        }
 
-/* SEARCH */
-.search-box { display:flex; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem; }
-.search-box input {
-  padding:0.8rem;
-  width:300px;
-  border:none;
-  border-radius:30px 0 0 30px;
-  outline:none;
-}
-.search-box button {
-  padding:0.8rem 1.5rem;
-  border:none;
-  background:var(--accent);
-  color:var(--primary);
-  border-radius:0 30px 30px 0;
-  font-weight:bold;
-  cursor:pointer;
-}
+        .ticker-move {
+            display: inline-block;
+            animation: ticker 40s linear infinite;
+        }
 
-.btn { padding:0.8rem 1.5rem; border-radius:30px; text-decoration:none; font-weight:bold; font-size:0.9rem; }
-.btn-primary { background: var(--accent); color: var(--primary); }
-.btn-secondary { border:2px solid var(--white); color: var(--white); margin-left:1rem; }
+        .ticker-move:hover {
+            animation-play-state: paused;
+        }
 
-/* SECTIONS */
-.section { padding:3.5rem 1.5rem; max-width:1100px; margin:auto; }
-.section h3 { text-align:center; margin-bottom:2rem; color:var(--primary); }
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0 2.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--white);
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
 
-.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.5rem; }
-.card {
-  background:var(--white);
-  padding:1.5rem;
-  border-radius:12px;
-  box-shadow:0 6px 15px rgba(0,0,0,0.08);
-  transition:0.3s ease;
-}
-.card:hover { transform:translateY(-5px); }
-.card h4 { margin-bottom:0.5rem; color:var(--primary); }
-.card p { font-size:0.9rem; margin-bottom:1rem; }
+        .ticker-item i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
 
-.card a {
-  text-decoration:none;
-  background:var(--accent);
-  color:var(--primary);
-  padding:0.5rem 1rem;
-  border-radius:6px;
-  font-weight:bold;
-  font-size:0.85rem;
-}
+        .ticker-item span {
+            color: var(--white);
+        }
 
-/* VERIFIED BADGE */
-.verified-badge {
-  background:#1877F2;
-  color:#fff;
-  font-size:0.7rem;
-  border-radius:50%;
-  padding:0.3rem 0.5rem;
-  margin-left:0.4rem;
-}
+        .ticker-item strong {
+            color: var(--accent);
+            font-weight: 700;
+            margin-left: 0.5rem;
+            background: rgba(255,255,255,0.15);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
 
-/* CTA */
-.cta { background: var(--primary); color: var(--white); text-align:center; padding:3rem 1.5rem; }
-.cta h3 { margin-bottom:1rem; }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
 
-/* FOOTER */
-footer { text-align:center; padding:1rem; background:#081730; color:var(--white); font-size:0.85rem; }
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
 
-</style>
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: var(--primary);
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent);
+        }
+
+        .nav-menu a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .dashboard-link {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--accent-light);
+            color: var(--primary) !important;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: 600 !important;
+        }
+
+        .dashboard-link i {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-outline {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--gray-300);
+            background: transparent;
+            color: var(--gray-700);
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-primary {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 4rem 0;
+        }
+
+        .hero-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge i {
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-highlight {
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .search-container {
+            background: var(--white);
+            border-radius: 50px;
+            padding: 0.5rem;
+            display: flex;
+            box-shadow: var(--shadow-lg);
+            max-width: 600px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .search-input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .search-input-wrapper i {
+            color: var(--gray-400);
+            margin-right: 0.75rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 0;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--accent-dark);
+            transform: scale(1.05);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--gray-500);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            color: var(--gray-500);
+            font-size: 1.1rem;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .category-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .category-card h4 {
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .category-card p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+
+        /* Featured Jobs - Pulsating Cards */
+        .featured-jobs {
+            padding: 5rem 0;
+            background: var(--gray-50);
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        /* Pulsating Animation */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 15px 30px rgba(244, 162, 97, 0.2);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+        }
+
+        .job-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* Different colors for each card */
+        .job-card:nth-child(1) {
+            background: linear-gradient(135deg, #fff 0%, #f0f9ff 100%);
+            border-left: 4px solid #0284c7;
+        }
+        .job-card:nth-child(1) .job-title {
+            color: #0284c7;
+        }
+
+        .job-card:nth-child(2) {
+            background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+            border-left: 4px solid #059669;
+        }
+        .job-card:nth-child(2) .job-title {
+            color: #059669;
+        }
+
+        .job-card:nth-child(3) {
+            background: linear-gradient(135deg, #fff 0%, #fef2f2 100%);
+            border-left: 4px solid #b45309;
+        }
+        .job-card:nth-child(3) .job-title {
+            color: #b45309;
+        }
+
+        .job-card:nth-child(4) {
+            background: linear-gradient(135deg, #fff 0%, #f5f3ff 100%);
+            border-left: 4px solid #6d28d9;
+        }
+        .job-card:nth-child(4) .job-title {
+            color: #6d28d9;
+        }
+
+        .job-card:nth-child(5) {
+            background: linear-gradient(135deg, #fff 0%, #fff1f0 100%);
+            border-left: 4px solid #c2410c;
+        }
+        .job-card:nth-child(5) .job-title {
+            color: #c2410c;
+        }
+
+        .job-card:nth-child(6) {
+            background: linear-gradient(135deg, #fff 0%, #fef9e7 100%);
+            border-left: 4px solid #b45309;
+        }
+        .job-card:nth-child(6) .job-title {
+            color: #b45309;
+        }
+
+        .job-card:hover {
+            animation: none;
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .verified-badge {
+            background: var(--success);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .company-info i {
+            color: var(--accent);
+        }
+
+        .job-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--gray-200);
+        }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .job-meta i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        .salary {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .job-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            border: 1px solid var(--gray-200);
+        }
+
+        .apply-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .apply-link i {
+            transition: transform 0.3s ease;
+        }
+
+        .apply-link:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Quick Stats Bar */
+        .quick-stats {
+            background: var(--white);
+            padding: 3rem 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-block {
+            text-align: center;
+        }
+
+        .stat-block .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .stat-block .label {
+            color: var(--gray-500);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--white);
+            font-size: 2rem;
+        }
+
+        .feature-item h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-item p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+        }
+
+        .how-it-works .section-header h2 {
+            color: var(--white);
+        }
+
+        .how-it-works .section-header p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step-card h4 {
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .step-card p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .story-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .story-card i {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .story-card p {
+            color: var(--gray-600);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gray-200);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .author-info h5 {
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: var(--gray-500);
+            font-size: 0.85rem;
+            margin: 0;
+            font-style: normal;
+        }
+
+        /* Why Choose Us */
+        .why-choose {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+        }
+
+        .why-choose .section-header h2 {
+            color: var(--white);
+        }
+
+        .why-choose .section-header p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .benefit-item i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-item h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .benefit-item p {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        /* App Download */
+        .app-download {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+
+        .app-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .app-text h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .app-text p {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .app-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .app-btn i {
+            font-size: 2rem;
+        }
+
+        .app-btn span {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-btn small {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .app-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-white {
+            padding: 1rem 2.5rem;
+            background: var(--white);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-outline-white {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-white:hover {
+            background: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo .logo-icon {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .footer-logo .logo-text {
+            color: var(--white);
+        }
+
+        .footer-col p {
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--gray-400);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .categories-grid,
+            .jobs-grid,
+            .features-grid,
+            .steps-grid,
+            .stories-grid,
+            .benefits-grid,
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .app-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .app-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1.5rem;
+                box-shadow: var(--shadow-lg);
+                border-top: 1px solid var(--gray-200);
+            }
+
+            .nav-menu.show {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .nav-menu li {
+                width: 100%;
+            }
+
+            .nav-menu a {
+                display: block;
+                padding: 0.5rem 0;
+            }
+
+            .dashboard-link {
+                display: inline-flex;
+                width: auto;
+            }
+
+            .auth-buttons {
+                width: 100%;
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+
+            .auth-buttons button {
+                width: 100%;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                display: none;
+            }
+
+            .categories-grid,
+            .jobs-grid,
+            .features-grid,
+            .steps-grid,
+            .stories-grid,
+            .benefits-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                flex-direction: column;
+                background: transparent;
+                box-shadow: none;
+            }
+
+            .search-input-wrapper {
+                background: var(--white);
+                border-radius: 50px;
+                border: 1px solid var(--gray-200);
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .app-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-stats {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-<header>
-  <nav>
-    <h1>TrueJobs</h1>
-    <span class="menu-toggle" onclick="toggleMenu()">☰</span>
-    <ul id="menu">
-      <li><a href="job.html">Jobs</a></li>
-      <li><a href="task.html">Tasks</a></li>
-      <li><a href="apply.html">Apply</a></li>
-      <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <h2>Job Opportunities</h2>
-  <p>Connecting Skilled Professionals To Verified Global Opportunities.</p>
-
-  <div class="search-box">
-    <input type="text" placeholder="Search jobs, skills, country...">
-    <button>Search</button>
-  </div>
-<a href="signup.html" class="btn btn-primary">Find Jobs</a>
-  <a href="signup.html" class="btn btn-secondary">Create Account</a>
-</section>
-
-<!-- INTRO -->
-<section class="section">
-  <h3>Why Choose TrueJobs?</h3>
-  <div class="cards">
-    <div class="card">
-      <h4>Verified Employers</h4>
-      <p>Every employer is screened to ensure safe applications.</p>
+    <!-- Moving Job Ticker at Top -->
+    <div class="job-ticker">
+        <div class="ticker-wrap">
+            <div class="ticker-move">
+                <!-- First set of jobs -->
+                <span class="ticker-item"><i class="fas fa-hand-holding-heart"></i> Care Giver <strong>245 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-shield-alt"></i> Security Guard <strong>189 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-industry"></i> Factory Work <strong>432 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-child"></i> Nanny <strong>156 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-user-nurse"></i> Home Nurse Assistant <strong>278 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-shopping-cart"></i> Super Market Cashier <strong>198 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-broom"></i> Cleaner <strong>312 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-utensils"></i> Kitchen Helper <strong>167 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-truck"></i> Driver <strong>234 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-hard-hat"></i> Construction <strong>345 jobs</strong></span>
+                
+                <!-- Duplicate for seamless loop -->
+                <span class="ticker-item"><i class="fas fa-hand-holding-heart"></i> Care Giver <strong>245 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-shield-alt"></i> Security Guard <strong>189 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-industry"></i> Factory Work <strong>432 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-child"></i> Nanny <strong>156 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-user-nurse"></i> Home Nurse Assistant <strong>278 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-shopping-cart"></i> Super Market Cashier <strong>198 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-broom"></i> Cleaner <strong>312 jobs</strong></span>
+                <span class="ticker-item"><i class="fas fa-utensils"></i> Kitchen Helper <strong>167 jobs</strong></span>
+            </div>
+        </div>
     </div>
-    <div class="card">
-      <h4>Global Opportunities</h4>
-      <p>Work in Qatar, Egypt, Kenya and beyond.</p>
-    </div>
-    <div class="card">
-      <h4>Secure Platform</h4>
-      <p>Your data and applications are fully protected.</p>
-    </div>
-  </div>
-</section>
 
-<!-- CATEGORIES -->
-<section class="section">
-  <h3>Browse By Category</h3>
-  <div class="cards">
-    <div class="card"><h4>Healthcare</h4><p>Nursing, Doctors, Caregivers</p></div>
-    <div class="card"><h4>Education</h4><p>Teachers & Lecturers</p></div>
-    <div class="card"><h4>Technology</h4><p>Developers & IT Experts</p></div>
-    <div class="card"><h4>Remote Jobs</h4><p>Work From Anywhere</p></div>
-  </div>
-</section>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">TJ</span>
+                <span class="logo-text">TrueJobs</span>
+            </a>
+            
+            <span class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </span>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="jobs.html">Find Jobs</a></li>
+                <li><a href="companies.html">Companies</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="dashboard.html" class="dashboard-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="auth-buttons">
+                    <button class="btn-outline" onclick="location.href='login.html'">Sign In</button>
+                    <button class="btn-primary" onclick="location.href='signup.html'">Sign Up</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<!-- FEATURED JOBS -->
-<section class="section">
-  <h3>Featured Opportunities</h3>
-  <div class="cards">
-    <div class="card">
-      <h4>Nursing – Qatar <span class="verified-badge">✔</span></h4>
-      <p>Competitive salary and housing benefits.</p>
-      <a href="apply.html">Apply Now</a>
-    </div>
-    <div class="card">
-      <h4>Teaching – Egypt <span class="verified-badge">✔</span></h4>
-      <p>Join a trusted institution in Cairo.</p>
-      <a href="apply.html">Apply Now</a>
-    </div>
-    <div class="card">
-      <h4>Software Developer – Kenya <span class="verified-badge">✔</span></h4>
-      <p>Collaborate with a global IT firm.</p>
-      <a href="apply.html">Apply Now</a>
-    </div>
-  </div>
-</section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>100% Verified Jobs Worldwide</span>
+                </div>
+                
+                <h1>
+                    Find Your 
+                    <span class="hero-highlight">Dream Job</span>
+                    Today
+                </h1>
+                
+                <p>Connect with trusted employers and find the perfect job opportunity that matches your skills and experience.</p>
+                
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="search-input" placeholder="Job title, skills, or keywords">
+                    </div>
+                    <button class="search-btn">Search Jobs</button>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">12,000+</span>
+                        <span class="stat-label">Active Jobs</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">800+</span>
+                        <span class="stat-label">Companies</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">45+</span>
+                        <span class="stat-label">Countries</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Professional team working together">
+            </div>
+        </div>
+    </section>
 
-<!-- HOW IT WORKS -->
-<section class="section">
-  <h3>How It Works</h3>
-  <div class="cards">
-    <div class="card"><h4>1. Create Account</h4><p>Register and complete your profile.</p></div>
-    <div class="card"><h4>2. Apply for Jobs</h4><p>Browse verified listings and apply.</p></div>
-    <div class="card"><h4>3. Get Hired</h4><p>Connect with employers worldwide.</p></div>
-  </div>
-</section>
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Browse by Category</h2>
+                <p>Find jobs in your preferred field</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card" onclick="location.href='jobs.html?category=healthcare'">
+                    <div class="category-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h4>Healthcare</h4>
+                    <p>2,345 jobs</p>
+                </div>
+                
+                <div class="category-card" onclick="location.href='jobs.html?category=domestic'">
+                    <div class="category-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h4>Domestic Work</h4>
+                    <p>1,567 jobs</p>
+                </div>
+                
+                <div class="category-card" onclick="location.href='jobs.html?category=security'">
+                    <div class="category-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Security</h4>
+                    <p>892 jobs</p>
+                </div>
+                
+                <div class="category-card" onclick="location.href='jobs.html?category=hospitality'">
+                    <div class="category-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h4>Hospitality</h4>
+                    <p>1,234 jobs</p>
+                </div>
+                
+                <div class="category-card" onclick="location.href='jobs.html?category=construction'">
+                    <div class="category-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h4>Construction</h4>
+                    <p>1,678 jobs</p>
+                </div>
+                
+                <div class="category-card" onclick="location.href='jobs.html?category=education'">
+                    <div class="category-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h4>Education</h4>
+                    <p>1,123 jobs</p>
+                </div>
+                
+                <div class="category-card" onclick="location.href='jobs.html?category=drivers'">
+                    <div class="category-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h4>Drivers</h4>
+                    <p>756 jobs</p>
+                </div>
+                
+                <div class="category-card" onclick="location.href='jobs.html?category=retail'">
+                    <div class="category-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h4>Retail</h4>
+                    <p>945 jobs</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- TESTIMONIALS -->
-<section class="section">
-  <h3>Success Stories</h3>
-  <div class="cards">
-    <div class="card">
-      <p>"TrueJobs helped me secure a job abroad safely."</p>
-      <h4>- Sarah K.</h4>
-    </div>
-    <div class="card">
-      <p>"Professional and transparent platform."</p>
-      <h4>- David M.</h4>
-    </div>
-  </div>
-</section>
+    <!-- Quick Stats Bar -->
+    <section class="quick-stats">
+        <div class="container">
+            <div class="stats-bar">
+                <div class="stat-block">
+                    <div class="number">12,345+</div>
+                    <div class="label">Jobs Posted</div>
+                </div>
+                <div class="stat-block">
+                    <div class="number">8,901+</div>
+                    <div class="label">Hired Candidates</div>
+                </div>
+                <div class="stat-block">
+                    <div class="number">567+</div>
+                    <div class="label">Companies</div>
+                </div>
+                <div class="stat-block">
+                    <div class="number">45+</div>
+                    <div class="label">Countries</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- STATS -->
-<section class="section">
-  <h3>Our Impact</h3>
-  <div class="cards">
-    <div class="card"><h4>10,000+</h4><p>Professionals</p></div>
-    <div class="card"><h4>500+</h4><p>Employers</p></div>
-    <div class="card"><h4>40+</h4><p>Countries</p></div>
-  </div>
-</section>
+    <!-- Featured Jobs - Pulsating Cards -->
+    <section class="featured-jobs">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Opportunities</h2>
+                <p>Hand-picked jobs from trusted employers</p>
+            </div>
+            
+            <div class="jobs-grid">
+                <!-- Job Card 1 - Care Giver -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Care Giver 
+                            <span class="verified-badge">✓</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="company-info">
+                        <i class="fas fa-building"></i>
+                        <span>Golden Age Care Center</span>
+                    </div>
+                    
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,800/mo</span>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="tag">Elderly Care</span>
+                        <span class="tag">First Aid</span>
+                        <span class="tag">2+ years</span>
+                    </div>
+                    
+                    <a href="apply.html" class="apply-link">
+                        Apply Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <!-- Job Card 2 - Security Guard -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Security Guard
+                            <span class="verified-badge">✓</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="company-info">
+                        <i class="fas fa-building"></i>
+                        <span>SecurePlus International</span>
+                    </div>
+                    
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Doha, Qatar</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,500/mo</span>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="tag">SIA Licensed</span>
+                        <span class="tag">CCTV</span>
+                        <span class="tag">1+ year</span>
+                    </div>
+                    
+                    <a href="apply.html" class="apply-link">
+                        Apply Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <!-- Job Card 3 - Factory Worker -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Factory Worker
+                            <span class="verified-badge">✓</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="company-info">
+                        <i class="fas fa-building"></i>
+                        <span>Gulf Manufacturing Co.</span>
+                    </div>
+                    
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Jeddah, KSA</span>
+                        <span><i class="fas fa-clock"></i> Shift Work</span>
+                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,200/mo</span>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="tag">Assembly Line</span>
+                        <span class="tag">No Experience</span>
+                        <span class="tag">Accommodation</span>
+                    </div>
+                    
+                    <a href="apply.html" class="apply-link">
+                        Apply Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <!-- Job Card 4 - Nanny -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Professional Nanny
+                            <span class="verified-badge">✓</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="company-info">
+                        <i class="fas fa-building"></i>
+                        <span>Elite Family Services</span>
+                    </div>
+                    
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Kuwait City</span>
+                        <span><i class="fas fa-clock"></i> Live-in</span>
+                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,600/mo</span>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="tag">Childcare</span>
+                        <span class="tag">First Aid</span>
+                        <span class="tag">3+ years</span>
+                    </div>
+                    
+                    <a href="apply.html" class="apply-link">
+                        Apply Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <!-- Job Card 5 - Home Nurse Assistant -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Home Nurse Assistant
+                            <span class="verified-badge">✓</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="company-info">
+                        <i class="fas fa-building"></i>
+                        <span>HomeCare Plus</span>
+                    </div>
+                    
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Abu Dhabi, UAE</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,900/mo</span>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="tag">Nursing License</span>
+                        <span class="tag">Elderly Care</span>
+                        <span class="tag">2+ years</span>
+                    </div>
+                    
+                    <a href="apply.html" class="apply-link">
+                        Apply Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <!-- Job Card 6 - Super Market Cashier -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Super Market Cashier
+                            <span class="verified-badge">✓</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="company-info">
+                        <i class="fas fa-building"></i>
+                        <span>Lulu Hypermarket</span>
+                    </div>
+                    
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Muscat, Oman</span>
+                        <span><i class="fas fa-clock"></i> Part-time</span>
+                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,000/mo</span>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="tag">Customer Service</span>
+                        <span class="tag">Cash Handling</span>
+                        <span class="tag">6 months</span>
+                    </div>
+                    
+                    <a href="apply.html" class="apply-link">
+                        Apply Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- CTA -->
-<section class="cta">
-  <h3>Ready to Start Your Career Journey?</h3>
-  <a href="signup.html" class="btn btn-primary">Get Started Today</a>
-</section>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose TrueJobs?</h2>
+                <p>We make your job search easier and safer</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Verified Employers</h3>
+                    <p>Every employer is thoroughly screened to ensure legitimacy and protect your career.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Global Opportunities</h3>
+                    <p>Access jobs across 45+ countries in the Middle East, Africa, and Asia.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Quick Apply</h3>
+                    <p>Apply to multiple jobs with just a few clicks using your saved profile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<footer>
-  &copy; 2026 TrueJobs. All rights reserved.
-</footer>
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Get started in three simple steps</p>
+            </div>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Create Account</h4>
+                    <p>Sign up for free and build your professional profile in minutes.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Browse & Apply</h4>
+                    <p>Search through thousands of verified jobs and apply with one click.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Get Hired</h4>
+                    <p>Connect with employers, interview, and start your new job.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script>
-function toggleMenu() {
-  document.getElementById('menu').classList.toggle('show');
-}
-</script>
+    <!-- Success Stories -->
+    <section class="success-stories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Success Stories</h2>
+                <p>Real people, real jobs, real success</p>
+            </div>
+            
+            <div class="stories-grid">
+                <div class="story-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"TrueJobs helped me find a nursing position in Qatar within 2 weeks. The process was smooth and all employers were verified."</p>
+                    <div class="story-author">
+                        <div class="author-avatar">MA</div>
+                        <div class="author-info">
+                            <h5>Maryam Ahmed</h5>
+                            <p>Nurse in Qatar</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"I got my dream job as a security supervisor in Dubai. TrueJobs made it possible with their verified listings."</p>
+                    <div class="story-author">
+                        <div class="author-avatar">KK</div>
+                        <div class="author-info">
+                            <h5>Kevin Kimani</h5>
+                            <p>Security Supervisor</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"The platform is very user-friendly. I found a factory job in Jeddah with accommodation provided. Thank you TrueJobs!"</p>
+                    <div class="story-author">
+                        <div class="author-avatar">RA</div>
+                        <div class="author-info">
+                            <h5>Rashid Ali</h5>
+                            <p>Factory Worker</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Why Choose Us -->
+    <section class="why-choose">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Job Seekers Love Us</h2>
+                <p>We're committed to your success</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>100% Free</h4>
+                    <p>No hidden fees. Apply to jobs for free.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-clock"></i>
+                    <h4>24/7 Support</h4>
+                    <p>Our team is always here to help.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-file-alt"></i>
+                    <h4>Resume Tips</h4>
+                    <p>Expert advice to improve your CV.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-bell"></i>
+                    <h4>Job Alerts</h4>
+                    <p>Get notified about new opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download -->
+    <section class="app-download">
+        <div class="container">
+            <div class="app-content">
+                <div class="app-text">
+                    <h2>Download Our App</h2>
+                    <p>Apply for jobs on the go. Get instant notifications about new opportunities.</p>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-apple"></i>
+                            <span>
+                                <small>Download on the</small>
+                                <strong>App Store</strong>
+                            </span>
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-google-play"></i>
+                            <span>
+                                <small>Get it on</small>
+                                <strong>Google Play</strong>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="app-image">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Mobile App">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Your Career Journey?</h2>
+            <p>Join thousands of professionals who found their dream jobs through TrueJobs</p>
+            <div class="cta-buttons">
+                <button class="btn-white" onclick="location.href='signup.html'">Create Free Account</button>
+                <button class="btn-outline-white" onclick="location.href='jobs.html'">Browse Jobs</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <span class="logo-icon">TJ</span>
+                        <span class="logo-text">TrueJobs</span>
+                    </div>
+                    <p>Your trusted partner for global job opportunities. We connect skilled professionals with verified employers worldwide.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="jobs.html">Find Jobs</a></li>
+                        <li><a href="companies.html">Companies</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="jobs.html?category=healthcare">Healthcare</a></li>
+                        <li><a href="jobs.html?category=domestic">Domestic Work</a></li>
+                        <li><a href="jobs.html?category=security">Security</a></li>
+                        <li><a href="jobs.html?category=construction">Construction</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Use</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 TrueJobs. All rights reserved. Your trusted partner for global employment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('show');
+        }
+    </script>
 </body>
 </html>
 
