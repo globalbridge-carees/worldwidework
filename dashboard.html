@@ -1,127 +1,1430 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GlobalBridge Careers - Dashboard</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: var(--light, #F4F6F9); /* same background as index.html */
-      color: #222;
-    }
-    header {
-      background: #0A1F44; /* primary color */
-      color: #F5B400;     /* accent color */
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: auto;
-    }
-    nav h1 { font-size: 1.6rem; font-weight: bold; color: #F5B400; }
-    nav ul { list-style: none; display: flex; }
-    nav ul li { margin-left: 1.5rem; }
-    nav ul li a { color: #fff; text-decoration: none; font-weight: 600; }
-    nav ul li a:hover { color: #F5B400; }
-    .hero {
-      text-align: center;
-      padding: 3rem 2rem;
-      background: #0A1F44;
-      color: #fff;
-    }
-    .hero h2 { font-size: 2.4rem; margin-bottom: 1rem; }
-    .dashboard {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-    }
-    .card {
-      background: #fff;
-      color: #333;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .card h3 {
-      color: #0A1F44;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #F5B400;
-      padding-bottom: 0.5rem;
-    }
-    .update-btn {
-      margin-left: 1rem;
-      padding: 0.3rem 0.6rem;
-      border: none;
-      border-radius: 5px;
-      background: #F5B400;
-      color: #0A1F44;
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-    .update-btn:hover { background: #e6c200; }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #0A1F44;
-      color: #F5B400;
-      margin-top: 2rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - TrueJobs | Your Career Hub</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for statistics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f0f5fa;
+            color: #1e293b;
+        }
+
+        :root {
+            --primary: #0f2b4b;
+            --primary-light: #1e3a6a;
+            --primary-dark: #0a1f36;
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --accent-dark: #d97706;
+            --success: #10b981;
+            --success-light: #34d399;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--accent);
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent);
+        }
+
+        .nav-menu a.active {
+            color: var(--primary);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notifications i {
+            font-size: 1.3rem;
+            color: var(--gray-600);
+            transition: color 0.3s ease;
+        }
+
+        .notifications:hover i {
+            color: var(--accent);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: var(--white);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile:hover {
+            background: var(--gray-100);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .user-info {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .user-info {
+                display: block;
+            }
+        }
+
+        .user-info .name {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .user-info .role {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            padding: 2rem 0;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 30px;
+            padding: 2.5rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245,158,11,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-stats {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .welcome-stat {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .welcome-stat i {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .welcome-stat .stat-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .welcome-stat .stat-info p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--white);
+            font-size: 1.8rem;
+        }
+
+        .stat-card h3 {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+        }
+
+        .trend-up {
+            color: var(--success);
+        }
+
+        .trend-down {
+            color: var(--danger);
+        }
+
+        /* Main Content Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Recent Applications */
+        .applications-section {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            animation: slideIn 0.7s ease-out;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .view-all {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-all:hover {
+            color: var(--accent-dark);
+            gap: 0.5rem;
+        }
+
+        .applications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .application-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem;
+            background: var(--gray-50);
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .application-item:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .app-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .app-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .app-details h4 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .app-details .company {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .app-details .company i {
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        .app-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-review {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-interview {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .app-date {
+            color: var(--gray-500);
+            font-size: 0.85rem;
+        }
+
+        /* Activity Section */
+        .activity-section {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: var(--gray-50);
+        }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-details p {
+            color: var(--gray-700);
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-details .time {
+            color: var(--gray-500);
+            font-size: 0.8rem;
+        }
+
+        /* Saved Jobs */
+        .saved-jobs-section {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 2rem;
+            animation: slideIn 0.9s ease-out;
+        }
+
+        .saved-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .saved-card {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 1.2rem;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .saved-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .saved-card .remove-btn {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .saved-card .remove-btn:hover {
+            color: var(--danger);
+        }
+
+        .saved-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+            padding-right: 1.5rem;
+        }
+
+        .saved-card .company {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .saved-card .location {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--gray-500);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .saved-card .location i {
+            color: var(--accent);
+        }
+
+        .apply-now {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .apply-now:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 2rem;
+            animation: slideIn 1s ease-out;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-top: 1.5rem;
+        }
+
+        /* Profile Completion */
+        .profile-section {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .profile-info h3 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .profile-info p {
+            color: var(--gray-500);
+        }
+
+        .completion-bar {
+            margin: 1.5rem 0;
+        }
+
+        .completion-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--gray-600);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .profile-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .profile-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+        }
+
+        .profile-item i {
+            width: 30px;
+            height: 30px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .profile-item span {
+            flex: 1;
+            color: var(--gray-600);
+        }
+
+        .profile-item .status {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .profile-item .status.missing {
+            color: var(--danger);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--white);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray-500);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .saved-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-menu.show {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .user-menu {
+                margin-left: auto;
+            }
+
+            .user-info {
+                display: none;
+            }
+
+            .welcome-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .saved-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .application-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .app-status {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <header>
-    <nav>
-      <h1>GlobalBridge Careers</h1>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="jobs.html">Jobs</a></li>
-        <li><a href="tasks.html">Tasks</a></li>
-        <li><a href="works.html">Works</a></li>
-        <li><a href="apply.html">Apply</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="testimonials.html">Testimonials</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-      </ul>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">TJ</span>
+                <span class="logo-text">TrueJobs</span>
+            </a>
+            
+            <span class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </span>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="findjobs.html">Find Jobs</a></li>
+                <li><a href="companies.html">Companies</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            </ul>
+
+            <div class="user-menu">
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile" onclick="toggleUserMenu()">
+                    <div class="avatar">JD</div>
+                    <div class="user-info">
+                        <div class="name" id="userName">John Doe</div>
+                        <div class="role">Job Seeker</div>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
     </nav>
-  </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h2>Welcome to Your Dashboard</h2>
-    <p>Track your applications, tasks, and updates in one place.</p>
-  </section>
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+        <div class="container">
+            <div class="welcome-card">
+                <div class="welcome-content">
+                    <h1>Welcome back, <span id="welcomeName">John</span>! 👋</h1>
+                    <p>Your job search journey is progressing well. Here's what's happening today.</p>
+                    <div class="welcome-stats">
+                        <div class="welcome-stat">
+                            <i class="fas fa-eye"></i>
+                            <div class="stat-info">
+                                <h3>128</h3>
+                                <p>Profile Views</p>
+                            </div>
+                        </div>
+                        <div class="welcome-stat">
+                            <i class="fas fa-file-alt"></i>
+                            <div class="stat-info">
+                                <h3>12</h3>
+                                <p>Applications</p>
+                            </div>
+                        </div>
+                        <div class="welcome-stat">
+                            <i class="fas fa-bookmark"></i>
+                            <div class="stat-info">
+                                <h3>8</h3>
+                                <p>Saved Jobs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Dashboard Content -->
-  <div class="dashboard">
-    <div class="card">
-      <h3>My Applications</h3>
-      <p>Pending: 2</p>
-      <p>Approved: 1</p>
-      <p>Rejected: 0</p>
+    <!-- Stats Grid -->
+    <section class="stats-grid container">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-paper-plane"></i>
+            </div>
+            <h3>Applications Sent</h3>
+            <div class="stat-number">24</div>
+            <div class="stat-trend trend-up">
+                <i class="fas fa-arrow-up"></i> +12% from last month
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Under Review</h3>
+            <div class="stat-number">8</div>
+            <div class="stat-trend trend-up">
+                <i class="fas fa-arrow-up"></i> +3 this week
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Interviews</h3>
+            <div class="stat-number">3</div>
+            <div class="stat-trend trend-up">
+                <i class="fas fa-arrow-up"></i> 2 upcoming
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h3>Offers Received</h3>
+            <div class="stat-number">2</div>
+            <div class="stat-trend trend-up">
+                <i class="fas fa-arrow-up"></i> 1 pending
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <div class="container main-grid">
+        <!-- Recent Applications -->
+        <section class="applications-section">
+            <div class="section-header">
+                <h2>Recent Applications</h2>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="applications-list">
+                <div class="application-item">
+                    <div class="app-info">
+                        <div class="app-logo">MC</div>
+                        <div class="app-details">
+                            <h4>Senior Nurse</h4>
+                            <div class="company">
+                                <i class="fas fa-building"></i> Mediclinic Hospital
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-review">Under Review</span>
+                        <span class="app-date">2 days ago</span>
+                    </div>
+                </div>
+
+                <div class="application-item">
+                    <div class="app-info">
+                        <div class="app-logo">QA</div>
+                        <div class="app-details">
+                            <h4>Security Supervisor</h4>
+                            <div class="company">
+                                <i class="fas fa-building"></i> Qatar Airways
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-interview">Interview</span>
+                        <span class="app-date">5 days ago</span>
+                    </div>
+                </div>
+
+                <div class="application-item">
+                    <div class="app-info">
+                        <div class="app-logo">DP</div>
+                        <div class="app-details">
+                            <h4>Logistics Coordinator</h4>
+                            <div class="company">
+                                <i class="fas fa-building"></i> DP World
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-pending">Pending</span>
+                        <span class="app-date">1 week ago</span>
+                    </div>
+                </div>
+
+                <div class="application-item">
+                    <div class="app-info">
+                        <div class="app-logo">JG</div>
+                        <div class="app-details">
+                            <h4>Hotel Manager</h4>
+                            <div class="company">
+                                <i class="fas fa-building"></i> Jumeirah Group
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-rejected">Not Selected</span>
+                        <span class="app-date">2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="activity-section">
+            <div class="section-header">
+                <h2>Recent Activity</h2>
+            </div>
+
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="activity-details">
+                        <p>Your profile was viewed by <strong>Qatar Airways</strong></p>
+                        <span class="time">2 hours ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="activity-details">
+                        <p>Application status changed to <strong>Interview</strong> at Mediclinic</p>
+                        <span class="time">Yesterday</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                    <div class="activity-details">
+                        <p>You saved <strong>Security Supervisor</strong> position at G4S</p>
+                        <span class="time">2 days ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="activity-details">
+                        <p>Interview scheduled with <strong>Emirates Group</strong> for tomorrow</p>
+                        <span class="time">3 days ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="activity-details">
+                        <p>Your CV was downloaded by <strong>DP World</strong></p>
+                        <span class="time">4 days ago</span>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div class="card">
-      <h3>My Tasks</h3>
-      <p>Completed: 3</p>
-      <p>In Progress: 1</p>
-    </div>
-  </div>
+    <!-- Saved Jobs -->
+    <section class="saved-jobs-section container">
+        <div class="section-header">
+            <h2>Saved Jobs</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2026 GlobalBridge Careers. All rights reserved.</p>
-  </footer>
+        <div class="saved-grid">
+            <div class="saved-card">
+                <i class="fas fa-times remove-btn"></i>
+                <h4>Registered Nurse</h4>
+                <div class="company">Mediclinic Hospital</div>
+                <div class="location">
+                    <i class="fas fa-map-marker-alt"></i> Dubai, UAE
+                </div>
+                <button class="apply-now">Apply Now</button>
+            </div>
+
+            <div class="saved-card">
+                <i class="fas fa-times remove-btn"></i>
+                <h4>Security Manager</h4>
+                <div class="company">G4S Security</div>
+                <div class="location">
+                    <i class="fas fa-map-marker-alt"></i> Doha, Qatar
+                </div>
+                <button class="apply-now">Apply Now</button>
+            </div>
+
+            <div class="saved-card">
+                <i class="fas fa-times remove-btn"></i>
+                <h4>Construction Supervisor</h4>
+                <div class="company">Al Habtoor Group</div>
+                <div class="location">
+                    <i class="fas fa-map-marker-alt"></i> Abu Dhabi, UAE
+                </div>
+                <button class="apply-now">Apply Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section container">
+        <div class="section-header">
+            <h2>Application Statistics</h2>
+        </div>
+        <div class="chart-container">
+            <canvas id="applicationChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Profile Completion -->
+    <section class="profile-section container">
+        <div class="profile-header">
+            <div class="profile-avatar">JD</div>
+            <div class="profile-info">
+                <h3 id="profileName">John Doe</h3>
+                <p>Member since January 2026</p>
+            </div>
+        </div>
+
+        <div class="completion-bar">
+            <div class="completion-label">
+                <span>Profile Completion</span>
+                <span>75%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%"></div>
+            </div>
+        </div>
+
+        <div class="profile-items">
+            <div class="profile-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Personal Information</span>
+                <span class="status">Complete</span>
+            </div>
+            <div class="profile-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Work Experience</span>
+                <span class="status">Complete</span>
+            </div>
+            <div class="profile-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Skills & Qualifications</span>
+                <span class="status">Complete</span>
+            </div>
+            <div class="profile-item">
+                <i class="fas fa-times-circle"></i>
+                <span>Education</span>
+                <span class="status missing">Missing</span>
+            </div>
+            <div class="profile-item">
+                <i class="fas fa-times-circle"></i>
+                <span>Certifications</span>
+                <span class="status missing">Missing</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 TrueJobs. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Help Center</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('show');
+        }
+
+        // Toggle user menu
+        function toggleUserMenu() {
+            // Add user menu dropdown functionality
+            console.log('User menu clicked');
+        }
+
+        // Load user data
+        function loadUserData() {
+            const user = JSON.parse(localStorage.getItem('currentUser')) || {
+                name: 'John Doe',
+                email: 'john@example.com',
+                firstName: 'John',
+                lastName: 'Doe'
+            };
+
+            const displayName = user.firstName || user.name || 'John';
+            document.getElementById('welcomeName').textContent = displayName;
+            document.getElementById('userName').textContent = user.name || `${user.firstName} ${user.lastName}` || 'John Doe';
+            document.getElementById('profileName').textContent = user.name || `${user.firstName} ${user.lastName}` || 'John Doe';
+        }
+
+        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('applicationChart').getContext('2d');
+            
+            // Gradient for chart
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(245, 158, 11, 0.8)');
+            gradient.addColorStop(1, 'rgba(15, 43, 75, 0.8)');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                    datasets: [{
+                        label: 'Applications Sent',
+                        data: [5, 8, 12, 15, 20, 24],
+                        borderColor: '#f59e0b',
+                        backgroundColor: gradient,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#0f2b4b',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }, {
+                        label: 'Interviews',
+                        data: [1, 2, 3, 4, 3, 3],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        borderDash: [5, 5],
+                        pointBackgroundColor: '#10b981',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 43, 75, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#f59e0b',
+                            borderWidth: 2
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Remove saved job
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.parentElement.remove();
+                alert('Job removed from saved');
+            });
+        });
+
+        // Apply now buttons
+        document.querySelectorAll('.apply-now').forEach(btn => {
+            btn.addEventListener('click', function() {
+                window.location.href = 'apply.html';
+            });
+        });
+
+        // Application items click
+        document.querySelectorAll('.application-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Navigate to application details
+                console.log('View application details');
+            });
+        });
+
+        // Load data on page load
+        window.addEventListener('load', () => {
+            loadUserData();
+            initChart();
+        });
+    </script>
 </body>
 </html>
