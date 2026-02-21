@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Dashboard - TrueJobs | Your Career Hub</title>
     
     <!-- Font Awesome 6 -->
@@ -25,6 +25,7 @@
         body {
             background: #f0f5fa;
             color: #1e293b;
+            line-height: 1.5;
         }
 
         :root {
@@ -73,11 +74,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         @keyframes pulse {
@@ -328,7 +324,7 @@
             font-size: 0.9rem;
         }
 
-        /* Stats Grid */
+        /* Stats Grid - horizontal on desktop, stacked on mobile */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -404,7 +400,7 @@
             color: var(--danger);
         }
 
-        /* Main Content Grid */
+        /* Main Content Grid - side by side on desktop, stacked on mobile */
         .main-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -522,25 +518,10 @@
             font-weight: 600;
         }
 
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-review {
-            background: #cce5ff;
-            color: #004085;
-        }
-
-        .status-interview {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-rejected {
-            background: #f8d7da;
-            color: #721c24;
-        }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-review { background: #cce5ff; color: #004085; }
+        .status-interview { background: #d4edda; color: #155724; }
+        .status-rejected { background: #f8d7da; color: #721c24; }
 
         .app-date {
             color: var(--gray-500);
@@ -603,7 +584,7 @@
             font-size: 0.8rem;
         }
 
-        /* Saved Jobs */
+        /* Saved Jobs - horizontal grid on desktop, stack on mobile */
         .saved-jobs-section {
             background: var(--white);
             border-radius: 30px;
@@ -842,8 +823,9 @@
             color: var(--accent);
         }
 
-        /* Responsive */
-        @media (max-width: 1200px) {
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+        /* Tablet: 2 columns for stats, saved jobs; main grid stacks */
+        @media (max-width: 1024px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -857,6 +839,7 @@
             }
         }
 
+        /* Mobile: everything stacks in 1 column */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -871,12 +854,12 @@
                 background: var(--white);
                 padding: 1rem;
                 box-shadow: var(--shadow-lg);
+                flex-direction: column;
+                gap: 1rem;
             }
 
             .nav-menu.show {
                 display: flex;
-                flex-direction: column;
-                gap: 1rem;
             }
 
             .user-menu {
@@ -894,6 +877,7 @@
 
             .stats-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
             
             .saved-grid {
@@ -921,6 +905,49 @@
                 flex-wrap: wrap;
                 justify-content: center;
             }
+
+            .stat-card, .applications-section, .activity-section, 
+            .saved-jobs-section, .chart-section, .profile-section {
+                padding: 1.5rem;
+            }
+
+            .welcome-card {
+                padding: 1.5rem;
+            }
+
+            .welcome-content h1 {
+                font-size: 2rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .welcome-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .app-logo {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -942,6 +969,7 @@
                 <li><a href="findjobs.html">Find Jobs</a></li>
                 <li><a href="companies.html">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="dashboard.html" class="active">Dashboard</a></li>
             </ul>
 
@@ -997,7 +1025,7 @@
         </div>
     </section>
 
-    <!-- Stats Grid -->
+    <!-- Stats Grid - horizontal on desktop -->
     <section class="stats-grid container">
         <div class="stat-card">
             <div class="stat-icon">
@@ -1009,7 +1037,6 @@
                 <i class="fas fa-arrow-up"></i> +12% from last month
             </div>
         </div>
-
         <div class="stat-card">
             <div class="stat-icon">
                 <i class="fas fa-clock"></i>
@@ -1020,7 +1047,6 @@
                 <i class="fas fa-arrow-up"></i> +3 this week
             </div>
         </div>
-
         <div class="stat-card">
             <div class="stat-icon">
                 <i class="fas fa-calendar-check"></i>
@@ -1031,7 +1057,6 @@
                 <i class="fas fa-arrow-up"></i> 2 upcoming
             </div>
         </div>
-
         <div class="stat-card">
             <div class="stat-icon">
                 <i class="fas fa-trophy"></i>
@@ -1044,7 +1069,7 @@
         </div>
     </section>
 
-    <!-- Main Content Grid -->
+    <!-- Main Content Grid - side by side on desktop -->
     <div class="container main-grid">
         <!-- Recent Applications -->
         <section class="applications-section">
@@ -1052,16 +1077,13 @@
                 <h2>Recent Applications</h2>
                 <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
             </div>
-
             <div class="applications-list">
                 <div class="application-item">
                     <div class="app-info">
                         <div class="app-logo">MC</div>
                         <div class="app-details">
                             <h4>Senior Nurse</h4>
-                            <div class="company">
-                                <i class="fas fa-building"></i> Mediclinic Hospital
-                            </div>
+                            <div class="company"><i class="fas fa-building"></i> Mediclinic Hospital</div>
                         </div>
                     </div>
                     <div class="app-status">
@@ -1069,15 +1091,12 @@
                         <span class="app-date">2 days ago</span>
                     </div>
                 </div>
-
                 <div class="application-item">
                     <div class="app-info">
                         <div class="app-logo">QA</div>
                         <div class="app-details">
                             <h4>Security Supervisor</h4>
-                            <div class="company">
-                                <i class="fas fa-building"></i> Qatar Airways
-                            </div>
+                            <div class="company"><i class="fas fa-building"></i> Qatar Airways</div>
                         </div>
                     </div>
                     <div class="app-status">
@@ -1085,15 +1104,12 @@
                         <span class="app-date">5 days ago</span>
                     </div>
                 </div>
-
                 <div class="application-item">
                     <div class="app-info">
                         <div class="app-logo">DP</div>
                         <div class="app-details">
                             <h4>Logistics Coordinator</h4>
-                            <div class="company">
-                                <i class="fas fa-building"></i> DP World
-                            </div>
+                            <div class="company"><i class="fas fa-building"></i> DP World</div>
                         </div>
                     </div>
                     <div class="app-status">
@@ -1101,15 +1117,12 @@
                         <span class="app-date">1 week ago</span>
                     </div>
                 </div>
-
                 <div class="application-item">
                     <div class="app-info">
                         <div class="app-logo">JG</div>
                         <div class="app-details">
                             <h4>Hotel Manager</h4>
-                            <div class="company">
-                                <i class="fas fa-building"></i> Jumeirah Group
-                            </div>
+                            <div class="company"><i class="fas fa-building"></i> Jumeirah Group</div>
                         </div>
                     </div>
                     <div class="app-status">
@@ -1125,52 +1138,37 @@
             <div class="section-header">
                 <h2>Recent Activity</h2>
             </div>
-
             <div class="activity-list">
                 <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
+                    <div class="activity-icon"><i class="fas fa-eye"></i></div>
                     <div class="activity-details">
                         <p>Your profile was viewed by <strong>Qatar Airways</strong></p>
                         <span class="time">2 hours ago</span>
                     </div>
                 </div>
-
                 <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
+                    <div class="activity-icon"><i class="fas fa-file-alt"></i></div>
                     <div class="activity-details">
                         <p>Application status changed to <strong>Interview</strong> at Mediclinic</p>
                         <span class="time">Yesterday</span>
                     </div>
                 </div>
-
                 <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-bookmark"></i>
-                    </div>
+                    <div class="activity-icon"><i class="fas fa-bookmark"></i></div>
                     <div class="activity-details">
                         <p>You saved <strong>Security Supervisor</strong> position at G4S</p>
                         <span class="time">2 days ago</span>
                     </div>
                 </div>
-
                 <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-calendar"></i>
-                    </div>
+                    <div class="activity-icon"><i class="fas fa-calendar"></i></div>
                     <div class="activity-details">
                         <p>Interview scheduled with <strong>Emirates Group</strong> for tomorrow</p>
                         <span class="time">3 days ago</span>
                     </div>
                 </div>
-
                 <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-download"></i>
-                    </div>
+                    <div class="activity-icon"><i class="fas fa-download"></i></div>
                     <div class="activity-details">
                         <p>Your CV was downloaded by <strong>DP World</strong></p>
                         <span class="time">4 days ago</span>
@@ -1180,41 +1178,32 @@
         </section>
     </div>
 
-    <!-- Saved Jobs -->
+    <!-- Saved Jobs - horizontal grid on desktop -->
     <section class="saved-jobs-section container">
         <div class="section-header">
             <h2>Saved Jobs</h2>
             <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
         </div>
-
         <div class="saved-grid">
             <div class="saved-card">
                 <i class="fas fa-times remove-btn"></i>
                 <h4>Registered Nurse</h4>
                 <div class="company">Mediclinic Hospital</div>
-                <div class="location">
-                    <i class="fas fa-map-marker-alt"></i> Dubai, UAE
-                </div>
+                <div class="location"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</div>
                 <button class="apply-now">Apply Now</button>
             </div>
-
             <div class="saved-card">
                 <i class="fas fa-times remove-btn"></i>
                 <h4>Security Manager</h4>
                 <div class="company">G4S Security</div>
-                <div class="location">
-                    <i class="fas fa-map-marker-alt"></i> Doha, Qatar
-                </div>
+                <div class="location"><i class="fas fa-map-marker-alt"></i> Doha, Qatar</div>
                 <button class="apply-now">Apply Now</button>
             </div>
-
             <div class="saved-card">
                 <i class="fas fa-times remove-btn"></i>
                 <h4>Construction Supervisor</h4>
                 <div class="company">Al Habtoor Group</div>
-                <div class="location">
-                    <i class="fas fa-map-marker-alt"></i> Abu Dhabi, UAE
-                </div>
+                <div class="location"><i class="fas fa-map-marker-alt"></i> Abu Dhabi, UAE</div>
                 <button class="apply-now">Apply Now</button>
             </div>
         </div>
@@ -1239,7 +1228,6 @@
                 <p>Member since January 2026</p>
             </div>
         </div>
-
         <div class="completion-bar">
             <div class="completion-label">
                 <span>Profile Completion</span>
@@ -1249,33 +1237,12 @@
                 <div class="progress-fill" style="width: 75%"></div>
             </div>
         </div>
-
         <div class="profile-items">
-            <div class="profile-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Personal Information</span>
-                <span class="status">Complete</span>
-            </div>
-            <div class="profile-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Work Experience</span>
-                <span class="status">Complete</span>
-            </div>
-            <div class="profile-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Skills & Qualifications</span>
-                <span class="status">Complete</span>
-            </div>
-            <div class="profile-item">
-                <i class="fas fa-times-circle"></i>
-                <span>Education</span>
-                <span class="status missing">Missing</span>
-            </div>
-            <div class="profile-item">
-                <i class="fas fa-times-circle"></i>
-                <span>Certifications</span>
-                <span class="status missing">Missing</span>
-            </div>
+            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Personal Information</span><span class="status">Complete</span></div>
+            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Work Experience</span><span class="status">Complete</span></div>
+            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Skills & Qualifications</span><span class="status">Complete</span></div>
+            <div class="profile-item"><i class="fas fa-times-circle"></i><span>Education</span><span class="status missing">Missing</span></div>
+            <div class="profile-item"><i class="fas fa-times-circle"></i><span>Certifications</span><span class="status missing">Missing</span></div>
         </div>
     </section>
 
@@ -1295,37 +1262,27 @@
     </footer>
 
     <script>
-        // Toggle mobile menu
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        // Toggle user menu
         function toggleUserMenu() {
-            // Add user menu dropdown functionality
             console.log('User menu clicked');
         }
 
-        // Load user data
         function loadUserData() {
             const user = JSON.parse(localStorage.getItem('currentUser')) || {
                 name: 'John Doe',
-                email: 'john@example.com',
                 firstName: 'John',
                 lastName: 'Doe'
             };
-
-            const displayName = user.firstName || user.name || 'John';
-            document.getElementById('welcomeName').textContent = displayName;
-            document.getElementById('userName').textContent = user.name || `${user.firstName} ${user.lastName}` || 'John Doe';
-            document.getElementById('profileName').textContent = user.name || `${user.firstName} ${user.lastName}` || 'John Doe';
+            document.getElementById('welcomeName').textContent = user.firstName || 'John';
+            document.getElementById('userName').textContent = user.name || 'John Doe';
+            document.getElementById('profileName').textContent = user.name || 'John Doe';
         }
 
-        // Initialize chart
         function initChart() {
             const ctx = document.getElementById('applicationChart').getContext('2d');
-            
-            // Gradient for chart
             const gradient = ctx.createLinearGradient(0, 0, 0, 400);
             gradient.addColorStop(0, 'rgba(245, 158, 11, 0.8)');
             gradient.addColorStop(1, 'rgba(15, 43, 75, 0.8)');
@@ -1363,40 +1320,17 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            display: true,
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true,
-                                padding: 20
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(15, 43, 75, 0.9)',
-                            titleColor: '#fff',
-                            bodyColor: '#fff',
-                            borderColor: '#f59e0b',
-                            borderWidth: 2
-                        }
+                        legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
+                        tooltip: { backgroundColor: 'rgba(15, 43, 75, 0.9)', titleColor: '#fff', bodyColor: '#fff', borderColor: '#f59e0b', borderWidth: 2 }
                     },
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
+                        y: { beginAtZero: true, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+                        x: { grid: { display: false } }
                     }
                 }
             });
         }
 
-        // Remove saved job
         document.querySelectorAll('.remove-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -1405,22 +1339,18 @@
             });
         });
 
-        // Apply now buttons
         document.querySelectorAll('.apply-now').forEach(btn => {
             btn.addEventListener('click', function() {
                 window.location.href = 'apply.html';
             });
         });
 
-        // Application items click
         document.querySelectorAll('.application-item').forEach(item => {
             item.addEventListener('click', function() {
-                // Navigate to application details
                 console.log('View application details');
             });
         });
 
-        // Load data on page load
         window.addEventListener('load', () => {
             loadUserData();
             initChart();
@@ -1428,3 +1358,4 @@
     </script>
 </body>
 </html>
+
