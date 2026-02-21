@@ -675,7 +675,7 @@
             border-radius: 40px;
         }
 
-        /* Trust Badges & Quick Actions (now moved to bottom) */
+        /* Trust Badges & Quick Actions (moved to bottom) */
         .trust-section {
             background: var(--white);
             padding: 3rem 0;
@@ -960,7 +960,7 @@
             font-size: 0.9rem;
         }
 
-        /* Mobile Responsive */
+        /* Mobile Responsive – thinner hero */
         @media (max-width: 1200px) {
             .jobs-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1011,11 +1011,23 @@
             .auth-buttons button {
                 width: 100%;
             }
+
+            /* Thinner hero on mobile */
+            .hero-section {
+                padding: 1.5rem 0;
+            }
             .hero-content h1 {
-                font-size: 2.2rem;
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
             }
             .hero-content p {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
+            .hero-badge {
+                font-size: 0.8rem;
+                padding: 0.3rem 1rem;
+                margin-bottom: 1rem;
             }
             .search-container {
                 flex-direction: column;
@@ -1028,20 +1040,29 @@
             .search-input-wrapper {
                 background: var(--white);
                 border-radius: 50px;
-                padding: 0.3rem 1rem;
+                padding: 0.2rem 1rem;
                 border: 1px solid var(--gray-300);
+            }
+            .search-input {
+                padding: 0.6rem 0;
+                font-size: 0.95rem;
             }
             .search-btn {
                 width: 100%;
-                padding: 0.8rem;
+                padding: 0.7rem;
+                font-size: 1rem;
             }
             .hero-stats {
-                flex-wrap: wrap;
-                gap: 1.5rem;
+                gap: 1rem;
+                margin-top: 1.2rem;
             }
             .stat-number {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
+            .stat-label {
+                font-size: 0.7rem;
+            }
+
             .jobs-grid {
                 grid-template-columns: 1fr;
             }
@@ -1082,6 +1103,18 @@
             }
             .sort-select {
                 width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.6rem;
+            }
+            .hero-stats {
+                gap: 0.5rem;
+            }
+            .stat-number {
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -1406,6 +1439,7 @@
     </script>
 </body>
 </html>
+
 
 
 
