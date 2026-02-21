@@ -36,7 +36,6 @@
             --accent-light: #fbbf24;
             --accent-dark: #d97706;
             --success: #10b981;
-            --success-light: #34d399;
             --danger: #ef4444;
             --gray-50: #f8fafc;
             --gray-100: #f1f5f9;
@@ -52,6 +51,31 @@
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
             --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(245, 158, 11, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite;
         }
 
         .container {
@@ -141,7 +165,7 @@
         .user-menu {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1.5rem; /* spacing between bell and profile */
         }
 
         .notifications {
@@ -243,7 +267,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Welcome stats – horizontal by default, wrap on small screens */
         .welcome-stats {
             display: flex;
             gap: 3rem;
@@ -271,7 +294,7 @@
             font-size: 0.9rem;
         }
 
-        /* Stats grid – 2x2 on desktop and mobile (will be overridden for very small if needed) */
+        /* Stats grid – 2x2 */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -519,6 +542,7 @@
             color: var(--accent);
         }
 
+        /* Pulsing Apply Now button */
         .apply-now {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: var(--white);
@@ -529,6 +553,14 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .apply-now:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-xl);
+            animation: none;
         }
 
         .chart-container {
@@ -659,26 +691,37 @@
             .nav-menu.show {
                 display: flex;
             }
+
+            /* Space between hamburger and notification */
             .user-menu {
-                margin-left: auto;
+                gap: 1rem;
             }
+
             .user-info {
                 display: none;
             }
 
-            /* Welcome stats remain horizontal (wrap if needed) */
-            .welcome-stats {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 1rem;
-                justify-content: space-between;
+            /* Make welcome card thinner */
+            .welcome-card {
+                padding: 1.5rem;
             }
-            .welcome-stat {
-                flex: 1 1 auto;
-                min-width: 120px;
+            .welcome-content h1 {
+                font-size: 1.8rem;
+            }
+            .welcome-content p {
+                font-size: 1rem;
+            }
+            .welcome-stats {
+                gap: 1rem;
+            }
+            .welcome-stat i {
+                font-size: 1.5rem;
+            }
+            .welcome-stat .stat-info h3 {
+                font-size: 1.4rem;
             }
 
-            /* Stats grid stays 2 columns on mobile */
+            /* Stats grid stays 2 columns */
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
@@ -707,19 +750,10 @@
                 justify-content: center;
             }
 
-            /* Adjust card padding for mobile */
+            /* Reduce padding on cards */
             .stat-card, .applications-section, .activity-section,
             .saved-jobs-section, .chart-section, .profile-section {
                 padding: 1.2rem;
-            }
-            .welcome-card {
-                padding: 1.5rem;
-            }
-            .welcome-content h1 {
-                font-size: 2rem;
-            }
-            .stat-number {
-                font-size: 1.8rem;
             }
         }
 
@@ -731,14 +765,14 @@
                 padding: 0 1rem;
             }
             .welcome-content h1 {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
             .profile-header {
                 flex-direction: column;
                 text-align: center;
             }
             .welcome-stat {
-                min-width: 100px;
+                flex: 1 1 auto;
             }
         }
     </style>
@@ -779,7 +813,7 @@
         </div>
     </nav>
 
-    <!-- Welcome Section with horizontal stats -->
+    <!-- Welcome Section -->
     <section class="welcome-section">
         <div class="container">
             <div class="welcome-card">
@@ -814,7 +848,7 @@
         </div>
     </section>
 
-    <!-- Stats Cards – 2×2 grid -->
+    <!-- Stats Cards (2×2) -->
     <section class="stats-grid container">
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-paper-plane"></i></div>
@@ -842,7 +876,7 @@
         </div>
     </section>
 
-    <!-- Main content (applications + activity) -->
+    <!-- Main Content (Applications + Activity) -->
     <div class="container main-grid">
         <section class="applications-section">
             <div class="section-header">
