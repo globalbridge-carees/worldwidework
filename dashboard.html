@@ -69,11 +69,6 @@
             }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
         .pulse-btn {
             animation: pulse 2s infinite;
         }
@@ -165,7 +160,7 @@
         .user-menu {
             display: flex;
             align-items: center;
-            gap: 1.5rem; /* spacing between bell and profile */
+            gap: 1.5rem;
         }
 
         .notifications {
@@ -692,7 +687,6 @@
                 display: flex;
             }
 
-            /* Space between hamburger and notification */
             .user-menu {
                 gap: 1rem;
             }
@@ -701,7 +695,7 @@
                 display: none;
             }
 
-            /* Make welcome card thinner */
+            /* Thinner welcome card on mobile */
             .welcome-card {
                 padding: 1.5rem;
             }
@@ -721,7 +715,6 @@
                 font-size: 1.4rem;
             }
 
-            /* Stats grid stays 2 columns */
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
@@ -750,7 +743,6 @@
                 justify-content: center;
             }
 
-            /* Reduce padding on cards */
             .stat-card, .applications-section, .activity-section,
             .saved-jobs-section, .chart-section, .profile-section {
                 padding: 1.2rem;
@@ -770,9 +762,6 @@
             .profile-header {
                 flex-direction: column;
                 text-align: center;
-            }
-            .welcome-stat {
-                flex: 1 1 auto;
             }
         }
     </style>
@@ -813,12 +802,12 @@
         </div>
     </nav>
 
-    <!-- Welcome Section -->
+    <!-- Welcome Section with exact text "Welcome back to John!" -->
     <section class="welcome-section">
         <div class="container">
             <div class="welcome-card">
                 <div class="welcome-content">
-                    <h1>Welcome back, <span id="welcomeName">John</span>! 👋</h1>
+                    <h1>Welcome back to <span id="welcomeName">John</span>! 👋</h1>
                     <p>Your job search journey is progressing well. Here's what's happening today.</p>
                     <div class="welcome-stats">
                         <div class="welcome-stat">
