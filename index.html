@@ -186,7 +186,6 @@
             font-weight: 600;
         }
 
-        /* FIXED: Dashboard link now matches other nav items */
         .dashboard-link {
             display: flex;
             align-items: center;
@@ -216,11 +215,12 @@
             gap: 1rem;
         }
 
-        .btn-outline {
+        /* FIXED: Button styles for anchor tags */
+        .auth-buttons a {
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
             padding: 0.5rem 1.5rem;
-            border: 1px solid var(--gray-300);
-            background: transparent;
-            color: var(--gray-700);
             border-radius: 30px;
             font-weight: 500;
             font-size: 0.95rem;
@@ -228,24 +228,24 @@
             transition: all 0.3s ease;
         }
 
-        .btn-outline:hover {
+        .auth-buttons a.btn-outline {
+            border: 1px solid var(--gray-300);
+            background: transparent;
+            color: var(--gray-700);
+        }
+
+        .auth-buttons a.btn-outline:hover {
             border-color: var(--accent);
             color: var(--accent);
         }
 
-        .btn-primary {
-            padding: 0.5rem 1.5rem;
+        .auth-buttons a.btn-primary {
             background: var(--primary);
             color: var(--white);
             border: none;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .btn-primary:hover {
+        .auth-buttons a.btn-primary:hover {
             background: var(--primary-light);
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
@@ -1266,7 +1266,7 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive Design */
+        /* Responsive Design - IMPROVED FOR MOBILE */
         @media (max-width: 1024px) {
             .hero h1 {
                 font-size: 3rem;
@@ -1336,8 +1336,9 @@
                 margin-top: 1rem;
             }
 
-            .auth-buttons button {
+            .auth-buttons a {
                 width: 100%;
+                text-align: center;
             }
 
             .hero-container {
@@ -1353,6 +1354,37 @@
                 display: none;
             }
 
+            /* Improved search container for mobile */
+            .search-container {
+                flex-direction: column;
+                background: transparent;
+                box-shadow: none;
+                gap: 0.8rem;
+                padding: 0;
+            }
+            .search-input-wrapper {
+                background: var(--white);
+                border-radius: 50px;
+                border: 1px solid var(--gray-200);
+                width: 100%;
+                padding: 0.3rem 1rem;
+            }
+            .search-btn {
+                width: 100%;
+                margin-top: 0;
+            }
+
+            /* Stats adjustment */
+            .hero-stats {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+            .stat-item {
+                min-width: 100px;
+                text-align: center;
+            }
+
             .categories-grid,
             .jobs-grid,
             .features-grid,
@@ -1363,25 +1395,9 @@
                 grid-template-columns: 1fr;
             }
 
-            .search-container {
-                flex-direction: column;
-                background: transparent;
-                box-shadow: none;
-            }
-
-            .search-input-wrapper {
-                background: var(--white);
-                border-radius: 50px;
-                border: 1px solid var(--gray-200);
-            }
-
-            .search-btn {
-                width: 100%;
-            }
-
             .stats-bar {
                 flex-direction: column;
-                gap: 2rem;
+                gap: 1.5rem;
             }
 
             .cta-section h2 {
@@ -1397,11 +1413,6 @@
             .app-buttons {
                 flex-direction: column;
                 align-items: center;
-            }
-
-            .hero-stats {
-                flex-wrap: wrap;
-                gap: 1.5rem;
             }
         }
     </style>
@@ -1436,7 +1447,7 @@
         </div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation - WITH FIXED SIGN UP BUTTON -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -1456,9 +1467,10 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="dashboard.html" class="dashboard-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <!-- FIXED: Using anchor tags instead of buttons -->
                 <li class="auth-buttons">
-                    <button class="btn-outline" onclick="location.href='login.html'">Sign In</button>
-                    <button class="btn-primary" onclick="location.href='signup.html'">Sign Up</button>
+                    <a href="login.html" class="btn-outline">Sign In</a>
+                    <a href="signup.html" class="btn-primary">Sign Up</a>
                 </li>
             </ul>
         </div>
@@ -1486,7 +1498,7 @@
                         <i class="fas fa-search"></i>
                         <input type="text" class="search-input" placeholder="Job title, skills, or keywords">
                     </div>
-                    <button class="search-btn">Search Jobs</button>
+                    <button class="search-btn" onclick="window.location.href='findjobs.html'">Search Jobs</button>
                 </div>
                 
                 <div class="hero-stats">
@@ -1516,42 +1528,42 @@
             </div>
             
             <div class="categories-grid">
-                <div class="category-card" onclick="location.href='findjobs.html?category=healthcare'">
+                <div class="category-card" onclick="window.location.href='findjobs.html?category=healthcare'">
                     <div class="category-icon"><i class="fas fa-heartbeat"></i></div>
                     <h4>Healthcare</h4>
                     <p>2,345 jobs</p>
                 </div>
-                <div class="category-card" onclick="location.href='findjobs.html?category=domestic'">
+                <div class="category-card" onclick="window.location.href='findjobs.html?category=domestic'">
                     <div class="category-icon"><i class="fas fa-home"></i></div>
                     <h4>Domestic Work</h4>
                     <p>1,567 jobs</p>
                 </div>
-                <div class="category-card" onclick="location.href='findjobs.html?category=security'">
+                <div class="category-card" onclick="window.location.href='findjobs.html?category=security'">
                     <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
                     <h4>Security</h4>
                     <p>892 jobs</p>
                 </div>
-                <div class="category-card" onclick="location.href='findjobs.html?category=hospitality'">
+                <div class="category-card" onclick="window.location.href='findjobs.html?category=hospitality'">
                     <div class="category-icon"><i class="fas fa-utensils"></i></div>
                     <h4>Hospitality</h4>
                     <p>1,234 jobs</p>
                 </div>
-                <div class="category-card" onclick="location.href='findjobs.html?category=construction'">
+                <div class="category-card" onclick="window.location.href='findjobs.html?category=construction'">
                     <div class="category-icon"><i class="fas fa-hard-hat"></i></div>
                     <h4>Construction</h4>
                     <p>1,678 jobs</p>
                 </div>
-                <div class="category-card" onclick="location.href='findjobs.html?category=education'">
+                <div class="category-card" onclick="window.location.href='findjobs.html?category=education'">
                     <div class="category-icon"><i class="fas fa-chalkboard-teacher"></i></div>
                     <h4>Education</h4>
                     <p>1,123 jobs</p>
                 </div>
-                <div class="category-card" onclick="location.href='findjobs.html?category=drivers'">
+                <div class="category-card" onclick="window.location.href='findjobs.html?category=drivers'">
                     <div class="category-icon"><i class="fas fa-truck"></i></div>
                     <h4>Drivers</h4>
                     <p>756 jobs</p>
                 </div>
-                <div class="category-card" onclick="location.href='findjobs.html?category=retail'">
+                <div class="category-card" onclick="window.location.href='findjobs.html?category=retail'">
                     <div class="category-icon"><i class="fas fa-shopping-cart"></i></div>
                     <h4>Retail</h4>
                     <p>945 jobs</p>
@@ -1594,7 +1606,7 @@
             
             <div class="jobs-grid">
                 <!-- Job Card 1 - Care Giver -->
-                <div class="job-card">
+                <div class="job-card" onclick="window.location.href='job-details.html?id=1'">
                     <div class="job-header">
                         <h3 class="job-title">Care Giver <span class="verified-badge">✓</span></h3>
                     </div>
@@ -1609,11 +1621,11 @@
                         <span class="tag">First Aid</span>
                         <span class="tag">2+ years</span>
                     </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="job-details.html?id=1" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 
                 <!-- Job Card 2 - Security Guard -->
-                <div class="job-card">
+                <div class="job-card" onclick="window.location.href='job-details.html?id=2'">
                     <div class="job-header">
                         <h3 class="job-title">Security Guard <span class="verified-badge">✓</span></h3>
                     </div>
@@ -1628,11 +1640,11 @@
                         <span class="tag">CCTV</span>
                         <span class="tag">1+ year</span>
                     </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="job-details.html?id=2" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 
                 <!-- Job Card 3 - Factory Worker -->
-                <div class="job-card">
+                <div class="job-card" onclick="window.location.href='job-details.html?id=3'">
                     <div class="job-header">
                         <h3 class="job-title">Factory Worker <span class="verified-badge">✓</span></h3>
                     </div>
@@ -1647,11 +1659,11 @@
                         <span class="tag">No Experience</span>
                         <span class="tag">Accommodation</span>
                     </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="job-details.html?id=3" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 
                 <!-- Job Card 4 - Nanny -->
-                <div class="job-card">
+                <div class="job-card" onclick="window.location.href='job-details.html?id=4'">
                     <div class="job-header">
                         <h3 class="job-title">Professional Nanny <span class="verified-badge">✓</span></h3>
                     </div>
@@ -1666,11 +1678,11 @@
                         <span class="tag">First Aid</span>
                         <span class="tag">3+ years</span>
                     </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="job-details.html?id=4" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 
                 <!-- Job Card 5 - Home Nurse Assistant -->
-                <div class="job-card">
+                <div class="job-card" onclick="window.location.href='job-details.html?id=5'">
                     <div class="job-header">
                         <h3 class="job-title">Home Nurse Assistant <span class="verified-badge">✓</span></h3>
                     </div>
@@ -1685,11 +1697,11 @@
                         <span class="tag">Elderly Care</span>
                         <span class="tag">2+ years</span>
                     </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="job-details.html?id=5" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 
                 <!-- Job Card 6 - Super Market Cashier -->
-                <div class="job-card">
+                <div class="job-card" onclick="window.location.href='job-details.html?id=6'">
                     <div class="job-header">
                         <h3 class="job-title">Super Market Cashier <span class="verified-badge">✓</span></h3>
                     </div>
@@ -1704,7 +1716,7 @@
                         <span class="tag">Cash Handling</span>
                         <span class="tag">6 months</span>
                     </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="job-details.html?id=6" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -1882,7 +1894,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer - ALL LINKS FIXED -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -1896,6 +1908,7 @@
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul>
+                        <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="findjobs.html">Find Jobs</a></li>
                         <li><a href="companies.html">Companies</a></li>
@@ -1904,35 +1917,41 @@
                     </ul>
                 </div>
                 <div class="footer-col">
+                    <h4>My Account</h4>
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="complete-profile.html">My Profile</a></li>
+                        <li><a href="saved-jobs.html">Saved Jobs</a></li>
+                        <li><a href="job-alerts.html">Job Alerts</a></li>
+                        <li><a href="welcome.html">Welcome</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
                     <h4>Categories</h4>
                     <ul>
                         <li><a href="findjobs.html?category=healthcare">Healthcare</a></li>
-                        <li><a href="findjobs.html?category=domestic">Domestic Work</a></li>
                         <li><a href="findjobs.html?category=security">Security</a></li>
                         <li><a href="findjobs.html?category=construction">Construction</a></li>
+                        <li><a href="findjobs.html?category=hospitality">Hospitality</a></li>
+                        <li><a href="findjobs.html?category=education">Education</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Support</h4>
                     <ul>
-                        <li><a href="contact.html">Contact Us</a></li>
                         <li><a href="faq.html">FAQ</a></li>
                         <li><a href="privacy.html">Privacy Policy</a></li>
                         <li><a href="terms.html">Terms of Use</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
                     </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 TrueJobs. All rights reserved. Your trusted partner for global employment.</p>
+                <p>&copy; 2026 TrueJobs. All rights reserved. | 
+                    <a href="privacy.html">Privacy</a> | 
+                    <a href="terms.html">Terms</a> | 
+                    <a href="sitemap.html">Sitemap</a>
+                </p>
             </div>
         </div>
     </footer>
