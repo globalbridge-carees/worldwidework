@@ -11,7 +11,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Chart.js for statistics -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
@@ -38,8 +38,6 @@
             --success: #10b981;
             --success-light: #34d399;
             --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
             --gray-50: #f8fafc;
             --gray-100: #f1f5f9;
             --gray-200: #e2e8f0;
@@ -51,8 +49,6 @@
             --gray-800: #1e293b;
             --gray-900: #0f172a;
             --white: #ffffff;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
             --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
@@ -62,29 +58,6 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
-        }
-
-        /* Animations */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
         }
 
         /* Navigation */
@@ -125,7 +98,7 @@
             justify-content: center;
             font-size: 1.8rem;
             font-weight: 800;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-lg);
         }
 
         .logo-text {
@@ -145,17 +118,13 @@
             color: var(--gray-600);
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
+            position: relative;
         }
 
-        .nav-menu a:hover {
-            color: var(--accent);
-        }
-
+        .nav-menu a:hover,
         .nav-menu a.active {
             color: var(--primary);
-            font-weight: 700;
-            position: relative;
         }
 
         .nav-menu a.active::after {
@@ -183,11 +152,6 @@
         .notifications i {
             font-size: 1.3rem;
             color: var(--gray-600);
-            transition: color 0.3s ease;
-        }
-
-        .notifications:hover i {
-            color: var(--accent);
         }
 
         .badge {
@@ -209,7 +173,7 @@
             cursor: pointer;
             padding: 0.5rem 1rem;
             border-radius: 40px;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease;
         }
 
         .user-profile:hover {
@@ -257,7 +221,6 @@
         /* Welcome Section */
         .welcome-section {
             padding: 2rem 0;
-            animation: slideIn 0.5s ease-out;
         }
 
         .welcome-card {
@@ -267,23 +230,6 @@
             color: var(--white);
             position: relative;
             overflow: hidden;
-        }
-
-        .welcome-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 60%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(245,158,11,0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .welcome-content {
-            position: relative;
-            z-index: 2;
         }
 
         .welcome-content h1 {
@@ -297,6 +243,7 @@
             margin-bottom: 1.5rem;
         }
 
+        /* Welcome stats – horizontal by default, wrap on small screens */
         .welcome-stats {
             display: flex;
             gap: 3rem;
@@ -324,13 +271,12 @@
             font-size: 0.9rem;
         }
 
-        /* Stats Grid - horizontal on desktop, stacked on mobile */
+        /* Stats grid – 2x2 on desktop and mobile (will be overridden for very small if needed) */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             margin-bottom: 2rem;
-            animation: slideIn 0.6s ease-out;
         }
 
         .stat-card {
@@ -340,18 +286,6 @@
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--gray-200);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
         }
 
         .stat-card:hover {
@@ -392,15 +326,9 @@
             font-size: 0.85rem;
         }
 
-        .trend-up {
-            color: var(--success);
-        }
+        .trend-up { color: var(--success); }
 
-        .trend-down {
-            color: var(--danger);
-        }
-
-        /* Main Content Grid - side by side on desktop, stacked on mobile */
+        /* Main grid */
         .main-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -408,14 +336,16 @@
             margin-bottom: 2rem;
         }
 
-        /* Recent Applications */
-        .applications-section {
+        .applications-section,
+        .activity-section,
+        .saved-jobs-section,
+        .chart-section,
+        .profile-section {
             background: var(--white);
             border-radius: 30px;
             padding: 2rem;
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--gray-200);
-            animation: slideIn 0.7s ease-out;
         }
 
         .section-header {
@@ -437,12 +367,6 @@
             display: flex;
             align-items: center;
             gap: 0.3rem;
-            transition: all 0.3s ease;
-        }
-
-        .view-all:hover {
-            color: var(--accent-dark);
-            gap: 0.5rem;
         }
 
         .applications-list {
@@ -459,14 +383,7 @@
             background: var(--gray-50);
             border-radius: 16px;
             border: 1px solid var(--gray-200);
-            transition: all 0.3s ease;
             cursor: pointer;
-        }
-
-        .application-item:hover {
-            transform: translateX(5px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md);
         }
 
         .app-info {
@@ -495,14 +412,6 @@
         .app-details .company {
             color: var(--gray-500);
             font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .app-details .company i {
-            color: var(--accent);
-            font-size: 0.8rem;
         }
 
         .app-status {
@@ -518,9 +427,9 @@
             font-weight: 600;
         }
 
-        .status-pending { background: #fff3cd; color: #856404; }
         .status-review { background: #cce5ff; color: #004085; }
         .status-interview { background: #d4edda; color: #155724; }
+        .status-pending { background: #fff3cd; color: #856404; }
         .status-rejected { background: #f8d7da; color: #721c24; }
 
         .app-date {
@@ -528,34 +437,16 @@
             font-size: 0.85rem;
         }
 
-        /* Activity Section */
-        .activity-section {
-            background: var(--white);
-            border-radius: 30px;
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-200);
-            animation: slideIn 0.8s ease-out;
-        }
-
         .activity-list {
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
-            margin-top: 1.5rem;
         }
 
         .activity-item {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 0.8rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .activity-item:hover {
-            background: var(--gray-50);
         }
 
         .activity-icon {
@@ -570,10 +461,6 @@
             font-size: 1.2rem;
         }
 
-        .activity-details {
-            flex: 1;
-        }
-
         .activity-details p {
             color: var(--gray-700);
             margin-bottom: 0.2rem;
@@ -582,17 +469,6 @@
         .activity-details .time {
             color: var(--gray-500);
             font-size: 0.8rem;
-        }
-
-        /* Saved Jobs - horizontal grid on desktop, stack on mobile */
-        .saved-jobs-section {
-            background: var(--white);
-            border-radius: 30px;
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-200);
-            margin-bottom: 2rem;
-            animation: slideIn 0.9s ease-out;
         }
 
         .saved-grid {
@@ -607,14 +483,7 @@
             border-radius: 16px;
             padding: 1.2rem;
             border: 1px solid var(--gray-200);
-            transition: all 0.3s ease;
             position: relative;
-        }
-
-        .saved-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-lg);
         }
 
         .saved-card .remove-btn {
@@ -623,11 +492,6 @@
             right: 0.8rem;
             color: var(--gray-400);
             cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .saved-card .remove-btn:hover {
-            color: var(--danger);
         }
 
         .saved-card h4 {
@@ -664,38 +528,12 @@
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             width: 100%;
-        }
-
-        .apply-now:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Chart Section */
-        .chart-section {
-            background: var(--white);
-            border-radius: 30px;
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-200);
-            margin-bottom: 2rem;
-            animation: slideIn 1s ease-out;
         }
 
         .chart-container {
             height: 300px;
             margin-top: 1.5rem;
-        }
-
-        /* Profile Completion */
-        .profile-section {
-            background: var(--white);
-            border-radius: 30px;
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-200);
         }
 
         .profile-header {
@@ -716,15 +554,6 @@
             color: var(--white);
             font-size: 2rem;
             font-weight: 700;
-        }
-
-        .profile-info h3 {
-            color: var(--primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .profile-info p {
-            color: var(--gray-500);
         }
 
         .completion-bar {
@@ -768,22 +597,6 @@
             border-radius: 12px;
         }
 
-        .profile-item i {
-            width: 30px;
-            height: 30px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-        }
-
-        .profile-item span {
-            flex: 1;
-            color: var(--gray-600);
-        }
-
         .profile-item .status {
             color: var(--success);
             font-weight: 600;
@@ -793,7 +606,6 @@
             color: var(--danger);
         }
 
-        /* Footer */
         .footer {
             background: var(--white);
             padding: 2rem 0;
@@ -816,35 +628,22 @@
         .footer-links a {
             color: var(--gray-500);
             text-decoration: none;
-            transition: color 0.3s ease;
         }
 
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-
-        /* ===== RESPONSIVE BREAKPOINTS ===== */
-        /* Tablet: 2 columns for stats, saved jobs; main grid stacks */
+        /* ===== MOBILE RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .main-grid {
                 grid-template-columns: 1fr;
             }
-            
             .saved-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* Mobile: everything stacks in 1 column */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
             }
-
             .nav-menu {
                 display: none;
                 position: absolute;
@@ -857,96 +656,89 @@
                 flex-direction: column;
                 gap: 1rem;
             }
-
             .nav-menu.show {
                 display: flex;
             }
-
             .user-menu {
                 margin-left: auto;
             }
-
             .user-info {
                 display: none;
             }
 
+            /* Welcome stats remain horizontal (wrap if needed) */
             .welcome-stats {
-                flex-direction: column;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: space-between;
+            }
+            .welcome-stat {
+                flex: 1 1 auto;
+                min-width: 120px;
+            }
+
+            /* Stats grid stays 2 columns on mobile */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
             .saved-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .application-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
             }
-            
             .app-status {
                 width: 100%;
                 justify-content: space-between;
             }
-            
+
             .footer-content {
                 flex-direction: column;
                 gap: 1rem;
                 text-align: center;
             }
-            
             .footer-links {
                 flex-wrap: wrap;
                 justify-content: center;
             }
 
-            .stat-card, .applications-section, .activity-section, 
+            /* Adjust card padding for mobile */
+            .stat-card, .applications-section, .activity-section,
             .saved-jobs-section, .chart-section, .profile-section {
-                padding: 1.5rem;
+                padding: 1.2rem;
             }
-
             .welcome-card {
                 padding: 1.5rem;
             }
-
             .welcome-content h1 {
                 font-size: 2rem;
             }
-
             .stat-number {
                 font-size: 1.8rem;
             }
         }
 
-        /* Small phones */
         @media (max-width: 480px) {
             .container {
                 padding: 0 1rem;
             }
-
             .nav-container {
                 padding: 0 1rem;
             }
-
             .welcome-content h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
-
             .profile-header {
                 flex-direction: column;
                 text-align: center;
             }
-
-            .app-logo {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+            .welcome-stat {
+                min-width: 100px;
             }
         }
     </style>
@@ -959,11 +751,9 @@
                 <span class="logo-icon">TJ</span>
                 <span class="logo-text">TrueJobs</span>
             </a>
-            
             <span class="menu-toggle" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </span>
-            
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="findjobs.html">Find Jobs</a></li>
@@ -972,13 +762,12 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="dashboard.html" class="active">Dashboard</a></li>
             </ul>
-
             <div class="user-menu">
                 <div class="notifications">
                     <i class="fas fa-bell"></i>
                     <span class="badge">3</span>
                 </div>
-                <div class="user-profile" onclick="toggleUserMenu()">
+                <div class="user-profile">
                     <div class="avatar">JD</div>
                     <div class="user-info">
                         <div class="name" id="userName">John Doe</div>
@@ -990,7 +779,7 @@
         </div>
     </nav>
 
-    <!-- Welcome Section -->
+    <!-- Welcome Section with horizontal stats -->
     <section class="welcome-section">
         <div class="container">
             <div class="welcome-card">
@@ -1025,53 +814,36 @@
         </div>
     </section>
 
-    <!-- Stats Grid - horizontal on desktop -->
+    <!-- Stats Cards – 2×2 grid -->
     <section class="stats-grid container">
         <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-paper-plane"></i>
-            </div>
+            <div class="stat-icon"><i class="fas fa-paper-plane"></i></div>
             <h3>Applications Sent</h3>
             <div class="stat-number">24</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i> +12% from last month
-            </div>
+            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +12%</div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-clock"></i>
-            </div>
+            <div class="stat-icon"><i class="fas fa-clock"></i></div>
             <h3>Under Review</h3>
             <div class="stat-number">8</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i> +3 this week
-            </div>
+            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +3 this week</div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-calendar-check"></i>
-            </div>
+            <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
             <h3>Interviews</h3>
             <div class="stat-number">3</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i> 2 upcoming
-            </div>
+            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> 2 upcoming</div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-trophy"></i>
-            </div>
+            <div class="stat-icon"><i class="fas fa-trophy"></i></div>
             <h3>Offers Received</h3>
             <div class="stat-number">2</div>
-            <div class="stat-trend trend-up">
-                <i class="fas fa-arrow-up"></i> 1 pending
-            </div>
+            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> 1 pending</div>
         </div>
     </section>
 
-    <!-- Main Content Grid - side by side on desktop -->
+    <!-- Main content (applications + activity) -->
     <div class="container main-grid">
-        <!-- Recent Applications -->
         <section class="applications-section">
             <div class="section-header">
                 <h2>Recent Applications</h2>
@@ -1083,7 +855,7 @@
                         <div class="app-logo">MC</div>
                         <div class="app-details">
                             <h4>Senior Nurse</h4>
-                            <div class="company"><i class="fas fa-building"></i> Mediclinic Hospital</div>
+                            <div class="company">Mediclinic Hospital</div>
                         </div>
                     </div>
                     <div class="app-status">
@@ -1096,7 +868,7 @@
                         <div class="app-logo">QA</div>
                         <div class="app-details">
                             <h4>Security Supervisor</h4>
-                            <div class="company"><i class="fas fa-building"></i> Qatar Airways</div>
+                            <div class="company">Qatar Airways</div>
                         </div>
                     </div>
                     <div class="app-status">
@@ -1109,7 +881,7 @@
                         <div class="app-logo">DP</div>
                         <div class="app-details">
                             <h4>Logistics Coordinator</h4>
-                            <div class="company"><i class="fas fa-building"></i> DP World</div>
+                            <div class="company">DP World</div>
                         </div>
                     </div>
                     <div class="app-status">
@@ -1122,7 +894,7 @@
                         <div class="app-logo">JG</div>
                         <div class="app-details">
                             <h4>Hotel Manager</h4>
-                            <div class="company"><i class="fas fa-building"></i> Jumeirah Group</div>
+                            <div class="company">Jumeirah Group</div>
                         </div>
                     </div>
                     <div class="app-status">
@@ -1133,44 +905,41 @@
             </div>
         </section>
 
-        <!-- Recent Activity -->
         <section class="activity-section">
-            <div class="section-header">
-                <h2>Recent Activity</h2>
-            </div>
+            <div class="section-header"><h2>Recent Activity</h2></div>
             <div class="activity-list">
                 <div class="activity-item">
                     <div class="activity-icon"><i class="fas fa-eye"></i></div>
                     <div class="activity-details">
-                        <p>Your profile was viewed by <strong>Qatar Airways</strong></p>
+                        <p>Profile viewed by <strong>Qatar Airways</strong></p>
                         <span class="time">2 hours ago</span>
                     </div>
                 </div>
                 <div class="activity-item">
                     <div class="activity-icon"><i class="fas fa-file-alt"></i></div>
                     <div class="activity-details">
-                        <p>Application status changed to <strong>Interview</strong> at Mediclinic</p>
+                        <p>Status changed to <strong>Interview</strong> at Mediclinic</p>
                         <span class="time">Yesterday</span>
                     </div>
                 </div>
                 <div class="activity-item">
                     <div class="activity-icon"><i class="fas fa-bookmark"></i></div>
                     <div class="activity-details">
-                        <p>You saved <strong>Security Supervisor</strong> position at G4S</p>
+                        <p>Saved <strong>Security Supervisor</strong> at G4S</p>
                         <span class="time">2 days ago</span>
                     </div>
                 </div>
                 <div class="activity-item">
                     <div class="activity-icon"><i class="fas fa-calendar"></i></div>
                     <div class="activity-details">
-                        <p>Interview scheduled with <strong>Emirates Group</strong> for tomorrow</p>
+                        <p>Interview with <strong>Emirates Group</strong> tomorrow</p>
                         <span class="time">3 days ago</span>
                     </div>
                 </div>
                 <div class="activity-item">
                     <div class="activity-icon"><i class="fas fa-download"></i></div>
                     <div class="activity-details">
-                        <p>Your CV was downloaded by <strong>DP World</strong></p>
+                        <p>CV downloaded by <strong>DP World</strong></p>
                         <span class="time">4 days ago</span>
                     </div>
                 </div>
@@ -1178,7 +947,7 @@
         </section>
     </div>
 
-    <!-- Saved Jobs - horizontal grid on desktop -->
+    <!-- Saved Jobs -->
     <section class="saved-jobs-section container">
         <div class="section-header">
             <h2>Saved Jobs</h2>
@@ -1209,14 +978,10 @@
         </div>
     </section>
 
-    <!-- Chart Section -->
+    <!-- Chart -->
     <section class="chart-section container">
-        <div class="section-header">
-            <h2>Application Statistics</h2>
-        </div>
-        <div class="chart-container">
-            <canvas id="applicationChart"></canvas>
-        </div>
+        <div class="section-header"><h2>Application Statistics</h2></div>
+        <div class="chart-container"><canvas id="applicationChart"></canvas></div>
     </section>
 
     <!-- Profile Completion -->
@@ -1229,13 +994,8 @@
             </div>
         </div>
         <div class="completion-bar">
-            <div class="completion-label">
-                <span>Profile Completion</span>
-                <span>75%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 75%"></div>
-            </div>
+            <div class="completion-label"><span>Profile Completion</span><span>75%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
         </div>
         <div class="profile-items">
             <div class="profile-item"><i class="fas fa-check-circle"></i><span>Personal Information</span><span class="status">Complete</span></div>
@@ -1266,67 +1026,47 @@
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        function toggleUserMenu() {
-            console.log('User menu clicked');
-        }
-
         function loadUserData() {
-            const user = JSON.parse(localStorage.getItem('currentUser')) || {
-                name: 'John Doe',
-                firstName: 'John',
-                lastName: 'Doe'
-            };
+            const user = JSON.parse(localStorage.getItem('currentUser')) || { firstName: 'John' };
             document.getElementById('welcomeName').textContent = user.firstName || 'John';
-            document.getElementById('userName').textContent = user.name || 'John Doe';
-            document.getElementById('profileName').textContent = user.name || 'John Doe';
+            document.getElementById('userName').textContent = user.firstName ? `${user.firstName} Doe` : 'John Doe';
+            document.getElementById('profileName').textContent = user.firstName ? `${user.firstName} Doe` : 'John Doe';
         }
 
         function initChart() {
             const ctx = document.getElementById('applicationChart').getContext('2d');
-            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient.addColorStop(0, 'rgba(245, 158, 11, 0.8)');
-            gradient.addColorStop(1, 'rgba(15, 43, 75, 0.8)');
-
+            const gradient = ctx.createLinearGradient(0,0,0,400);
+            gradient.addColorStop(0,'rgba(245,158,11,0.8)');
+            gradient.addColorStop(1,'rgba(15,43,75,0.8)');
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                    labels: ['Week1','Week2','Week3','Week4','Week5','Week6'],
                     datasets: [{
                         label: 'Applications Sent',
-                        data: [5, 8, 12, 15, 20, 24],
+                        data: [5,8,12,15,20,24],
                         borderColor: '#f59e0b',
                         backgroundColor: gradient,
                         tension: 0.4,
                         fill: true,
                         pointBackgroundColor: '#0f2b4b',
                         pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 6,
-                        pointHoverRadius: 8
-                    }, {
+                        pointRadius: 6
+                    },{
                         label: 'Interviews',
-                        data: [1, 2, 3, 4, 3, 3],
+                        data: [1,2,3,4,3,3],
                         borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        backgroundColor: 'rgba(16,185,129,0.1)',
                         tension: 0.4,
-                        borderDash: [5, 5],
+                        borderDash: [5,5],
                         pointBackgroundColor: '#10b981',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
                         pointRadius: 4
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
-                        tooltip: { backgroundColor: 'rgba(15, 43, 75, 0.9)', titleColor: '#fff', bodyColor: '#fff', borderColor: '#f59e0b', borderWidth: 2 }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
-                        x: { grid: { display: false } }
-                    }
+                    plugins: { legend: { position: 'bottom' } }
                 }
             });
         }
@@ -1335,20 +1075,12 @@
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 this.parentElement.remove();
-                alert('Job removed from saved');
+                alert('Job removed');
             });
         });
 
         document.querySelectorAll('.apply-now').forEach(btn => {
-            btn.addEventListener('click', function() {
-                window.location.href = 'apply.html';
-            });
-        });
-
-        document.querySelectorAll('.application-item').forEach(item => {
-            item.addEventListener('click', function() {
-                console.log('View application details');
-            });
+            btn.addEventListener('click', () => window.location.href = 'apply.html');
         });
 
         window.addEventListener('load', () => {
@@ -1358,4 +1090,5 @@
     </script>
 </body>
 </html>
+
 
