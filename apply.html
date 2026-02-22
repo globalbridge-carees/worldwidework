@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* (Keep all existing styles exactly as before) */
         * {
             margin: 0;
             padding: 0;
@@ -1012,7 +1013,7 @@
                         </label>
                         <div class="input-wrapper">
                             <i class="fas fa-calendar"></i>
-                            <input type="text" id="dob" placeholder="DD/MM/YYYY" pattern="\d{2}/\d{2}/\d{4}" title="Enter date in DD/MM/YYYY format">
+                            <input type="text" id="dob" placeholder="DD/MM/YYYY" maxlength="10">
                         </div>
                     </div>
 
@@ -1235,7 +1236,7 @@
                 <i class="fas fa-check"></i>
             </div>
             <h2>Application Submitted!</h2>
-            <p>Your application has been sent. You'll be notified of updates via email.</p>
+            <p>Your application has been sent. Redirecting to dashboard...</p>
             <div class="modal-actions">
                 <button class="modal-btn secondary" onclick="goToJobs()">Browse Jobs</button>
                 <button class="modal-btn primary" onclick="goToDashboard()">Dashboard</button>
@@ -1271,6 +1272,18 @@
         else if (companyName.includes('American')) logo.textContent = 'AH';
         else if (companyName.includes('Cleveland')) logo.textContent = 'CC';
         else logo.textContent = companyName.charAt(0);
+
+        // Auto-format date of birth (DD/MM/YYYY)
+        const dobInput = document.getElementById('dob');
+        dobInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 2 && value.length <= 4) {
+                value = value.slice(0,2) + '/' + value.slice(2);
+            } else if (value.length > 4) {
+                value = value.slice(0,2) + '/' + value.slice(2,4) + '/' + value.slice(4,8);
+            }
+            e.target.value = value;
+        });
 
         // Progress tracking
         let currentStep = 1;
@@ -1357,10 +1370,6 @@
 
                     if (!experience || !position || !skills || !coverLetter) {
                         alert('Please fill in all required fields');
-                        return false;
-                    }
-                    if (coverLetter.length < 50) {
-                        alert('Cover letter should be at least 50 characters');
                         return false;
                     }
                     return true;
@@ -1457,7 +1466,14 @@
                 return;
             }
 
-            document.getElementById('successModal').classList.add('show');
+            // Show modal
+            const modal = document.getElementById('successModal');
+            modal.classList.add('show');
+
+            // Auto-redirect to dashboard after 2.5 seconds
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2500);
         }
 
         function goToDashboard() {
@@ -1474,7 +1490,9 @@
             }
         }
 
-        document.getElementById('nextBtn').addEventListener('click', function(e) {
+        // Attach click handler for next button
+        const nextBtn = document.getElementById('nextBtn');
+        nextBtn.addEventListener('click', function(e) {
             if (currentStep === 4) {
                 e.preventDefault();
                 submitApplication();
@@ -1485,6 +1503,7 @@
     </script>
 </body>
 </html>
+
 
 
 
