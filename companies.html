@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Companies - TrueJobs | Trusted Employers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies - TrueJobs | Trusted Employers Worldwide</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* (Keep all your existing styles exactly the same – no changes needed here) */
         * {
             margin: 0;
             padding: 0;
@@ -20,18 +21,31 @@
         }
 
         body {
-            background: #f8fafc;
+            background: #f0f5fa;
             color: #1e293b;
             line-height: 1.6;
         }
 
         :root {
-            --primary: #1e3a5f;
-            --primary-light: #2b4c7c;
-            --accent: #f4a261;
-            --accent-light: #f8b47c;
-            --accent-dark: #e76f51;
-            --success: #2ecc71;
+            --primary: #0f2b4b;
+            --primary-dark: #0a1f36;
+            --primary-light: #1e3a6a;
+            --primary-glow: rgba(15, 43, 75, 0.3);
+            
+            --accent: #f59e0b;
+            --accent-dark: #d97706;
+            --accent-light: #fbbf24;
+            --accent-glow: rgba(245, 158, 11, 0.4);
+            
+            --success: #10b981;
+            --success-dark: #059669;
+            --success-light: #34d399;
+            --success-glow: rgba(16, 185, 129, 0.4);
+            
+            --info: #3b82f6;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            
             --gray-50: #f8fafc;
             --gray-100: #f1f5f9;
             --gray-200: #e2e8f0;
@@ -42,11 +56,20 @@
             --gray-700: #334155;
             --gray-800: #1e293b;
             --gray-900: #0f172a;
+            
             --white: #ffffff;
+            --black: #000000;
+            
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+            
+            --shadow-accent: 0 10px 15px -3px rgba(245, 158, 11, 0.3);
+            --shadow-success: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+            --shadow-primary: 0 10px 15px -3px rgba(15, 43, 75, 0.3);
         }
 
         .container {
@@ -55,15 +78,129 @@
             padding: 0 2rem;
         }
 
-        /* Navigation */
+        /* ===== ANIMATIONS ===== */
+        @keyframes pulse-glow {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 var(--accent-glow);
+            }
+            
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(245, 158, 11, 0);
+            }
+            
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+            }
+        }
+
+        @keyframes verified-pulse {
+            0% {
+                transform: scale(1);
+                background: var(--success);
+                box-shadow: 0 0 0 0 var(--success-glow);
+            }
+            50% {
+                transform: scale(1.1);
+                background: var(--success-light);
+                box-shadow: 0 0 20px 5px var(--success);
+            }
+            100% {
+                transform: scale(1);
+                background: var(--success);
+                box-shadow: 0 0 0 0 var(--success-glow);
+            }
+        }
+
+        @keyframes card-float {
+            0% {
+                transform: translateY(0);
+                box-shadow: var(--shadow-lg);
+            }
+            50% {
+                transform: translateY(-10px);
+                box-shadow: var(--shadow-2xl);
+            }
+            100% {
+                transform: translateY(0);
+                box-shadow: var(--shadow-lg);
+            }
+        }
+
+        @keyframes border-pulse {
+            0% {
+                border-color: var(--gray-200);
+                box-shadow: 0 0 0 0 transparent;
+            }
+            50% {
+                border-color: var(--accent);
+                box-shadow: 0 0 20px 0 var(--accent-glow);
+            }
+            100% {
+                border-color: var(--gray-200);
+                box-shadow: 0 0 0 0 transparent;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Apply animations to elements */
+        .pulse-btn {
+            animation: pulse-glow 2s infinite;
+        }
+
+        .pulse-verified {
+            animation: verified-pulse 2s infinite;
+        }
+
+        .float-card {
+            animation: card-float 4s ease-in-out infinite;
+        }
+
+        .border-pulse {
+            animation: border-pulse 3s infinite;
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        /* ===== NAVIGATION ===== */
         .navbar {
             background: var(--white);
-            padding: 0.6rem 0;
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: var(--shadow-sm);
-            border-bottom: 2px solid var(--accent);
+            box-shadow: var(--shadow-lg);
+            border-bottom: 3px solid var(--accent);
         }
 
         .nav-container {
@@ -83,28 +220,35 @@
         }
 
         .logo-icon {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: var(--accent);
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(10deg) scale(1.1);
+            box-shadow: var(--shadow-accent);
         }
 
         .logo-text {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
             color: var(--primary);
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
         }
 
         .nav-menu {
             display: flex;
-            gap: 1rem;
+            gap: 2.5rem;
             align-items: center;
             list-style: none;
         }
@@ -112,9 +256,11 @@
         .nav-menu a {
             color: var(--gray-600);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.85rem;
-            transition: color 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
         .nav-menu a:hover {
@@ -123,124 +269,250 @@
 
         .nav-menu a.active {
             color: var(--primary);
-            font-weight: 600;
+            font-weight: 700;
         }
 
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 3px;
+            animation: bounce 2s infinite;
+        }
+
+        /* Dashboard link – now plain (no gradient, no icon) */
         .dashboard-link {
             color: var(--gray-600) !important;
             background: transparent !important;
-            padding: 0 !important;
-            font-weight: 500 !important;
+            padding: 0.5rem 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
         }
 
         .dashboard-link:hover {
             color: var(--accent) !important;
+            transform: none !important;
+            box-shadow: none !important;
         }
 
         .menu-toggle {
             display: none;
-            font-size: 1.5rem;
-            color: var(--gray-600);
-            cursor: pointer;
-        }
-
-        /* User menu for logged-in users */
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .user-greeting {
+            font-size: 1.8rem;
             color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .logout-btn {
-            background: var(--gray-200);
-            border: none;
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.8rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--gray-700);
-        }
-        .logout-btn:hover {
-            background: var(--accent);
-            color: white;
         }
 
-        /* Hero Section – simple like home page */
+        /* ===== HERO SECTION ===== */
         .hero-section {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            padding: 3rem 0;
-            color: var(--white);
-            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero-section h1 {
-            font-size: 2.5rem;
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -10%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: rotate 15s linear infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: bounce 2s infinite;
+        }
+
+        .hero-badge i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .hero-highlight {
             color: var(--accent);
+            position: relative;
+            display: inline-block;
         }
 
-        .hero-section p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 600px;
+        .hero-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(245,158,11,0.3);
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== SEARCH SECTION ===== */
+        .search-section {
+            padding: 2rem 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 82px;
+            z-index: 99;
+        }
+
+        .search-wrapper {
+            max-width: 700px;
             margin: 0 auto;
         }
 
-        /* Industry Grid – like home page categories */
-        .industry-section {
-            padding: 3rem 0;
+        .search-container {
+            display: flex;
             background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 60px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 2rem;
+        .search-container:focus-within {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-accent);
+            transform: scale(1.02);
         }
 
-        .section-header h2 {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 0.3rem;
+        .search-input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
         }
 
-        .section-header p {
-            color: var(--gray-500);
+        .search-input-wrapper i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-right: 0.75rem;
         }
 
-        .industry-grid {
+        .search-input {
+            width: 100%;
+            padding: 1.2rem 0;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-input::placeholder {
+            color: var(--gray-400);
+            font-weight: 400;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--white);
+            border: none;
+            padding: 0 2.5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+            transform: scale(1.05);
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--white), var(--gray-50));
+        }
+
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
-        .industry-card {
-            background: linear-gradient(135deg, var(--white), var(--gray-50));
-            border-radius: 16px;
-            padding: 1.5rem;
+        .stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
             text-align: center;
             border: 1px solid var(--gray-200);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-lg);
             transition: all 0.3s ease;
-            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        .industry-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-2xl);
             border-color: var(--accent);
         }
 
-        .industry-icon {
+        .stat-icon {
             width: 60px;
             height: 60px;
             background: linear-gradient(135deg, var(--accent-light), var(--accent));
@@ -253,71 +525,208 @@
             font-size: 1.8rem;
         }
 
-        .industry-card h4 {
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
             color: var(--primary);
             margin-bottom: 0.3rem;
-            font-size: 1.2rem;
+            line-height: 1.2;
         }
 
-        .industry-card p {
+        .stat-label {
             color: var(--gray-600);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
-        /* Companies Grid */
+        /* ===== COMPANIES SECTION ===== */
         .companies-section {
-            padding: 3rem 0;
-            background: var(--gray-50);
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.8rem;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-btn:hover {
+            background: var(--accent);
+            color: var(--white);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-accent);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
         }
 
         .companies-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
+        /* Company Card */
         .company-card {
             background: var(--white);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 24px;
+            padding: 2rem;
             border: 1px solid var(--gray-200);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* Card hover effect */
         .company-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-2xl);
             border-color: var(--accent);
         }
 
+        /* Card background animation */
+        .company-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(245,158,11,0.05));
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .company-card:hover::before {
+            transform: translateX(0);
+        }
+
+        /* Featured ribbon */
+        .company-card.featured::after {
+            content: '⭐ FEATURED';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--white);
+            padding: 0.3rem 3rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+            box-shadow: var(--shadow-md);
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* Company Logo */
         .company-logo {
-            width: 70px;
-            height: 70px;
+            width: 90px;
+            height: 90px;
             background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            border-radius: 16px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
+            margin: 0 auto 1.5rem;
             color: var(--white);
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 2;
         }
 
+        .company-card:hover .company-logo {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: var(--shadow-accent);
+        }
+
+        /* Verified Badge - PULSING */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--success);
+            color: var(--white);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 0 0 var(--success);
+            animation: verified-pulse 2s infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .verified-badge i {
+            font-size: 0.9rem;
+        }
+
+        /* Company Info */
         .company-card h3 {
             color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 0.2rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
         }
 
         .company-industry {
             color: var(--accent);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
@@ -325,87 +734,397 @@
         .company-location {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.3rem;
             color: var(--gray-600);
-            font-size: 0.85rem;
-            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
         }
 
         .company-location i {
             color: var(--accent);
         }
 
-        .company-jobs {
-            margin-top: auto;
+        /* Company Stats */
+        .company-stats {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 0.8rem;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 0;
             border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
         }
 
-        .job-count {
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-value {
             font-weight: 700;
             color: var(--primary);
+            font-size: 1.1rem;
         }
 
-        .view-btn {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* View Jobs Button - PULSING */
+        .view-jobs-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border: none;
+            padding: 1rem 0;
+            width: 100%;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 0 0 0 var(--primary-glow);
+            animation: pulse-glow 2s infinite;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
         }
 
-        .view-btn:hover {
-            background: var(--primary);
+        .view-jobs-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .view-jobs-btn:hover {
+            animation: none;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-accent);
+        }
+
+        .view-jobs-btn:hover::before {
+            left: 100%;
+        }
+
+        /* ===== FEATURED COMPANIES SECTION ===== */
+        .featured-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: rotate 25s linear infinite;
+        }
+
+        .featured-section h2 {
+            text-align: center;
+            color: var(--white);
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .featured-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            animation: card-float 5s ease-in-out infinite;
+        }
+
+        .featured-card:nth-child(1) { animation-delay: 0s; }
+        .featured-card:nth-child(2) { animation-delay: 0.5s; }
+        .featured-card:nth-child(3) { animation-delay: 1s; }
+
+        .featured-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            background: rgba(255,255,255,0.2);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .featured-logo {
+            width: 120px;
+            height: 120px;
+            background: var(--white);
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary);
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: var(--shadow-xl);
+            transition: all 0.4s ease;
+        }
+
+        .featured-card:hover .featured-logo {
+            transform: rotate(360deg);
+            background: var(--accent);
             color: var(--white);
         }
 
-        /* Footer (same as home page) */
+        .featured-card h3 {
+            color: var(--white);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-card p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-jobs {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 40px;
+        }
+
+        /* ===== WHY CHOOSE US SECTION ===== */
+        .why-choose-section {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--white), var(--gray-50));
+            border-radius: 30px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-lg);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .benefit-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .benefit-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--white);
+            font-size: 2.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .benefit-card:hover .benefit-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .benefit-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card p {
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 3rem;
+        }
+
+        .page-btn {
+            width: 45px;
+            height: 45px;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .page-btn:hover {
+            background: var(--accent);
+            color: var(--white);
+            border-color: var(--accent);
+            transform: scale(1.1);
+            box-shadow: var(--shadow-accent);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border-color: var(--primary);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .page-btn.next {
+            width: auto;
+            padding: 0 2rem;
+            border-radius: 40px;
+            gap: 0.5rem;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            background: var(--white);
+            color: var(--primary);
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        /* ===== FOOTER ===== */
         .footer {
             background: var(--gray-900);
             color: var(--white);
-            padding: 2rem 0 1rem;
+            padding: 5rem 0 2rem;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
 
         .footer-logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.3rem;
+            margin-bottom: 1.5rem;
         }
 
         .footer-logo .logo-icon {
             background: var(--accent);
             color: var(--primary);
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
         }
 
         .footer-logo .logo-text {
             color: var(--white);
+            font-size: 1.5rem;
         }
 
         .footer-col p {
             color: var(--gray-400);
-            font-size: 0.7rem;
-            line-height: 1.4;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
         }
 
         .footer-col h4 {
             color: var(--white);
-            margin-bottom: 0.6rem;
-            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .footer-col ul {
@@ -413,57 +1132,73 @@
         }
 
         .footer-col li {
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.8rem;
         }
 
         .footer-col a {
             color: var(--gray-400);
             text-decoration: none;
-            font-size: 0.7rem;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .footer-col a:hover {
             color: var(--accent);
+            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
-            gap: 0.4rem;
+            gap: 1rem;
         }
 
         .social-link {
-            width: 28px;
-            height: 28px;
+            width: 45px;
+            height: 45px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--white);
+            text-decoration: none;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
+            font-size: 1.2rem;
         }
 
         .social-link:hover {
             background: var(--accent);
             color: var(--primary);
+            transform: translateY(-5px) rotate(360deg);
         }
 
         .footer-bottom {
             text-align: center;
-            padding-top: 0.8rem;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             color: var(--gray-400);
-            font-size: 0.65rem;
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .industry-grid {
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .companies-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .companies-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .companies-grid {
+            
+            .featured-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -472,6 +1207,7 @@
             .menu-toggle {
                 display: block;
             }
+
             .nav-menu {
                 display: none;
                 position: absolute;
@@ -479,32 +1215,64 @@
                 left: 0;
                 width: 100%;
                 background: var(--white);
-                padding: 1rem;
-                box-shadow: var(--shadow-md);
-                border-top: 1px solid var(--gray-200);
-                flex-direction: column;
-                align-items: flex-start;
+                padding: 2rem;
+                box-shadow: var(--shadow-xl);
+                border-top: 2px solid var(--accent);
             }
+
             .nav-menu.show {
                 display: flex;
-            }
-            .user-menu {
-                width: 100%;
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 1rem;
             }
 
-            .hero-section h1 {
-                font-size: 2rem;
+            .nav-menu li {
+                width: 100%;
             }
 
-            .industry-grid,
+            .nav-menu a {
+                display: block;
+                padding: 0.5rem 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
             .companies-grid {
                 grid-template-columns: 1fr;
             }
-
+            
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .footer-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-container {
+                flex-direction: column;
+                border-radius: 30px;
+            }
+            
+            .search-input-wrapper {
+                padding: 0.5rem 1.5rem;
+                border-bottom: 1px solid var(--gray-200);
+            }
+            
+            .search-btn {
+                padding: 1rem;
             }
         }
     </style>
@@ -517,16 +1285,20 @@
                 <span class="logo-icon">TJ</span>
                 <span class="logo-text">TrueJobs</span>
             </a>
-            <span class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></span>
+            
+            <span class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </span>
+            
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="findjobs.html">Find jobs</a></li>
+                <li><a href="findjobs.html">Find Jobs</a></li>
+                <!-- Dashboard moved after Find Jobs – plain link, no icon -->
                 <li><a href="dashboard.html" class="dashboard-link">Dashboard</a></li>
                 <li><a href="companies.html" class="active">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <!-- User menu will be injected here -->
+                <!-- Auth buttons removed – user menu will be injected by script -->
             </ul>
         </div>
     </nav>
@@ -534,75 +1306,182 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1>
-                <span class="hero-highlight">Trusted Companies</span> Hiring Now
-            </h1>
-            <p>Explore top employers from around the world</p>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Trusted by 1,200+ Companies Worldwide</span>
+                </div>
+                
+                <h1>
+                    Discover <span class="hero-highlight">Top Companies</span><br>
+                    Hiring Right Now
+                </h1>
+                
+                <p>Join thousands of professionals who found their dream jobs at these trusted employers</p>
+            </div>
         </div>
     </section>
 
-    <!-- Industry Categories (like home page) -->
-    <section class="industry-section">
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-wrapper">
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search companies by name, industry, or location...">
+                    </div>
+                    <button class="search-btn" onclick="searchCompanies()">
+                        <i class="fas fa-arrow-right"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="stat-number">1,200+</div>
+                    <div class="stat-label">Active Companies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="stat-number">15,678</div>
+                    <div class="stat-label">Open Jobs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-number">45+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Verified Employers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Companies Section -->
+    <section class="companies-section">
         <div class="container">
             <div class="section-header">
-                <h2>Browse by Industry</h2>
-                <p>Find companies in your field</p>
+                <div class="section-title">
+                    <h2>Featured Companies</h2>
+                    <p>Browse trusted employers hiring across the globe</p>
+                </div>
+                <div class="category-filters">
+                    <button class="filter-btn active" onclick="filterCompanies('all')">All</button>
+                    <button class="filter-btn" onclick="filterCompanies('healthcare')">Healthcare</button>
+                    <button class="filter-btn" onclick="filterCompanies('construction')">Construction</button>
+                    <button class="filter-btn" onclick="filterCompanies('hospitality')">Hospitality</button>
+                    <button class="filter-btn" onclick="filterCompanies('security')">Security</button>
+                    <button class="filter-btn" onclick="filterCompanies('aviation')">Aviation</button>
+                    <button class="filter-btn" onclick="filterCompanies('retail')">Retail</button>
+                </div>
             </div>
-            <div class="industry-grid">
-                <div class="industry-card" onclick="window.location.href='findjobs.html?category=healthcare'">
-                    <div class="industry-icon"><i class="fas fa-heartbeat"></i></div>
-                    <h4>Healthcare</h4>
-                    <p>2,345 jobs</p>
-                </div>
-                <div class="industry-card" onclick="window.location.href='findjobs.html?category=domestic'">
-                    <div class="industry-icon"><i class="fas fa-home"></i></div>
-                    <h4>Domestic Work</h4>
-                    <p>1,587 jobs</p>
-                </div>
-                <div class="industry-card" onclick="window.location.href='findjobs.html?category=security'">
-                    <div class="industry-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h4>Security</h4>
-                    <p>892 jobs</p>
-                </div>
-                <div class="industry-card" onclick="window.location.href='findjobs.html?category=hospitality'">
-                    <div class="industry-icon"><i class="fas fa-utensils"></i></div>
-                    <h4>Hospitality</h4>
-                    <p>1,307 jobs</p>
-                </div>
-                <div class="industry-card" onclick="window.location.href='findjobs.html?category=construction'">
-                    <div class="industry-icon"><i class="fas fa-hard-hat"></i></div>
-                    <h4>Construction</h4>
-                    <p>1,649 jobs</p>
-                </div>
-                <div class="industry-card" onclick="window.location.href='findjobs.html?category=education'">
-                    <div class="industry-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <h4>Education</h4>
-                    <p>1,193 jobs</p>
-                </div>
-                <div class="industry-card" onclick="window.location.href='findjobs.html?category=drivers'">
-                    <div class="industry-icon"><i class="fas fa-truck"></i></div>
-                    <h4>Drivers</h4>
-                    <p>756 jobs</p>
-                </div>
-                <div class="industry-card" onclick="window.location.href='findjobs.html?category=retail'">
-                    <div class="industry-icon"><i class="fas fa-shopping-cart"></i></div>
-                    <h4>Retail</h4>
-                    <p>945 jobs</p>
-                </div>
+
+            <div class="companies-grid" id="companiesGrid">
+                <!-- Companies will be loaded by JavaScript -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">5</button>
+                <button class="page-btn next">Next <i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
 
     <!-- Featured Companies -->
-    <section class="companies-section">
+    <section class="featured-section">
         <div class="container">
-            <div class="section-header">
-                <h2>Featured Companies</h2>
-                <p>Meet some of our trusted employers</p>
+            <h2>🌟 Featured Employers</h2>
+            <div class="featured-grid">
+                <div class="featured-card" onclick="viewCompanyJobs('Qatar Airways')">
+                    <div class="featured-logo">QA</div>
+                    <h3>Qatar Airways</h3>
+                    <p>Aviation • Doha, Qatar</p>
+                    <span class="featured-jobs">234 jobs</span>
+                </div>
+                <div class="featured-card" onclick="viewCompanyJobs('Emirates')">
+                    <div class="featured-logo">EK</div>
+                    <h3>Emirates Group</h3>
+                    <p>Aviation • Dubai, UAE</p>
+                    <span class="featured-jobs">189 jobs</span>
+                </div>
+                <div class="featured-card" onclick="viewCompanyJobs('Saudi Aramco')">
+                    <div class="featured-logo">SA</div>
+                    <h3>Saudi Aramco</h3>
+                    <p>Energy • Dhahran, KSA</p>
+                    <span class="featured-jobs">156 jobs</span>
+                </div>
             </div>
-            <div class="companies-grid" id="companiesGrid">
-                <!-- Companies will be loaded by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose-section">
+        <div class="container">
+            <div class="section-header" style="text-align: center;">
+                <div class="section-title">
+                    <h2>Why Companies Trust TrueJobs</h2>
+                    <p>We connect employers with the best talent worldwide</p>
+                </div>
             </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Quality Candidates</h3>
+                    <p>Access a pool of pre-screened, qualified professionals ready to contribute to your team.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast Hiring</h3>
+                    <p>Post jobs and receive applications within hours, not days. Fill positions quickly.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Global Reach</h3>
+                    <p>Connect with talent from over 45 countries and find the perfect match for your company.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Hire?</h2>
+            <p>Join 1,200+ companies already finding great talent on TrueJobs</p>
+            <button class="cta-btn" onclick="location.href='post-job.html'">
+                Post a Job <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
     </section>
 
@@ -611,14 +1490,42 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <div class="footer-logo"><span class="logo-icon">TJ</span><span class="logo-text">TrueJobs</span></div>
-                    <p>Your trusted partner for global job opportunities.</p>
+                    <div class="footer-logo">
+                        <span class="logo-icon">TJ</span>
+                        <span class="logo-text">TrueJobs</span>
+                    </div>
+                    <p>Your trusted partner for global job opportunities. Connecting skilled professionals with verified employers worldwide.</p>
                 </div>
-                <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="about.html">About</a></li><li><a href="findjobs.html">Find Jobs</a></li><li><a href="companies.html">Companies</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-                <div class="footer-col"><h4>Resources</h4><ul><li><a href="resources.html">Career Guides</a></li><li><a href="#">Resume Tips</a></li><li><a href="#">Interview Prep</a></li></ul></div>
-                <div class="footer-col"><h4>Follow Us</h4><div class="social-links"><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-twitter"></i></a><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a></div></div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="findjobs.html">Find Jobs</a></li>
+                        <li><a href="companies.html">Companies</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>For Employers</h4>
+                    <ul>
+                        <li><a href="post-job.html">Post a Job</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2026 TrueJobs. All rights reserved.</p></div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TrueJobs. All rights reserved. Your trusted partner for global employment.</p>
+            </div>
         </div>
     </footer>
 
@@ -627,33 +1534,222 @@
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        // Sample companies data
+        // Companies data
         const companies = [
-            { name: "Qatar Airways", industry: "Aviation", location: "Doha, Qatar", jobs: 234, logo: "QA" },
-            { name: "Emirates Group", industry: "Aviation", location: "Dubai, UAE", jobs: 189, logo: "EK" },
-            { name: "Saudi Aramco", industry: "Energy", location: "Dhahran, KSA", jobs: 156, logo: "SA" },
-            { name: "Mediclinic", industry: "Healthcare", location: "Abu Dhabi, UAE", jobs: 56, logo: "MC" },
-            { name: "Jumeirah Group", industry: "Hospitality", location: "Dubai, UAE", jobs: 45, logo: "JG" },
-            { name: "DP World", industry: "Logistics", location: "Dubai, UAE", jobs: 98, logo: "DP" }
+            {
+                name: "Qatar Airways",
+                industry: "Aviation",
+                location: "Doha, Qatar",
+                employees: "10,000+",
+                jobs: 234,
+                featured: true,
+                verified: true,
+                logo: "QA",
+                category: "aviation"
+            },
+            {
+                name: "Emirates Group",
+                industry: "Aviation",
+                location: "Dubai, UAE",
+                employees: "15,000+",
+                jobs: 189,
+                featured: true,
+                verified: true,
+                logo: "EK",
+                category: "aviation"
+            },
+            {
+                name: "Saudi Aramco",
+                industry: "Energy",
+                location: "Dhahran, KSA",
+                employees: "20,000+",
+                jobs: 156,
+                featured: true,
+                verified: true,
+                logo: "SA",
+                category: "energy"
+            },
+            {
+                name: "DP World",
+                industry: "Logistics",
+                location: "Dubai, UAE",
+                employees: "8,000+",
+                jobs: 98,
+                featured: false,
+                verified: true,
+                logo: "DP",
+                category: "logistics"
+            },
+            {
+                name: "Jumeirah Group",
+                industry: "Hospitality",
+                location: "Dubai, UAE",
+                employees: "5,000+",
+                jobs: 45,
+                featured: false,
+                verified: true,
+                logo: "JG",
+                category: "hospitality"
+            },
+            {
+                name: "Careem",
+                industry: "Technology",
+                location: "Dubai, UAE",
+                employees: "2,000+",
+                jobs: 67,
+                featured: false,
+                verified: true,
+                logo: "CM",
+                category: "technology"
+            },
+            {
+                name: "Al Habtoor Group",
+                industry: "Construction",
+                location: "Dubai, UAE",
+                employees: "7,000+",
+                jobs: 89,
+                featured: false,
+                verified: true,
+                logo: "AH",
+                category: "construction"
+            },
+            {
+                name: "Mediclinic",
+                industry: "Healthcare",
+                location: "Abu Dhabi, UAE",
+                employees: "3,000+",
+                jobs: 56,
+                featured: false,
+                verified: true,
+                logo: "MC",
+                category: "healthcare"
+            },
+            {
+                name: "G4S Security",
+                industry: "Security",
+                location: "Multiple Countries",
+                employees: "12,000+",
+                jobs: 234,
+                featured: false,
+                verified: true,
+                logo: "G4",
+                category: "security"
+            },
+            {
+                name: "Lulu Hypermarket",
+                industry: "Retail",
+                location: "GCC",
+                employees: "6,000+",
+                jobs: 145,
+                featured: false,
+                verified: true,
+                logo: "LH",
+                category: "retail"
+            },
+            {
+                name: "Royal Hotel",
+                industry: "Hospitality",
+                location: "Doha, Qatar",
+                employees: "1,500+",
+                jobs: 34,
+                featured: false,
+                verified: true,
+                logo: "RH",
+                category: "hospitality"
+            },
+            {
+                name: "SecurePlus",
+                industry: "Security",
+                location: "Qatar",
+                employees: "800+",
+                jobs: 23,
+                featured: false,
+                verified: true,
+                logo: "SP",
+                category: "security"
+            }
         ];
 
+        // Display companies
         function displayCompanies() {
             const grid = document.getElementById('companiesGrid');
-            grid.innerHTML = companies.map(company => `
-                <div class="company-card" onclick="window.location.href='findjobs.html?company=${encodeURIComponent(company.name)}'">
+            grid.innerHTML = companies.map((company, index) => `
+                <div class="company-card ${company.featured ? 'featured' : ''}" style="--card-index: ${index}" onclick="viewCompanyJobs('${company.name}')">
                     <div class="company-logo">${company.logo}</div>
+                    ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified Employer</div>' : ''}
                     <h3>${company.name}</h3>
                     <div class="company-industry">${company.industry}</div>
-                    <div class="company-location"><i class="fas fa-map-marker-alt"></i> ${company.location}</div>
-                    <div class="company-jobs">
-                        <span class="job-count">${company.jobs} open jobs</span>
-                        <button class="view-btn" onclick="event.stopPropagation(); window.location.href='findjobs.html?company=${encodeURIComponent(company.name)}'">View Jobs</button>
+                    <div class="company-location">
+                        <i class="fas fa-map-marker-alt"></i> ${company.location}
                     </div>
+                    <div class="company-stats">
+                        <div class="stat">
+                            <i class="fas fa-briefcase"></i>
+                            <span class="stat-value">${company.jobs}</span>
+                            <span class="stat-label">Jobs</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span class="stat-value">${company.employees}</span>
+                            <span class="stat-label">Employees</span>
+                        </div>
+                    </div>
+                    <button class="view-jobs-btn pulse-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
+                        View Jobs <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
             `).join('');
         }
 
-        displayCompanies();
+        // Navigate to findjobs.html filtered by company
+        function viewCompanyJobs(name) {
+            window.location.href = `findjobs.html?company=${encodeURIComponent(name)}`;
+        }
+
+        function searchCompanies() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            alert('Searching for: ' + searchTerm);
+        }
+
+        function filterCompanies(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (category === 'all') {
+                displayCompanies();
+            } else {
+                const filtered = companies.filter(c => c.category === category);
+                const grid = document.getElementById('companiesGrid');
+                grid.innerHTML = filtered.map((company, index) => `
+                    <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
+                        <div class="company-logo">${company.logo}</div>
+                        ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified Employer</div>' : ''}
+                        <h3>${company.name}</h3>
+                        <div class="company-industry">${company.industry}</div>
+                        <div class="company-location">
+                            <i class="fas fa-map-marker-alt"></i> ${company.location}
+                        </div>
+                        <div class="company-stats">
+                            <div class="stat">
+                                <i class="fas fa-briefcase"></i>
+                                <span class="stat-value">${company.jobs}</span>
+                                <span class="stat-label">Jobs</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-users"></i>
+                                <span class="stat-value">${company.employees}</span>
+                                <span class="stat-label">Employees</span>
+                            </div>
+                        </div>
+                        <button class="view-jobs-btn pulse-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
+                            View Jobs <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
 
         // AUTH CHECK and USER MENU (same as home page)
         (function() {
@@ -691,9 +1787,13 @@
             localStorage.removeItem('truejobs_user');
             window.location.href = 'login.html?redirect=' + encodeURIComponent('index.html');
         }
+
+        // Initial display
+        displayCompanies();
     </script>
 </body>
 </html>
+
 
 
 
