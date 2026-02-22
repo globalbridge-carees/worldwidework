@@ -85,6 +85,7 @@
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow-lg);
             backdrop-filter: blur(10px);
+            position: relative;
         }
 
         .nav-container {
@@ -976,6 +977,7 @@
                     <div class="form-group">
                         <label class="form-label">
                             <i class="fas fa-phone"></i> Phone <span class="required">*</span>
+                            <span style="font-size:0.7rem; color:var(--gray-500);">(include country code)</span>
                         </label>
                         <div class="input-wrapper">
                             <i class="fas fa-phone"></i>
@@ -985,11 +987,11 @@
 
                     <div class="form-group">
                         <label class="form-label">
-                            <i class="fas fa-calendar"></i> Date of Birth
+                            <i class="fas fa-calendar"></i> Date of Birth <span class="required">*</span>
                         </label>
                         <div class="input-wrapper">
                             <i class="fas fa-calendar"></i>
-                            <input type="date" id="dob">
+                            <input type="text" id="dob" placeholder="DD/MM/YYYY" pattern="\d{2}/\d{2}/\d{4}" title="Enter date in DD/MM/YYYY format">
                         </div>
                     </div>
 
@@ -1107,25 +1109,27 @@
                     </div>
                     <div>
                         <h2>Upload Documents</h2>
-                        <p>Resume & certificates</p>
+                        <p>National ID & certificates</p>
                     </div>
                 </div>
 
-                <!-- CV Upload -->
-                <div class="file-upload-area" onclick="document.getElementById('cv').click()">
-                    <input type="file" id="cv" style="display: none;" accept=".pdf,.doc,.docx">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <h4>Upload CV/Resume</h4>
-                    <p>PDF, DOC, DOCX (max 5MB)</p>
+                <!-- National ID Upload (required) - with camera capture -->
+                <div class="file-upload-area" onclick="document.getElementById('nationalId').click()">
+                    <input type="file" id="nationalId" style="display: none;" accept="image/*" capture="environment">
+                    <i class="fas fa-id-card"></i>
+                    <h4>Upload National ID <span class="required">*</span></h4>
+                    <p>Take a photo or choose from gallery</p>
+                    <div class="file-hint">Image format (max 5MB)</div>
                 </div>
-                <div id="cv-info" style="display: none;"></div>
+                <div id="nationalId-info" style="display: none;"></div>
 
-                <!-- Certificates Upload -->
+                <!-- Certificates Upload (optional) - with camera capture -->
                 <div class="file-upload-area" onclick="document.getElementById('certificates').click()" style="margin-top: 0.5rem;">
-                    <input type="file" id="certificates" style="display: none;" multiple accept=".pdf,.jpg,.jpeg,.png">
+                    <input type="file" id="certificates" style="display: none;" multiple accept="image/*" capture="environment">
                     <i class="fas fa-images"></i>
                     <h4>Upload Certificates (Optional)</h4>
-                    <p>PDF, JPG, PNG (max 5MB each)</p>
+                    <p>Take photos or choose from gallery</p>
+                    <div class="file-hint">Image format, multiple allowed (max 5MB each)</div>
                 </div>
                 <div id="certificates-info" style="display: none;"></div>
             </div>
@@ -1172,8 +1176,8 @@
                         <div class="review-value" id="reviewSkills">-</div>
                     </div>
                     <div class="review-item">
-                        <div class="review-label">CV:</div>
-                        <div class="review-value" id="reviewCV">Not uploaded</div>
+                        <div class="review-label">National ID:</div>
+                        <div class="review-value" id="reviewNationalId">Not uploaded</div>
                     </div>
                 </div>
 
@@ -1216,10 +1220,18 @@
     </div>
 
     <script>
-        // Mobile menu toggle
+        // Mobile menu toggle - fixed
         function toggleMenu() {
-            document.getElementById('navMenu').classList.toggle('show');
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('show');
         }
+
+        // Close menu when clicking a link (optional)
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('show');
+            });
+        });
 
         // Get job details from URL or sessionStorage
         const urlParams = new URLSearchParams(window.location.search);
@@ -1302,14 +1314,21 @@
                     const lastName = document.getElementById('lastName').value;
                     const email = document.getElementById('email').value;
                     const phone = document.getElementById('phone').value;
+                    const dob = document.getElementById('dob').value;
                     const country = document.getElementById('country').value;
 
-                    if (!firstName || !lastName || !email || !phone || !country) {
+                    if (!firstName || !lastName || !email || !phone || !dob || !country) {
                         alert('Please fill in all required fields');
                         return false;
                     }
                     if (!email.includes('@')) {
                         alert('Please enter a valid email address');
+                        return false;
+                    }
+                    // Simple date format check (DD/MM/YYYY)
+                    const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+                    if (!datePattern.test(dob)) {
+                        alert('Please enter date of birth in DD/MM/YYYY format');
                         return false;
                     }
                     return true;
@@ -1331,9 +1350,9 @@
                     return true;
 
                 case 3:
-                    const cv = document.getElementById('cv').files.length;
-                    if (cv === 0) {
-                        alert('Please upload your CV');
+                    const nationalId = document.getElementById('nationalId').files.length;
+                    if (nationalId === 0) {
+                        alert('Please upload your National ID');
                         return false;
                     }
                     return true;
@@ -1368,26 +1387,26 @@
             document.getElementById('reviewPosition').textContent = document.getElementById('position').value;
             document.getElementById('reviewSkills').textContent = document.getElementById('skills').value;
             
-            const cvFile = document.getElementById('cv').files[0];
-            document.getElementById('reviewCV').textContent = cvFile ? cvFile.name : 'Not uploaded';
+            const nationalIdFile = document.getElementById('nationalId').files[0];
+            document.getElementById('reviewNationalId').textContent = nationalIdFile ? nationalIdFile.name : 'Not uploaded';
         }
 
         // File upload handlers
-        document.getElementById('cv').addEventListener('change', function(e) {
+        document.getElementById('nationalId').addEventListener('change', function(e) {
             if (e.target.files[0]) {
                 const file = e.target.files[0];
-                const info = document.getElementById('cv-info');
+                const info = document.getElementById('nationalId-info');
                 info.style.display = 'block';
                 info.innerHTML = `
                     <div class="uploaded-file">
                         <div class="file-info">
-                            <i class="fas fa-file-pdf"></i>
+                            <i class="fas fa-id-card"></i>
                             <div>
                                 <div class="file-name">${file.name}</div>
                                 <div class="file-size">${(file.size / 1024).toFixed(1)} KB</div>
                             </div>
                         </div>
-                        <i class="fas fa-times remove-file" onclick="this.parentElement.remove(); document.getElementById('cv').value = ''; this.parentElement.style.display='none'"></i>
+                        <i class="fas fa-times remove-file" onclick="this.parentElement.remove(); document.getElementById('nationalId').value = ''; this.parentElement.style.display='none'"></i>
                     </div>
                 `;
             }
@@ -1403,7 +1422,7 @@
                     html += `
                         <div class="uploaded-file">
                             <div class="file-info">
-                                <i class="fas fa-file"></i>
+                                <i class="fas fa-file-image"></i>
                                 <div>
                                     <div class="file-name">${files[i].name}</div>
                                     <div class="file-size">${(files[i].size / 1024).toFixed(1)} KB</div>
@@ -1424,9 +1443,6 @@
 
             // Show success modal
             document.getElementById('successModal').classList.add('show');
-            
-            // Clear form data from session
-            sessionStorage.removeItem('applyingFor');
         }
 
         function goToDashboard() {
@@ -1446,6 +1462,7 @@
     </script>
 </body>
 </html>
+
 
 
 
