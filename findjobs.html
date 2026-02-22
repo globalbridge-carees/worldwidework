@@ -68,6 +68,16 @@
             50% { transform: translateY(-5px); }
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245,158,11,0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(245,158,11,0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245,158,11,0); }
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+
         /* Navigation */
         .navbar {
             background: var(--white);
@@ -238,7 +248,7 @@
 
         .search-container:focus-within {
             border-color: var(--accent);
-            box-shadow: var(--shadow-accent, 0 0 0 3px rgba(245,158,11,0.2));
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.2);
         }
 
         .search-input-wrapper {
@@ -320,15 +330,33 @@
             padding: 1.2rem;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .job-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(245,158,11,0.05));
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .job-card:hover::before {
+            transform: translateX(0);
         }
 
         .job-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
             border-color: var(--accent);
         }
 
@@ -350,6 +378,7 @@
             color: var(--white);
             font-size: 1.2rem;
             font-weight: 700;
+            box-shadow: var(--shadow-sm);
         }
 
         .job-title h3 {
@@ -410,8 +439,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: auto;
+            animation: pulse 2s infinite;
         }
         .apply-btn:hover {
+            animation: none;
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
@@ -631,14 +662,14 @@
             </div>
 
             <!-- Pagination -->
-            <div class="pagination">
-                <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">4</button>
-                <button class="page-btn">5</button>
-                <button class="page-btn next">Next <i class="fas fa-chevron-right"></i></button>
+            <div class="pagination" id="pagination">
+                <button class="page-btn" data-page="prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="page-btn active" data-page="1">1</button>
+                <button class="page-btn" data-page="2">2</button>
+                <button class="page-btn" data-page="3">3</button>
+                <button class="page-btn" data-page="4">4</button>
+                <button class="page-btn" data-page="5">5</button>
+                <button class="page-btn next" data-page="next">Next <i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
@@ -762,21 +793,56 @@
             `).join('');
         }
 
-        displayJobs();
+        // Pagination functionality
+        function initPagination() {
+            const pagination = document.getElementById('pagination');
+            const pageButtons = pagination.querySelectorAll('.page-btn');
+            let currentPage = 1;
+
+            function setActivePage(page) {
+                pageButtons.forEach(btn => btn.classList.remove('active'));
+                const activeBtn = Array.from(pageButtons).find(btn => btn.dataset.page == page);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+
+            pageButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+
+                    if (page === 'prev') {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            setActivePage(currentPage);
+                            alert(`Loading page ${currentPage}...`); // Simulate page change
+                        }
+                    } else if (page === 'next') {
+                        if (currentPage < 5) {
+                            currentPage++;
+                            setActivePage(currentPage);
+                            alert(`Loading page ${currentPage}...`);
+                        }
+                    } else {
+                        currentPage = parseInt(page);
+                        setActivePage(currentPage);
+                        alert(`Loading page ${currentPage}...`);
+                    }
+                });
+            });
+        }
 
         // Optional: get company from URL if coming from Companies page
         const urlParams = new URLSearchParams(window.location.search);
         const companyFilter = urlParams.get('company');
         if (companyFilter) {
-            // filter jobs by company (simple alert for demo)
             alert(`Showing jobs for ${companyFilter}`);
             // In a real app, you'd filter the displayed jobs
         }
+
+        displayJobs();
+        initPagination();
     </script>
 </body>
 </html>
-
-
-
 
 
