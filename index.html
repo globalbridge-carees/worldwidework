@@ -1427,8 +1427,19 @@
             document.getElementById('navMenu').classList.toggle('show');
         }
     </script>
+    <!-- AUTH CHECK: Redirect to login if not logged in -->
+    <script>
+        (function() {
+            const isLoggedIn = localStorage.getItem('truejobs_loggedin') === 'true';
+            if (!isLoggedIn) {
+                const currentPage = window.location.pathname;
+                window.location.href = 'login.html?redirect=' + encodeURIComponent(currentPage);
+            }
+        })();
+    </script>
 </body>
 </html>
+
 
 
 
