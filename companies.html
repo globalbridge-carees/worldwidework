@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* (Keep all the compressed CSS from the previous version – exactly the same) */
         * {
             margin: 0;
             padding: 0;
@@ -336,8 +337,6 @@
         .search-btn:hover {
             background: linear-gradient(135deg, var(--accent-dark), var(--accent));
         }
-
-        /* Stats Section - REMOVED */
 
         /* Companies Section */
         .companies-section {
@@ -868,19 +867,19 @@
         <div class="container">
             <h2>🌟 Featured Employers</h2>
             <div class="featured-grid">
-                <div class="featured-card" onclick="location.href='company-detail.html?name=Qatar%20Airways'">
+                <div class="featured-card" onclick="location.href='findjobs.html?company=Qatar%20Airways'">
                     <div class="featured-logo">QA</div>
                     <h3>Qatar Airways</h3>
                     <p>Aviation • Doha, Qatar</p>
                     <span class="featured-jobs">234 jobs</span>
                 </div>
-                <div class="featured-card" onclick="location.href='company-detail.html?name=Emirates'">
+                <div class="featured-card" onclick="location.href='findjobs.html?company=Emirates'">
                     <div class="featured-logo">EK</div>
                     <h3>Emirates Group</h3>
                     <p>Aviation • Dubai, UAE</p>
                     <span class="featured-jobs">189 jobs</span>
                 </div>
-                <div class="featured-card" onclick="location.href='company-detail.html?name=Saudi%20Aramco'">
+                <div class="featured-card" onclick="location.href='findjobs.html?company=Saudi%20Aramco'">
                     <div class="featured-logo">SA</div>
                     <h3>Saudi Aramco</h3>
                     <p>Energy • Dhahran, KSA</p>
@@ -998,7 +997,7 @@
         function displayCompanies() {
             const grid = document.getElementById('companiesGrid');
             grid.innerHTML = companies.map((company, index) => `
-                <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompany('${company.name}')">
+                <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
                     <div class="company-logo">${company.logo}</div>
                     ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
                     <h3>${company.name}</h3>
@@ -1025,10 +1024,6 @@
             `).join('');
         }
 
-        function viewCompany(name) {
-            window.location.href = `company-detail.html?name=${encodeURIComponent(name)}`;
-        }
-
         function viewCompanyJobs(name) {
             window.location.href = `findjobs.html?company=${encodeURIComponent(name)}`;
         }
@@ -1048,7 +1043,7 @@
                 const filtered = companies.filter(c => c.category === category);
                 const grid = document.getElementById('companiesGrid');
                 grid.innerHTML = filtered.map((company, index) => `
-                    <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompany('${company.name}')">
+                    <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
                         <div class="company-logo">${company.logo}</div>
                         ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
                         <h3>${company.name}</h3>
