@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Your existing styles (unchanged) */
+        /* (Keep all your existing styles exactly as they were) */
         * {
             margin: 0;
             padding: 0;
@@ -1275,7 +1275,7 @@
         </div>
     </section>
 
-    <!-- Featured Jobs (apply buttons fixed) -->
+    <!-- Featured Jobs (apply buttons now point to apply.html) -->
     <section class="featured-jobs">
         <div class="container">
             <div class="section-header">
@@ -1293,7 +1293,7 @@
                         <span class="salary"><i class="fas fa-money-bill-wave"></i> $1.8k</span>
                     </div>
                     <div class="job-tags"><span class="tag">Elderly Care</span><span class="tag">First Aid</span></div>
-                    <a href="job-details.html?id=1" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="apply.html?job=Care%20Giver&company=Golden%20Care%20Center" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <!-- Card 2 -->
                 <div class="job-card" onclick="window.location.href='job-details.html?id=2'">
@@ -1305,7 +1305,7 @@
                         <span class="salary"><i class="fas fa-money-bill-wave"></i> $1.5k</span>
                     </div>
                     <div class="job-tags"><span class="tag">SIA Licensed</span><span class="tag">CCTV</span></div>
-                    <a href="job-details.html?id=2" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="apply.html?job=Security%20Guard&company=SecurePlus" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <!-- Card 3 -->
                 <div class="job-card" onclick="window.location.href='job-details.html?id=3'">
@@ -1317,7 +1317,7 @@
                         <span class="salary"><i class="fas fa-money-bill-wave"></i> $1.2k</span>
                     </div>
                     <div class="job-tags"><span class="tag">Assembly</span><span class="tag">No Exp</span></div>
-                    <a href="job-details.html?id=3" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="apply.html?job=Factory%20Worker&company=Gulf%20Manufacturing" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <!-- Card 4 -->
                 <div class="job-card" onclick="window.location.href='job-details.html?id=4'">
@@ -1329,7 +1329,7 @@
                         <span class="salary"><i class="fas fa-money-bill-wave"></i> $1.6k</span>
                     </div>
                     <div class="job-tags"><span class="tag">Childcare</span><span class="tag">First Aid</span></div>
-                    <a href="job-details.html?id=4" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="apply.html?job=Nanny&company=Elite%20Family" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <!-- Card 5 -->
                 <div class="job-card" onclick="window.location.href='job-details.html?id=5'">
@@ -1341,7 +1341,7 @@
                         <span class="salary"><i class="fas fa-money-bill-wave"></i> $1.9k</span>
                     </div>
                     <div class="job-tags"><span class="tag">Nursing License</span><span class="tag">Elderly</span></div>
-                    <a href="job-details.html?id=5" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="apply.html?job=Home%20Nurse%20Asst.&company=HomeCare%20Plus" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <!-- Card 6 -->
                 <div class="job-card" onclick="window.location.href='job-details.html?id=6'">
@@ -1353,7 +1353,7 @@
                         <span class="salary"><i class="fas fa-money-bill-wave"></i> $1.0k</span>
                     </div>
                     <div class="job-tags"><span class="tag">Customer Service</span><span class="tag">Cash</span></div>
-                    <a href="job-details.html?id=6" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="apply.html?job=Cashier&company=Lulu%20Hypermarket" class="apply-link" onclick="event.stopPropagation();">Apply Now <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -1466,27 +1466,21 @@
             if (!isLoggedIn) {
                 const currentPage = window.location.pathname;
                 window.location.href = 'login.html?redirect=' + encodeURIComponent(currentPage);
-                return; // stop further execution
+                return;
             }
 
-            // User is logged in – replace auth buttons with user menu
             const authButtons = document.getElementById('authButtons');
             if (!authButtons) return;
 
-            // Get user info
             const userStr = localStorage.getItem('truejobs_user');
             let userName = 'User';
             if (userStr) {
                 try {
                     const user = JSON.parse(userStr);
-                    // Try to get first name, otherwise use email or fallback
                     userName = user.firstName || user.name || (user.email ? user.email.split('@')[0] : 'User');
-                } catch (e) {
-                    // ignore
-                }
+                } catch (e) {}
             }
 
-            // Create user menu element
             const userMenu = document.createElement('li');
             userMenu.className = 'user-menu';
             userMenu.innerHTML = `
@@ -1494,15 +1488,12 @@
                 <button class="logout-btn" onclick="logout()">Logout</button>
             `;
 
-            // Replace the auth buttons with the user menu
             authButtons.replaceWith(userMenu);
         })();
 
-        // Logout function
         function logout() {
             localStorage.removeItem('truejobs_loggedin');
             localStorage.removeItem('truejobs_user');
-            // Redirect to login page with redirect back to home
             window.location.href = 'login.html?redirect=' + encodeURIComponent('index.html');
         }
     </script>
