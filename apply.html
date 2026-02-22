@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* (Keep all existing styles exactly as before) */
         * {
             margin: 0;
             padding: 0;
@@ -1217,7 +1216,7 @@
                 <button class="nav-btn prev" onclick="prevStep()" id="prevBtn">
                     <i class="fas fa-arrow-left"></i> Previous
                 </button>
-                <button class="nav-btn next" onclick="nextStep()" id="nextBtn">
+                <button class="nav-btn next" id="nextBtn">
                     Next <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
@@ -1258,7 +1257,7 @@
             });
         });
 
-        // Get job details from URL or sessionStorage
+        // Get job details from URL or sessionStorage (example)
         const urlParams = new URLSearchParams(window.location.search);
         let jobTitle = urlParams.get('job') || 'Senior Nurse';
         let companyName = urlParams.get('company') || 'Mediclinic Hospital';
@@ -1466,11 +1465,11 @@
                 return;
             }
 
-            // Show modal
+            // Show success modal
             const modal = document.getElementById('successModal');
             modal.classList.add('show');
 
-            // Auto-redirect to dashboard after 2.5 seconds
+            // Redirect to dashboard after 2.5 seconds
             setTimeout(() => {
                 window.location.href = 'dashboard.html';
             }, 2500);
@@ -1490,12 +1489,14 @@
             }
         }
 
-        // Attach click handler for next button
+        // Handle next button click
         const nextBtn = document.getElementById('nextBtn');
         nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             if (currentStep === 4) {
-                e.preventDefault();
                 submitApplication();
+            } else {
+                nextStep();
             }
         });
 
@@ -1503,6 +1504,7 @@
     </script>
 </body>
 </html>
+
 
 
 
