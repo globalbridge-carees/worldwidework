@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Companies - TrueJobs | Trusted Employers Worldwide</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Find Jobs - TrueJobs | Discover Your Next Opportunity</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* (All styles unchanged from the previous compressed version) */
         * {
             margin: 0;
             padding: 0;
@@ -21,27 +20,19 @@
         }
 
         body {
-            background: #f0f5fa;
+            background: #f8fafc;
             color: #1e293b;
             line-height: 1.6;
         }
 
         :root {
             --primary: #0f2b4b;
-            --primary-dark: #0a1f36;
             --primary-light: #1e3a6a;
-            --primary-glow: rgba(15, 43, 75, 0.3);
-            
+            --primary-dark: #0a1f36;
             --accent: #f59e0b;
-            --accent-dark: #d97706;
             --accent-light: #fbbf24;
-            --accent-glow: rgba(245, 158, 11, 0.4);
-            
+            --accent-dark: #d97706;
             --success: #10b981;
-            --success-dark: #059669;
-            --success-light: #34d399;
-            --success-glow: rgba(16, 185, 129, 0.4);
-            
             --gray-50: #f8fafc;
             --gray-100: #f1f5f9;
             --gray-200: #e2e8f0;
@@ -52,17 +43,12 @@
             --gray-700: #334155;
             --gray-800: #1e293b;
             --gray-900: #0f172a;
-            
             --white: #ffffff;
-            
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
             --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-            
-            --shadow-accent: 0 10px 15px -3px rgba(245, 158, 11, 0.3);
-            --shadow-primary: 0 10px 15px -3px rgba(15, 43, 75, 0.3);
         }
 
         .container {
@@ -72,25 +58,15 @@
         }
 
         /* Animations */
-        @keyframes pulse-glow {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 var(--accent-glow); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(245,158,11,0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245,158,11,0); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes verified-pulse {
-            0% { transform: scale(1); background: var(--success); }
-            50% { transform: scale(1.1); background: var(--success-light); }
-            100% { transform: scale(1); background: var(--success); }
-        }
-
-        @keyframes card-float {
+        @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
         }
-
-        .pulse-btn { animation: pulse-glow 2s infinite; }
-        .pulse-verified { animation: verified-pulse 2s infinite; }
 
         /* Navigation */
         .navbar {
@@ -130,14 +106,12 @@
             justify-content: center;
             font-size: 1.5rem;
             font-weight: 800;
-            box-shadow: var(--shadow-md);
         }
 
         .logo-text {
             font-size: 1.5rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--primary);
-            letter-spacing: -0.5px;
         }
 
         .nav-menu {
@@ -179,14 +153,13 @@
         .menu-toggle {
             display: none;
             font-size: 1.5rem;
-            color: var(--primary);
             cursor: pointer;
         }
 
         /* Hero Section – compressed */
         .hero-section {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             position: relative;
             overflow: hidden;
         }
@@ -200,7 +173,7 @@
             height: 150%;
             background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%);
             border-radius: 50%;
-            animation: pulse-glow 6s infinite;
+            animation: float 8s ease-in-out infinite;
         }
 
         .hero-content {
@@ -208,6 +181,8 @@
             z-index: 2;
             text-align: center;
             color: var(--white);
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .hero-badge {
@@ -222,38 +197,34 @@
             border: 1px solid rgba(255,255,255,0.2);
             font-size: 0.8rem;
         }
-        .hero-badge i { color: var(--accent); font-size: 0.9rem; }
+        .hero-badge i { color: var(--accent); }
 
         .hero-content h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .hero-highlight { color: var(--accent); }
 
         .hero-content p {
-            font-size: 0.95rem;
+            font-size: 1rem;
             margin-bottom: 0;
-            opacity: 0.9;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            opacity: 0.95;
         }
 
         /* Search Section */
         .search-section {
-            padding: 1.5rem 0;
+            padding: 2rem 0;
             background: var(--white);
             border-bottom: 1px solid var(--gray-200);
-            position: sticky;
-            top: 70px;
-            z-index: 99;
         }
 
-        .search-wrapper { max-width: 600px; margin: 0 auto; }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+        }
 
         .search-container {
             display: flex;
@@ -267,7 +238,7 @@
 
         .search-container:focus-within {
             border-color: var(--accent);
-            box-shadow: var(--shadow-accent);
+            box-shadow: var(--shadow-accent, 0 0 0 3px rgba(245,158,11,0.2));
         }
 
         .search-input-wrapper {
@@ -285,10 +256,10 @@
 
         .search-input {
             width: 100%;
-            padding: 0.7rem 0;
+            padding: 0.8rem 0;
             border: none;
             outline: none;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
         .search-input::placeholder { color: var(--gray-400); }
 
@@ -296,9 +267,9 @@
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             color: var(--white);
             border: none;
-            padding: 0 1.5rem;
+            padding: 0 1.8rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
@@ -307,105 +278,65 @@
             background: linear-gradient(135deg, var(--accent-dark), var(--accent));
         }
 
-        /* Companies Section */
-        .companies-section {
+        /* Filters */
+        .filters-section {
+            padding: 1.5rem 0;
+            background: var(--white);
+        }
+
+        .filters-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .filter-select {
+            padding: 0.6rem 1.5rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 30px;
+            background: var(--white);
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Jobs Section */
+        .jobs-section {
             padding: 2.5rem 0;
         }
 
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .section-title h2 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 0.3rem;
-            font-weight: 700;
-            position: relative;
-        }
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
-        }
-        .section-title p { color: var(--gray-600); font-size: 0.9rem; }
-
-        .category-filters {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1.2rem;
-            border: 1px solid var(--gray-200);
-            background: var(--white);
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .filter-btn:hover {
-            background: var(--accent);
-            color: var(--white);
-            border-color: var(--accent);
-        }
-        .filter-btn.active {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-        }
-
-        .companies-grid {
+        .jobs-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        /* Company Card – compressed */
-        .company-card {
+        .job-card {
             background: var(--white);
             border-radius: 16px;
-            padding: 1rem;
+            padding: 1.2rem;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
-            cursor: pointer;
             transition: all 0.3s ease;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
         }
-        .company-card:hover {
+
+        .job-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
             border-color: var(--accent);
         }
 
-        .company-card.featured::after {
-            content: '⭐';
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--accent);
-            color: var(--white);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
+        .job-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .company-logo {
@@ -416,195 +347,83 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.5rem;
             color: var(--white);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            box-shadow: var(--shadow-sm);
         }
 
-        .verified-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.2rem;
-            background: var(--success);
-            color: var(--white);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            animation: verified-pulse 2s infinite;
-            align-self: center;
-        }
-        .verified-badge i { font-size: 0.65rem; }
-
-        .company-card h3 {
+        .job-title h3 {
             color: var(--primary);
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 0.2rem;
-            font-weight: 700;
-            text-align: center;
         }
 
-        .company-industry {
-            color: var(--accent);
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            text-align: center;
-        }
-
-        .company-location {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.2rem;
+        .job-title p {
             color: var(--gray-600);
-            font-size: 0.7rem;
-            margin-bottom: 0.5rem;
-        }
-        .company-location i { color: var(--accent); font-size: 0.7rem; }
-
-        .company-stats {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-bottom: 0.5rem;
-            padding: 0.3rem 0;
-            border-top: 1px solid var(--gray-200);
-            border-bottom: 1px solid var(--gray-200);
+            font-size: 0.85rem;
         }
 
-        .stat {
+        .job-details {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
         }
-        .stat i { color: var(--accent); font-size: 0.8rem; margin-bottom: 0.1rem; }
-        .stat-value { font-weight: 700; color: var(--primary); font-size: 0.8rem; }
-        .stat-label { font-size: 0.55rem; color: var(--gray-500); }
 
-        .view-jobs-btn {
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray-600);
+        }
+        .detail-item i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        .job-tags {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: var(--gray-100);
+            color: var(--gray-600);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .apply-btn {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: var(--white);
             border: none;
-            padding: 0.5rem 0;
+            padding: 0.6rem 0;
             width: 100%;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            animation: pulse-glow 2s infinite;
+            margin-top: auto;
         }
-        .view-jobs-btn:hover {
-            animation: none;
+        .apply-btn:hover {
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             transform: translateY(-2px);
-            box-shadow: var(--shadow-accent);
-        }
-
-        /* Featured Companies – compressed */
-        .featured-section {
-            padding: 2.5rem 0;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        }
-        .featured-section h2 {
-            text-align: center;
-            color: var(--white);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        .featured-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.2rem;
-        }
-        .featured-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            border-radius: 16px;
-            padding: 1.2rem;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: card-float 4s ease-in-out infinite;
-        }
-        .featured-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.2);
-            border-color: var(--accent);
-        }
-        .featured-logo {
-            width: 60px;
-            height: 60px;
-            background: var(--white);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.8rem;
-            color: var(--primary);
-            font-size: 1.8rem;
-            font-weight: 800;
             box-shadow: var(--shadow-md);
         }
-        .featured-card h3 { color: var(--white); font-size: 1.1rem; margin-bottom: 0.2rem; }
-        .featured-card p { color: rgba(255,255,255,0.8); font-size: 0.75rem; margin-bottom: 0.5rem; }
-        .featured-jobs {
-            color: var(--accent);
-            font-size: 0.9rem;
-            font-weight: 700;
-            padding: 0.2rem 1rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 30px;
-        }
 
-        /* Why Choose Us – compressed */
-        .why-choose-section {
-            padding: 2.5rem 0;
-            background: var(--white);
-        }
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .benefit-card {
-            text-align: center;
-            padding: 1.5rem 0.8rem;
-            background: linear-gradient(135deg, var(--white), var(--gray-50));
-            border-radius: 16px;
-            border: 1px solid var(--gray-200);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
-        }
-        .benefit-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-        .benefit-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.8rem;
-            color: var(--white);
-            font-size: 1.3rem;
-        }
-        .benefit-card h3 { color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem; }
-        .benefit-card p { color: var(--gray-600); font-size: 0.8rem; line-height: 1.4; }
-
-        /* Pagination – compressed */
+        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 0.5rem;
-            margin-top: 2rem;
+            margin-top: 2.5rem;
         }
 
         .page-btn {
@@ -638,29 +457,6 @@
             border-radius: 30px;
         }
 
-        /* CTA Section – compressed */
-        .cta-section {
-            padding: 2.5rem 0;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-            color: var(--white);
-            text-align: center;
-        }
-        .cta-section h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
-        .cta-section p { font-size: 0.9rem; margin-bottom: 1.2rem; opacity: 0.9; }
-        .cta-btn {
-            background: var(--white);
-            color: var(--primary);
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
-        }
-        .cta-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-
         /* Footer */
         .footer {
             background: var(--gray-900);
@@ -691,16 +487,8 @@
         .footer-col h4 { color: var(--white); margin-bottom: 1rem; font-size: 1rem; }
         .footer-col ul { list-style: none; }
         .footer-col li { margin-bottom: 0.5rem; }
-        .footer-col a {
-            color: var(--gray-400);
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-        .footer-col a:hover {
-            color: var(--accent);
-            padding-left: 3px;
-        }
+        .footer-col a { color: var(--gray-400); text-decoration: none; font-size: 0.8rem; transition: all 0.3s ease; }
+        .footer-col a:hover { color: var(--accent); padding-left: 3px; }
         .social-links { display: flex; gap: 0.8rem; }
         .social-link {
             width: 32px;
@@ -711,33 +499,19 @@
             align-items: center;
             justify-content: center;
             color: var(--white);
-            text-decoration: none;
             transition: all 0.3s ease;
             font-size: 0.9rem;
         }
-        .social-link:hover {
-            background: var(--accent);
-            color: var(--primary);
-            transform: translateY(-3px) rotate(360deg);
-        }
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: var(--gray-400);
-            font-size: 0.75rem;
-        }
+        .social-link:hover { background: var(--accent); color: var(--primary); transform: translateY(-3px) rotate(360deg); }
+        .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); color: var(--gray-400); font-size: 0.75rem; }
 
         /* Responsive */
-        @media (max-width: 1200px) {
-            .companies-grid { grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 1024px) {
+            .jobs-grid { grid-template-columns: repeat(2, 1fr); }
         }
-        @media (max-width: 992px) {
-            .companies-grid { grid-template-columns: repeat(2, 1fr); }
-            .featured-grid { grid-template-columns: repeat(2, 1fr); }
-            .benefits-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+
         @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
             .menu-toggle { display: block; }
             .nav-menu {
                 display: none;
@@ -750,15 +524,12 @@
                 box-shadow: var(--shadow-lg);
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 1rem;
             }
             .nav-menu.show { display: flex; }
-            .hero-content h1 { font-size: 1.6rem; }
-            .companies-grid,
-            .featured-grid,
-            .benefits-grid,
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero-content h1 { font-size: 2rem; }
+            .jobs-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
             .search-container { flex-direction: column; border-radius: 20px; }
             .search-input-wrapper { padding: 0.5rem 1rem; border-bottom: 1px solid var(--gray-200); }
             .search-btn { padding: 0.7rem; }
@@ -780,31 +551,28 @@
             
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="findjobs.html">Find Jobs</a></li>
+                <li><a href="findjobs.html" class="active">Find Jobs</a></li>
                 <li><a href="dashboard.html" class="dashboard-link">Dashboard</a></li>
-                <li><a href="companies.html" class="active">Companies</a></li>
+                <li><a href="companies.html">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <!-- No auth buttons, no user menu -->
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section (compressed) -->
+    <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Trusted by 1,200+ Companies</span>
+                    <i class="fas fa-check-circle"></i>
+                    <span>100% Verified Jobs</span>
                 </div>
-                
                 <h1>
-                    Discover <span class="hero-highlight">Top Companies</span><br>
-                    Hiring Now
+                    Find Your <span class="hero-highlight">Dream Job</span><br>
+                    Today
                 </h1>
-                
-                <p>Find your next opportunity at trusted employers</p>
+                <p>Browse thousands of opportunities from trusted employers.</p>
             </div>
         </div>
     </section>
@@ -816,37 +584,50 @@
                 <div class="search-container">
                     <div class="search-input-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="search-input" id="searchInput" placeholder="Search companies...">
+                        <input type="text" class="search-input" placeholder="Job title, keywords, or company">
                     </div>
-                    <button class="search-btn" onclick="searchCompanies()">
-                        <i class="fas fa-arrow-right"></i> Search
-                    </button>
+                    <button class="search-btn">Search</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Companies Section (stats removed) -->
-    <section class="companies-section">
+    <!-- Filters -->
+    <section class="filters-section">
         <div class="container">
-            <div class="section-header">
-                <div class="section-title">
-                    <h2>Featured Companies</h2>
-                    <p>Browse trusted employers</p>
-                </div>
-                <div class="category-filters">
-                    <button class="filter-btn active" onclick="filterCompanies('all')">All</button>
-                    <button class="filter-btn" onclick="filterCompanies('healthcare')">Healthcare</button>
-                    <button class="filter-btn" onclick="filterCompanies('construction')">Construction</button>
-                    <button class="filter-btn" onclick="filterCompanies('hospitality')">Hospitality</button>
-                    <button class="filter-btn" onclick="filterCompanies('security')">Security</button>
-                    <button class="filter-btn" onclick="filterCompanies('aviation')">Aviation</button>
-                    <button class="filter-btn" onclick="filterCompanies('retail')">Retail</button>
-                </div>
+            <div class="filters-wrapper">
+                <select class="filter-select">
+                    <option>All Categories</option>
+                    <option>Healthcare</option>
+                    <option>Construction</option>
+                    <option>Hospitality</option>
+                    <option>Security</option>
+                    <option>Aviation</option>
+                    <option>Retail</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Locations</option>
+                    <option>Dubai</option>
+                    <option>Abu Dhabi</option>
+                    <option>Doha</option>
+                    <option>Jeddah</option>
+                    <option>Kuwait</option>
+                </select>
+                <select class="filter-select">
+                    <option>Job Type</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                    <option>Contract</option>
+                </select>
             </div>
+        </div>
+    </section>
 
-            <div class="companies-grid" id="companiesGrid">
-                <!-- Companies loaded by JS -->
+    <!-- Jobs Listing -->
+    <section class="jobs-section">
+        <div class="container">
+            <div class="jobs-grid" id="jobsGrid">
+                <!-- Jobs will be loaded by JavaScript -->
             </div>
 
             <!-- Pagination -->
@@ -862,101 +643,21 @@
         </div>
     </section>
 
-    <!-- Featured Companies -->
-    <section class="featured-section">
-        <div class="container">
-            <h2>🌟 Featured Employers</h2>
-            <div class="featured-grid">
-                <div class="featured-card" onclick="viewCompanyJobs('Qatar Airways')">
-                    <div class="featured-logo">QA</div>
-                    <h3>Qatar Airways</h3>
-                    <p>Aviation • Doha, Qatar</p>
-                    <span class="featured-jobs">234 jobs</span>
-                </div>
-                <div class="featured-card" onclick="viewCompanyJobs('Emirates')">
-                    <div class="featured-logo">EK</div>
-                    <h3>Emirates Group</h3>
-                    <p>Aviation • Dubai, UAE</p>
-                    <span class="featured-jobs">189 jobs</span>
-                </div>
-                <div class="featured-card" onclick="viewCompanyJobs('Saudi Aramco')">
-                    <div class="featured-logo">SA</div>
-                    <h3>Saudi Aramco</h3>
-                    <p>Energy • Dhahran, KSA</p>
-                    <span class="featured-jobs">156 jobs</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose Us -->
-    <section class="why-choose-section">
-        <div class="container">
-            <div class="section-header" style="text-align: center;">
-                <div class="section-title">
-                    <h2>Why Companies Trust Us</h2>
-                    <p>We connect employers with the best talent</p>
-                </div>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon"><i class="fas fa-users"></i></div>
-                    <h3>Quality Candidates</h3>
-                    <p>Access pre-screened professionals ready to contribute.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
-                    <h3>Fast Hiring</h3>
-                    <p>Receive applications within hours.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon"><i class="fas fa-globe"></i></div>
-                    <h3>Global Reach</h3>
-                    <p>Connect with talent from 45+ countries.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to Hire?</h2>
-            <p>Join 1,200+ companies finding great talent</p>
-            <button class="cta-btn" onclick="location.href='post-job.html'">
-                Post a Job <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <div class="footer-logo">
-                        <span class="logo-icon">TJ</span>
-                        <span class="logo-text">TrueJobs</span>
-                    </div>
+                    <div class="footer-logo"><span class="logo-icon">TJ</span><span class="logo-text">TrueJobs</span></div>
                     <p>Your trusted partner for global job opportunities.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="findjobs.html">Find Jobs</a></li>
-                        <li><a href="companies.html">Companies</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
+                    <ul><li><a href="about.html">About</a></li><li><a href="findjobs.html">Find Jobs</a></li><li><a href="companies.html">Companies</a></li><li><a href="contact.html">Contact</a></li></ul>
                 </div>
                 <div class="footer-col">
-                    <h4>For Employers</h4>
-                    <ul>
-                        <li><a href="post-job.html">Post a Job</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="resources.html">Resources</a></li>
-                    </ul>
+                    <h4>Resources</h4>
+                    <ul><li><a href="resources.html">Career Guides</a></li><li><a href="#">Resume Tips</a></li><li><a href="#">Interview Prep</a></li></ul>
                 </div>
                 <div class="footer-col">
                     <h4>Follow Us</h4>
@@ -979,108 +680,101 @@
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        // Companies data (same as before)
-        const companies = [
-            { name: "Qatar Airways", industry: "Aviation", location: "Doha, Qatar", employees: "10k+", jobs: 234, featured: true, verified: true, logo: "QA", category: "aviation" },
-            { name: "Emirates Group", industry: "Aviation", location: "Dubai, UAE", employees: "15k+", jobs: 189, featured: true, verified: true, logo: "EK", category: "aviation" },
-            { name: "Saudi Aramco", industry: "Energy", location: "Dhahran, KSA", employees: "20k+", jobs: 156, featured: true, verified: true, logo: "SA", category: "energy" },
-            { name: "DP World", industry: "Logistics", location: "Dubai, UAE", employees: "8k+", jobs: 98, featured: false, verified: true, logo: "DP", category: "logistics" },
-            { name: "Jumeirah Group", industry: "Hospitality", location: "Dubai, UAE", employees: "5k+", jobs: 45, featured: false, verified: true, logo: "JG", category: "hospitality" },
-            { name: "Careem", industry: "Technology", location: "Dubai, UAE", employees: "2k+", jobs: 67, featured: false, verified: true, logo: "CM", category: "technology" },
-            { name: "Al Habtoor Group", industry: "Construction", location: "Dubai, UAE", employees: "7k+", jobs: 89, featured: false, verified: true, logo: "AH", category: "construction" },
-            { name: "Mediclinic", industry: "Healthcare", location: "Abu Dhabi, UAE", employees: "3k+", jobs: 56, featured: false, verified: true, logo: "MC", category: "healthcare" },
-            { name: "G4S Security", industry: "Security", location: "Multiple", employees: "12k+", jobs: 234, featured: false, verified: true, logo: "G4", category: "security" },
-            { name: "Lulu Hypermarket", industry: "Retail", location: "GCC", employees: "6k+", jobs: 145, featured: false, verified: true, logo: "LH", category: "retail" },
-            { name: "Royal Hotel", industry: "Hospitality", location: "Doha, Qatar", employees: "1.5k+", jobs: 34, featured: false, verified: true, logo: "RH", category: "hospitality" },
-            { name: "SecurePlus", industry: "Security", location: "Qatar", employees: "800+", jobs: 23, featured: false, verified: true, logo: "SP", category: "security" }
+        // Sample job data
+        const jobs = [
+            {
+                title: "Senior Nurse",
+                company: "Mediclinic Hospital",
+                location: "Dubai, UAE",
+                salary: "$3,500 - $4,500/mo",
+                type: "Full-time",
+                tags: ["Healthcare", "Nursing"],
+                logo: "MC"
+            },
+            {
+                title: "Security Guard",
+                company: "SecurePlus",
+                location: "Doha, Qatar",
+                salary: "$1,500 - $2,000/mo",
+                type: "Full-time",
+                tags: ["Security", "CCTV"],
+                logo: "SP"
+            },
+            {
+                title: "Construction Supervisor",
+                company: "Al Habtoor Group",
+                location: "Dubai, UAE",
+                salary: "$2,800 - $3,500/mo",
+                type: "Full-time",
+                tags: ["Construction", "Supervisor"],
+                logo: "AH"
+            },
+            {
+                title: "Nanny",
+                company: "Elite Family",
+                location: "Kuwait City",
+                salary: "$1,600 - $2,000/mo",
+                type: "Live-in",
+                tags: ["Childcare", "Live-in"],
+                logo: "EF"
+            },
+            {
+                title: "Home Nurse Assistant",
+                company: "HomeCare Plus",
+                location: "Abu Dhabi, UAE",
+                salary: "$1,900 - $2,400/mo",
+                type: "Full-time",
+                tags: ["Healthcare", "Elderly"],
+                logo: "HC"
+            },
+            {
+                title: "Cashier",
+                company: "Lulu Hypermarket",
+                location: "Muscat, Oman",
+                salary: "$1,000 - $1,300/mo",
+                type: "Part-time",
+                tags: ["Retail", "Customer Service"],
+                logo: "LH"
+            }
         ];
 
-        function displayCompanies() {
-            const grid = document.getElementById('companiesGrid');
-            grid.innerHTML = companies.map(company => `
-                <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
-                    <div class="company-logo">${company.logo}</div>
-                    ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
-                    <h3>${company.name}</h3>
-                    <div class="company-industry">${company.industry}</div>
-                    <div class="company-location">
-                        <i class="fas fa-map-marker-alt"></i> ${company.location}
-                    </div>
-                    <div class="company-stats">
-                        <div class="stat">
-                            <i class="fas fa-briefcase"></i>
-                            <span class="stat-value">${company.jobs}</span>
-                            <span class="stat-label">Jobs</span>
-                        </div>
-                        <div class="stat">
-                            <i class="fas fa-users"></i>
-                            <span class="stat-value">${company.employees}</span>
-                            <span class="stat-label">Emp</span>
+        function displayJobs() {
+            const grid = document.getElementById('jobsGrid');
+            grid.innerHTML = jobs.map(job => `
+                <div class="job-card" onclick="window.location.href='apply.html?job=${encodeURIComponent(job.title)}&company=${encodeURIComponent(job.company)}'">
+                    <div class="job-header">
+                        <div class="company-logo">${job.logo}</div>
+                        <div class="job-title">
+                            <h3>${job.title}</h3>
+                            <p>${job.company}</p>
                         </div>
                     </div>
-                    <button class="view-jobs-btn pulse-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
-                        View Jobs <i class="fas fa-arrow-right"></i>
-                    </button>
+                    <div class="job-details">
+                        <div class="detail-item"><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
+                        <div class="detail-item"><i class="fas fa-clock"></i> ${job.type}</div>
+                        <div class="detail-item"><i class="fas fa-money-bill-wave"></i> ${job.salary}</div>
+                    </div>
+                    <div class="job-tags">
+                        ${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <button class="apply-btn" onclick="event.stopPropagation(); window.location.href='apply.html?job=${encodeURIComponent(job.title)}&company=${encodeURIComponent(job.company)}'">Apply Now</button>
                 </div>
             `).join('');
         }
 
-        // Navigate to findjobs.html filtered by company
-        function viewCompanyJobs(name) {
-            window.location.href = `findjobs.html?company=${encodeURIComponent(name)}`;
+        displayJobs();
+
+        // Optional: get company from URL if coming from Companies page
+        const urlParams = new URLSearchParams(window.location.search);
+        const companyFilter = urlParams.get('company');
+        if (companyFilter) {
+            // filter jobs by company (simple alert for demo)
+            alert(`Showing jobs for ${companyFilter}`);
+            // In a real app, you'd filter the displayed jobs
         }
-
-        function searchCompanies() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            alert('Searching for: ' + searchTerm);
-        }
-
-        function filterCompanies(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (category === 'all') {
-                displayCompanies();
-            } else {
-                const filtered = companies.filter(c => c.category === category);
-                const grid = document.getElementById('companiesGrid');
-                grid.innerHTML = filtered.map(company => `
-                    <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
-                        <div class="company-logo">${company.logo}</div>
-                        ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
-                        <h3>${company.name}</h3>
-                        <div class="company-industry">${company.industry}</div>
-                        <div class="company-location">
-                            <i class="fas fa-map-marker-alt"></i> ${company.location}
-                        </div>
-                        <div class="company-stats">
-                            <div class="stat">
-                                <i class="fas fa-briefcase"></i>
-                                <span class="stat-value">${company.jobs}</span>
-                                <span class="stat-label">Jobs</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-users"></i>
-                                <span class="stat-value">${company.employees}</span>
-                                <span class="stat-label">Emp</span>
-                            </div>
-                        </div>
-                        <button class="view-jobs-btn pulse-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
-                            View Jobs <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // No auth check – page is public
-        // No user menu injection
-
-        displayCompanies();
     </script>
 </body>
 </html>
-
 
 
 
