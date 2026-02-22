@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* (All styles unchanged from the previous compressed version) */
         * {
             margin: 0;
             padding: 0;
@@ -306,8 +307,6 @@
             background: linear-gradient(135deg, var(--accent-dark), var(--accent));
         }
 
-        /* Stats Section – REMOVED */
-
         /* Companies Section */
         .companies-section {
             padding: 2.5rem 0;
@@ -327,6 +326,7 @@
             color: var(--primary);
             margin-bottom: 0.3rem;
             font-weight: 700;
+            position: relative;
         }
         .section-title h2::after {
             content: '';
@@ -785,7 +785,7 @@
                 <li><a href="companies.html" class="active">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <!-- Auth buttons removed -->
+                <!-- No auth buttons, no user menu -->
             </ul>
         </div>
     </nav>
@@ -826,7 +826,7 @@
         </div>
     </section>
 
-    <!-- Companies Section (stats section removed) -->
+    <!-- Companies Section (stats removed) -->
     <section class="companies-section">
         <div class="container">
             <div class="section-header">
@@ -1025,6 +1025,7 @@
             `).join('');
         }
 
+        // Navigate to findjobs.html filtered by company
         function viewCompanyJobs(name) {
             window.location.href = `findjobs.html?company=${encodeURIComponent(name)}`;
         }
@@ -1072,42 +1073,8 @@
             }
         }
 
-        // AUTH CHECK and USER MENU
-        (function() {
-            const isLoggedIn = localStorage.getItem('truejobs_loggedin') === 'true';
-            if (!isLoggedIn) {
-                const currentPage = window.location.pathname;
-                window.location.href = 'login.html?redirect=' + encodeURIComponent(currentPage);
-                return;
-            }
-
-            const navMenu = document.getElementById('navMenu');
-            if (!navMenu) return;
-
-            const userStr = localStorage.getItem('truejobs_user');
-            let userName = 'User';
-            if (userStr) {
-                try {
-                    const user = JSON.parse(userStr);
-                    userName = user.firstName || user.name || (user.email ? user.email.split('@')[0] : 'User');
-                } catch (e) {}
-            }
-
-            const userMenu = document.createElement('li');
-            userMenu.className = 'user-menu';
-            userMenu.innerHTML = `
-                <span class="user-greeting"><i class="fas fa-user-circle"></i> Hi, ${userName}</span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            `;
-
-            navMenu.appendChild(userMenu);
-        })();
-
-        function logout() {
-            localStorage.removeItem('truejobs_loggedin');
-            localStorage.removeItem('truejobs_user');
-            window.location.href = 'login.html?redirect=' + encodeURIComponent('index.html');
-        }
+        // No auth check – page is public
+        // No user menu injection
 
         displayCompanies();
     </script>
