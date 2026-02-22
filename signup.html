@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Sign Up - TrueJobs | Create Your Account</title>
     
     <!-- Font Awesome 6 -->
@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* (All your existing styles remain exactly the same – no changes needed) */
         * {
             margin: 0;
             padding: 0;
@@ -26,7 +25,36 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background (subtle on mobile) */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -10%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite reverse;
+            pointer-events: none;
         }
 
         :root {
@@ -35,6 +63,7 @@
             --accent: #f59e0b;
             --accent-light: #fbbf24;
             --success: #10b981;
+            --danger: #ef4444;
             --gray-50: #f8fafc;
             --gray-100: #f1f5f9;
             --gray-200: #e2e8f0;
@@ -51,8 +80,8 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
         }
 
         @keyframes slideIn {
@@ -82,6 +111,8 @@
             overflow: hidden;
             box-shadow: var(--shadow-2xl);
             animation: slideIn 0.6s ease-out;
+            position: relative;
+            z-index: 10;
         }
 
         /* Left Side - Branding */
@@ -99,22 +130,24 @@
             content: '';
             position: absolute;
             top: -50%;
-            right: -50%;
-            width: 200%;
+            right: -30%;
+            width: 100%;
             height: 200%;
-            background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%);
-            animation: float 8s ease-in-out infinite;
+            background: radial-gradient(circle, rgba(245,158,11,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 18s ease-in-out infinite;
         }
 
         .brand-side::after {
             content: '';
             position: absolute;
             bottom: -50%;
-            left: -50%;
-            width: 200%;
+            left: -30%;
+            width: 100%;
             height: 200%;
             background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: float 10s ease-in-out infinite reverse;
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite reverse;
         }
 
         .logo {
@@ -138,6 +171,11 @@
             font-size: 2rem;
             font-weight: 800;
             box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(10deg) scale(1.1);
         }
 
         .logo-text {
@@ -269,7 +307,7 @@
         }
 
         .form-header h2 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--primary);
             margin-bottom: 0.5rem;
         }
@@ -282,12 +320,15 @@
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .form-header p a:hover {
+            color: var(--accent-dark);
             text-decoration: underline;
         }
 
+        /* Account Type Toggle */
         .account-type {
             display: flex;
             gap: 1rem;
@@ -307,6 +348,8 @@
             color: var(--gray-600);
             cursor: pointer;
             transition: all 0.3s ease;
+            min-height: 54px;
+            font-size: 1rem;
         }
 
         .type-btn.active {
@@ -333,8 +376,9 @@
             position: relative;
         }
 
-        /* No left icon for password fields – we adjust padding accordingly */
-        .input-group input {
+        /* Input base styles */
+        .input-group input,
+        .input-group select {
             width: 100%;
             padding: 1rem 3rem 1rem 1rem; /* right padding for eye, left padding normal */
             border: 2px solid var(--gray-200);
@@ -342,34 +386,29 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             background: var(--gray-50);
+            appearance: none;
+            -webkit-appearance: none;
         }
 
-        .input-group input:focus {
+        .input-group select {
+            padding-right: 2rem; /* space for arrow */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.2rem;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
             outline: none;
             border-color: var(--accent);
             background: var(--white);
             box-shadow: 0 0 0 4px rgba(245,158,11,0.1);
         }
 
-        /* Enhanced eye toggle */
-        .input-group .toggle-password {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-400);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 1.3rem;
-        }
-
-        .input-group .toggle-password:hover {
-            color: var(--accent);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        /* For fields that still have left icons (like name, email, phone) we keep the left padding */
-        .input-group.with-icon input {
+        /* For fields that have left icons (name, email, phone) */
+        .input-group.with-icon input,
+        .input-group.with-icon select {
             padding-left: 3rem;
         }
 
@@ -381,10 +420,32 @@
             color: var(--gray-400);
             transition: color 0.3s ease;
             font-size: 1.1rem;
+            z-index: 2;
+            pointer-events: none;
         }
 
-        .input-group.with-icon input:focus + i:first-child {
+        .input-group.with-icon input:focus + i:first-child,
+        .input-group.with-icon select:focus + i:first-child {
             color: var(--accent);
+        }
+
+        /* Password eye toggle */
+        .input-group .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.3rem;
+            z-index: 2;
+            padding: 0.5rem; /* increase touch area */
+        }
+
+        .input-group .toggle-password:hover {
+            color: var(--accent);
+            transform: translateY(-50%) scale(1.1);
         }
 
         .terms-group {
@@ -392,6 +453,7 @@
             align-items: center;
             gap: 0.8rem;
             margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
 
         .terms-group input[type="checkbox"] {
@@ -404,6 +466,8 @@
         .terms-group label {
             color: var(--gray-600);
             font-size: 0.95rem;
+            line-height: 1.4;
+            flex: 1;
         }
 
         .terms-group a {
@@ -416,6 +480,7 @@
             text-decoration: underline;
         }
 
+        /* Submit Button */
         .submit-btn {
             width: 100%;
             padding: 1.2rem;
@@ -429,6 +494,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            min-height: 60px;
         }
 
         .submit-btn::before {
@@ -452,6 +518,11 @@
             left: 100%;
         }
 
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Social Login */
         .social-login {
             margin-top: 2rem;
             text-align: center;
@@ -459,7 +530,7 @@
 
         .social-login p {
             color: var(--gray-600);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             position: relative;
         }
 
@@ -500,11 +571,11 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            min-height: 54px;
+            font-size: 1rem;
         }
 
         .social-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
             transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
         }
@@ -512,18 +583,26 @@
         .social-btn.google:hover {
             border-color: #DB4437;
             color: #DB4437;
+            background: #fff1f0;
         }
 
         .social-btn.facebook:hover {
             border-color: #4267B2;
             color: #4267B2;
+            background: #f0f4ff;
         }
 
         .social-btn.linkedin:hover {
             border-color: #0077b5;
             color: #0077b5;
+            background: #f0f9ff;
         }
 
+        .social-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
         @media (max-width: 968px) {
             .container {
                 grid-template-columns: 1fr;
@@ -535,32 +614,102 @@
             }
         }
 
-        @media (max-width: 480px) {
+        /* Enhanced mobile styles */
+        @media (max-width: 600px) {
             body {
-                padding: 1rem;
+                padding: 0.5rem;
             }
 
             .form-side {
-                padding: 2rem;
+                padding: 1.5rem;
             }
 
-            .form-row {
-                grid-template-columns: 1fr;
+            .form-header h2 {
+                font-size: 1.8rem;
             }
 
-            .social-buttons {
-                flex-direction: column;
+            .form-header p {
+                font-size: 0.9rem;
             }
 
             .account-type {
                 flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.8rem;
+            }
+
+            .type-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .input-group input,
+            .input-group select {
+                padding-top: 0.9rem;
+                padding-bottom: 0.9rem;
+                font-size: 16px; /* prevents zoom on iOS */
+                border-radius: 14px;
+            }
+
+            .input-group.with-icon input,
+            .input-group.with-icon select {
+                padding-left: 2.8rem;
+            }
+
+            .input-group .toggle-password {
+                font-size: 1.2rem;
+                right: 0.8rem;
+            }
+
+            .terms-group {
+                margin: 1rem 0;
+            }
+
+            .terms-group label {
+                font-size: 0.9rem;
+            }
+
+            .submit-btn {
+                padding: 1rem;
+                font-size: 1rem;
+                min-height: 54px;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .social-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .form-side {
+                padding: 1rem;
+            }
+
+            .form-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .input-group input,
+            .input-group select {
+                font-size: 15px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Left Side - Branding -->
+        <!-- Left Side - Branding (hidden on mobile) -->
         <div class="brand-side">
             <div class="logo">
                 <span class="logo-icon">TJ</span>
@@ -656,7 +805,7 @@
                     </div>
                 </div>
 
-                <!-- Password fields – no left icon, only eye toggle on the right -->
+                <!-- Password fields – no left icon, only eye toggle -->
                 <div class="form-group">
                     <div class="input-group">
                         <input type="password" id="password" placeholder="Enter password" required>
@@ -673,7 +822,7 @@
                 <div class="form-group">
                     <div class="input-group with-icon">
                         <i class="fas fa-map-marker-alt"></i>
-                        <select id="country" required style="width: 100%; padding: 1rem 1rem 1rem 3rem; border: 2px solid var(--gray-200); border-radius: 16px; background: var(--gray-50);">
+                        <select id="country" required>
                             <option value="">Select Country</option>
                             <option value="uae">United Arab Emirates</option>
                             <option value="qatar">Qatar</option>
@@ -801,8 +950,7 @@
                 return;
             }
 
-            // Simulate successful signup (in a real app, you'd send data to a server)
-            // Store user info (optional) and set logged-in flag
+            // Simulate successful signup
             const user = {
                 firstName,
                 lastName,
@@ -819,12 +967,13 @@
             window.location.href = redirect;
         }
 
-        // Social signup placeholders – you can implement actual OAuth later
+        // Social signup placeholders
         function socialSignup(provider) {
             alert(`Signing up with ${provider} is not yet implemented.`);
         }
     </script>
 </body>
 </html>
+
 
 
