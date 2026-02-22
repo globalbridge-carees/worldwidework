@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Sign In - TrueJobs | Welcome Back</title>
     
     <!-- Font Awesome 6 -->
@@ -25,12 +26,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1rem;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* Animated Background */
+        /* Animated Background (kept for desktop, subtle on mobile) */
         body::before {
             content: '';
             position: absolute;
@@ -41,6 +42,7 @@
             background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%);
             border-radius: 50%;
             animation: float 20s ease-in-out infinite;
+            pointer-events: none;
         }
 
         body::after {
@@ -53,6 +55,7 @@
             background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
             border-radius: 50%;
             animation: float 15s ease-in-out infinite reverse;
+            pointer-events: none;
         }
 
         :root {
@@ -99,11 +102,6 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
         }
 
         @keyframes shake {
@@ -379,6 +377,7 @@
             color: var(--gray-400);
             transition: all 0.3s ease;
             font-size: 1.1rem;
+            z-index: 2;
         }
 
         .input-group.with-icon input {
@@ -405,7 +404,7 @@
         /* Password field – no left icon, only right eye */
         .input-group input {
             width: 100%;
-            padding: 1.2rem 3.2rem 1.2rem 1.2rem; /* right padding for eye, left padding normal */
+            padding: 1.2rem 3.2rem 1.2rem 1.2rem;
             border: 2px solid var(--gray-200);
             border-radius: 20px;
             font-size: 1rem;
@@ -434,6 +433,8 @@
             cursor: pointer;
             transition: color 0.3s ease;
             font-size: 1.2rem;
+            z-index: 2;
+            padding: 0.5rem; /* increase touch area */
         }
 
         .input-group .toggle-password:hover {
@@ -446,6 +447,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .remember-me {
@@ -495,6 +498,7 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 2rem;
+            min-height: 60px; /* good touch target */
         }
 
         .signin-btn::before {
@@ -570,6 +574,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            min-height: 54px;
         }
 
         .social-btn:hover {
@@ -641,92 +646,6 @@
             font-size: 1.2rem;
         }
 
-        /* Success Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 30px;
-            max-width: 400px;
-            text-align: center;
-            animation: slideIn 0.3s ease;
-            box-shadow: var(--shadow-2xl);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal-content::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        .modal-content i {
-            font-size: 5rem;
-            color: var(--success);
-            margin-bottom: 1.5rem;
-            animation: pulse 2s infinite;
-            position: relative;
-            z-index: 2;
-        }
-
-        .modal-content h2 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .modal-content p {
-            color: var(--gray-600);
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .modal-btn {
-            padding: 1rem 3rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
-            border: none;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-        }
-
-        .modal-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
-        }
-
         /* Forgot Password Modal */
         .forgot-modal {
             display: none;
@@ -740,6 +659,7 @@
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(5px);
+            padding: 1rem;
         }
 
         .forgot-modal.show {
@@ -748,10 +668,10 @@
 
         .forgot-content {
             background: var(--white);
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 30px;
             max-width: 450px;
-            width: 90%;
+            width: 100%;
             animation: slideIn 0.3s ease;
             box-shadow: var(--shadow-2xl);
         }
@@ -786,6 +706,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            min-height: 54px;
         }
 
         .cancel-btn:hover {
@@ -802,6 +723,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            min-height: 54px;
         }
 
         .send-btn:hover {
@@ -821,58 +743,102 @@
             }
         }
 
+        /* Enhanced mobile styles */
         @media (max-width: 480px) {
             body {
-                padding: 1rem;
+                padding: 0.5rem;
             }
 
             .form-side {
-                padding: 2rem;
+                padding: 1.5rem;
             }
 
-            .form-options {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
+            .form-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .form-header p {
+                font-size: 0.9rem;
+            }
+
+            .input-group input,
+            .input-group.with-icon input {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+                font-size: 16px; /* prevents zoom on iOS */
+                border-radius: 16px;
+            }
+
+            .signin-btn {
+                padding: 1rem;
+                font-size: 1rem;
+                min-height: 54px;
             }
 
             .social-buttons {
                 flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .social-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
             }
 
             .forgot-actions {
                 flex-direction: column;
             }
 
+            .forgot-content {
+                padding: 1.5rem;
+            }
+
+            .forgot-content h2 {
+                font-size: 1.6rem;
+            }
+
             .modal-content {
                 margin: 1rem;
-                padding: 2rem;
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 360px) {
+            .form-side {
+                padding: 1rem;
+            }
+
+            .input-group input {
+                font-size: 15px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Left Side - Welcome Back -->
+        <!-- Left Side - Welcome Back (hidden on mobile) -->
         <div class="welcome-side">
             <div class="logo">
                 <span class="logo-icon">TJ</span>
                 <span class="logo-text">TrueJobs</span>
             </div>
-
             <div class="welcome-content">
                 <div class="welcome-badge">
                     <i class="fas fa-shield-alt"></i>
                     <span>Trusted by 50,000+ Professionals</span>
                 </div>
-
                 <h1>
                     Welcome<br>
                     <span class="welcome-highlight">Back!</span>
                 </h1>
-
                 <p>Sign in to continue your job search journey and connect with top employers worldwide.</p>
-
                 <div class="stats">
                     <div class="stat-item">
                         <div class="stat-number">15k+</div>
@@ -887,7 +853,6 @@
                         <div class="stat-label">Countries</div>
                     </div>
                 </div>
-
                 <div class="testimonial">
                     <i class="fas fa-quote-left"></i>
                     <p>"TrueJobs helped me find my dream job in Dubai within 2 weeks. The platform is amazing and all employers are verified!"</p>
@@ -935,7 +900,7 @@
                 <div class="form-options">
                     <label class="remember-me">
                         <input type="checkbox" id="remember"> 
-                        <label for="remember">Remember me</label>
+                        <span>Remember me</span>
                     </label>
                     <a href="#" class="forgot-password" onclick="showForgotPassword(event)">Forgot Password?</a>
                 </div>
@@ -968,16 +933,6 @@
         </div>
     </div>
 
-    <!-- Success Modal -->
-    <div class="modal" id="successModal">
-        <div class="modal-content">
-            <i class="fas fa-check-circle"></i>
-            <h2>Welcome Back!</h2>
-            <p>You have successfully signed in. Redirecting to your dashboard...</p>
-            <button class="modal-btn" onclick="goToDashboard()">Go to Dashboard</button>
-        </div>
-    </div>
-
     <!-- Forgot Password Modal -->
     <div class="forgot-modal" id="forgotModal">
         <div class="forgot-content">
@@ -997,14 +952,20 @@
     </div>
 
     <script>
-        // Get redirect URL from query parameters and preserve it in links
+        // Get redirect URL from query parameters
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect') || 'index.html';
 
         // Update signup link to include redirect parameter
-        document.getElementById('signupLink').href = 'signup.html?redirect=' + encodeURIComponent(redirect);
+        const signupLink = document.getElementById('signupLink');
+        if (signupLink) {
+            signupLink.href = 'signup.html?redirect=' + encodeURIComponent(redirect);
+        }
         // Also update the bottom signup link
-        document.querySelector('.signup-link a').href = 'signup.html?redirect=' + encodeURIComponent(redirect);
+        const bottomSignupLink = document.querySelector('.signup-link a');
+        if (bottomSignupLink) {
+            bottomSignupLink.href = 'signup.html?redirect=' + encodeURIComponent(redirect);
+        }
 
         // Toggle password visibility
         function togglePassword() {
@@ -1066,7 +1027,7 @@
                 return;
             }
 
-            // Simulate login – set login flag and redirect to the original page (home)
+            // Simulate login – set login flag and redirect to the original page
             setTimeout(() => {
                 const user = {
                     email: email,
@@ -1078,7 +1039,7 @@
                 localStorage.setItem('truejobs_user', JSON.stringify(user));
                 localStorage.setItem('truejobs_loggedin', 'true');
                 
-                // Redirect to the page the user originally wanted (home)
+                // Redirect to the page the user originally wanted
                 window.location.href = redirect;
             }, 1000);
         }
