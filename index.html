@@ -175,28 +175,16 @@
             font-weight: 600;
         }
 
+        /* Dashboard link now matches other nav items (no icon) */
         .dashboard-link {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
             color: var(--gray-600) !important;
-            padding: 0;
-            border-radius: 0;
+            background: transparent !important;
+            padding: 0 !important;
             font-weight: 500 !important;
-            background: transparent;
-        }
-
-        .dashboard-link i {
-            color: var(--gray-600);
-            transition: color 0.3s ease;
         }
 
         .dashboard-link:hover {
             color: var(--accent) !important;
-        }
-
-        .dashboard-link:hover i {
-            color: var(--accent);
         }
 
         .auth-buttons {
@@ -1168,11 +1156,12 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="findjobs.html">Find jobs</a></li>
+                <!-- Dashboard moved here, after Find jobs -->
+                <li><a href="dashboard.html" class="dashboard-link">Dashboard</a></li>
                 <li><a href="companies.html">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="dashboard.html" class="dashboard-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li class="auth-buttons">
                     <a href="login.html" class="btn-outline">Sign In</a>
                     <a href="signup.html" class="btn-primary">Sign Up</a>
@@ -1439,6 +1428,7 @@
     </script>
 </body>
 </html>
+
 
 
 
