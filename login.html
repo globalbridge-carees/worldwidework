@@ -370,7 +370,8 @@
             position: relative;
         }
 
-        .input-group i {
+        /* Email field with left icon */
+        .input-group.with-icon i:first-child {
             position: absolute;
             left: 1.2rem;
             top: 50%;
@@ -380,9 +381,31 @@
             font-size: 1.1rem;
         }
 
-        .input-group input {
+        .input-group.with-icon input {
             width: 100%;
             padding: 1.2rem 1.2rem 1.2rem 3.2rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--gray-50);
+        }
+
+        .input-group.with-icon input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(245,158,11,0.1);
+        }
+
+        .input-group.with-icon input:focus + i:first-child {
+            color: var(--accent);
+        }
+
+        /* Password field – no left icon, only right eye */
+        .input-group input {
+            width: 100%;
+            padding: 1.2rem 3.2rem 1.2rem 1.2rem; /* right padding for eye, left padding normal */
             border: 2px solid var(--gray-200);
             border-radius: 20px;
             font-size: 1rem;
@@ -395,10 +418,6 @@
             border-color: var(--accent);
             background: var(--white);
             box-shadow: 0 0 0 4px rgba(245,158,11,0.1);
-        }
-
-        .input-group input:focus + i {
-            color: var(--accent);
         }
 
         .input-group input.error {
@@ -414,6 +433,7 @@
             color: var(--gray-400);
             cursor: pointer;
             transition: color 0.3s ease;
+            font-size: 1.2rem;
         }
 
         .input-group .toggle-password:hover {
@@ -886,7 +906,7 @@
         <div class="form-side">
             <div class="form-header">
                 <h2>Sign In</h2>
-                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                <p>Don't have an account? <a href="signup.html" id="signupLink">Sign Up</a></p>
             </div>
 
             <!-- Error Message (hidden by default) -->
@@ -898,7 +918,7 @@
             <!-- Sign In Form -->
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <div class="input-group">
+                    <div class="input-group with-icon">
                         <i class="fas fa-envelope"></i>
                         <input type="email" id="email" placeholder="Email Address" required>
                     </div>
@@ -906,7 +926,7 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <i class="fas fa-lock"></i>
+                        <!-- No left icon for password -->
                         <input type="password" id="password" placeholder="Password" required>
                         <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
                     </div>
@@ -964,7 +984,7 @@
             <h2>Reset Password</h2>
             <p>Enter your email address and we'll send you a link to reset your password.</p>
             
-            <div class="input-group">
+            <div class="input-group with-icon">
                 <i class="fas fa-envelope"></i>
                 <input type="email" id="resetEmail" placeholder="Email Address">
             </div>
@@ -977,6 +997,15 @@
     </div>
 
     <script>
+        // Get redirect URL from query parameters and preserve it in links
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect') || 'index.html';
+
+        // Update signup link to include redirect parameter
+        document.getElementById('signupLink').href = 'signup.html?redirect=' + encodeURIComponent(redirect);
+        // Also update the bottom signup link
+        document.querySelector('.signup-link a').href = 'signup.html?redirect=' + encodeURIComponent(redirect);
+
         // Toggle password visibility
         function togglePassword() {
             const passwordInput = document.getElementById('password');
@@ -1026,23 +1055,19 @@
                 return;
             }
 
-            // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 showError('Please enter a valid email address');
                 return;
             }
 
-            // Password validation (min 6 characters)
             if (password.length < 6) {
                 showError('Password must be at least 6 characters');
                 return;
             }
 
-            // Simulate login - In real app, this would be an API call
-            // For demo, accept any valid format
+            // Simulate login – set login flag and redirect to the original page (home)
             setTimeout(() => {
-                // Store user session
                 const user = {
                     email: email,
                     name: email.split('@')[0],
@@ -1050,22 +1075,17 @@
                     remember: remember
                 };
                 
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('truejobs_user', JSON.stringify(user));
+                localStorage.setItem('truejobs_loggedin', 'true');
                 
-                // Show success modal
-                document.getElementById('successModal').classList.add('show');
-                
-                // Auto redirect after 2 seconds
-                setTimeout(() => {
-                    goToDashboard();
-                }, 2000);
+                // Redirect to the page the user originally wanted (home)
+                window.location.href = redirect;
             }, 1000);
         }
 
-        // Social login
+        // Social login (placeholder)
         function socialLogin(provider) {
-            alert(`Signing in with ${provider}...`);
-            // In real app, redirect to OAuth provider
+            alert(`Signing in with ${provider} is not yet implemented.`);
         }
 
         // Show forgot password modal
@@ -1080,7 +1100,7 @@
             document.getElementById('resetEmail').value = '';
         }
 
-        // Send reset link
+        // Send reset link (placeholder)
         function sendResetLink() {
             const email = document.getElementById('resetEmail').value;
             
@@ -1098,24 +1118,6 @@
             alert(`Password reset link sent to ${email}`);
             hideForgotPassword();
         }
-
-        // Go to dashboard
-        function goToDashboard() {
-            window.location.href = 'dashboard.html';
-        }
-
-        // Check if user is already logged in
-        window.onload = function() {
-            const user = localStorage.getItem('currentUser');
-            if (user) {
-                // Auto redirect for demo
-                // Uncomment if you want auto-login
-                // window.location.href = 'dashboard.html';
-            }
-        };
-
-        // Add demo account for testing
-        console.log('Demo Account: demo@truejobs.com / password123');
     </script>
 </body>
 </html>
