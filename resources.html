@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Resources - TrueJobs | Career Guides & Templates</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        :root {
+            --primary: #0f2b4b;
+            --primary-light: #1e3a6a;
+            --primary-dark: #0a1f36;
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --accent-dark: #d97706;
+            --success: #10b981;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a:hover { color: var(--accent); }
+        .nav-menu a.active { color: var(--primary); font-weight: 700; position: relative; }
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+
+        .dashboard-link {
+            color: var(--gray-600) !important;
+            background: transparent !important;
+            padding: 0.5rem 0 !important;
+            font-weight: 600 !important;
+        }
+        .dashboard-link:hover { color: var(--accent) !important; }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section – compressed */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 2.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 60%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.8rem;
+        }
+        .hero-badge i { color: var(--accent); }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+        }
+
+        .hero-highlight { color: var(--accent); }
+
+        .hero-content p {
+            font-size: 1rem;
+            margin-bottom: 0;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            padding: 2.5rem 0;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        .section-header p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, var(--white), var(--gray-50));
+            border-radius: 16px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem;
+            color: var(--white);
+            font-size: 1.4rem;
+        }
+        .category-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+        .category-card p {
+            color: var(--gray-600);
+            font-size: 0.8rem;
+        }
+
+        /* Featured Guides */
+        .guides-section {
+            padding: 2.5rem 0;
+            background: var(--gray-50);
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .guide-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent);
+        }
+
+        .guide-image {
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+        }
+        .guide-content {
+            padding: 1.2rem;
+        }
+        .guide-tags {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .guide-tag {
+            background: var(--gray-100);
+            color: var(--gray-600);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .guide-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+        .guide-content p {
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .guide-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .guide-link:hover { gap: 0.5rem; }
+
+        /* Templates Section */
+        .templates-section {
+            padding: 2.5rem 0;
+            background: var(--white);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .template-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+        .template-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+        .template-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+        .template-card p {
+            color: var(--gray-500);
+            font-size: 0.75rem;
+            margin-bottom: 0.8rem;
+        }
+        .download-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .download-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Articles Section */
+        .articles-section {
+            padding: 2.5rem 0;
+            background: var(--gray-50);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .article-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent);
+        }
+        .article-image {
+            height: 100px;
+            background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+            font-size: 1.5rem;
+        }
+        .article-content {
+            padding: 1rem;
+        }
+        .article-meta {
+            display: flex;
+            gap: 0.8rem;
+            color: var(--gray-500);
+            font-size: 0.7rem;
+            margin-bottom: 0.3rem;
+        }
+        .article-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+        .article-content p {
+            color: var(--gray-600);
+            margin-bottom: 0.8rem;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .read-more {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .read-more:hover { gap: 0.4rem; }
+
+        /* Newsletter Section – compressed */
+        .newsletter-section {
+            padding: 2.5rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            text-align: center;
+        }
+        .newsletter-section h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .newsletter-section p {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        .newsletter-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+            gap: 0.5rem;
+        }
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .newsletter-form button {
+            padding: 0.8rem 1.5rem;
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 2.5rem 0 1.5rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .footer-logo .logo-icon {
+            background: var(--accent);
+            color: var(--primary);
+            width: 35px;
+            height: 35px;
+            font-size: 1.2rem;
+        }
+        .footer-logo .logo-text { color: var(--white); font-size: 1.2rem; }
+        .footer-col p { color: var(--gray-400); font-size: 0.8rem; line-height: 1.5; }
+        .footer-col h4 { color: var(--white); margin-bottom: 1rem; font-size: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.5rem; }
+        .footer-col a { color: var(--gray-400); text-decoration: none; font-size: 0.8rem; transition: all 0.3s ease; }
+        .footer-col a:hover { color: var(--accent); padding-left: 3px; }
+        .social-links { display: flex; gap: 0.8rem; }
+        .social-link {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .social-link:hover { background: var(--accent); color: var(--primary); transform: translateY(-3px) rotate(360deg); }
+        .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); color: var(--gray-400); font-size: 0.75rem; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .guides-grid { grid-template-columns: repeat(2, 1fr); }
+            .templates-grid { grid-template-columns: repeat(2, 1fr); }
+            .articles-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .menu-toggle { display: block; }
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .nav-menu.show { display: flex; }
+            .hero-content h1 { font-size: 2rem; }
+            .categories-grid,
+            .guides-grid,
+            .templates-grid,
+            .articles-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">TJ</span>
+                <span class="logo-text">TrueJobs</span>
+            </a>
+            
+            <span class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </span>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="findjobs.html">Find Jobs</a></li>
+                <li><a href="dashboard.html" class="dashboard-link">Dashboard</a></li>
+                <li><a href="companies.html">Companies</a></li>
+                <li><a href="resources.html" class="active">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Career Advancement Hub</span>
+                </div>
+                <h1>
+                    Resources to <span class="hero-highlight">Elevate</span><br>
+                    Your Career
+                </h1>
+                <p>Expert guides, templates, and articles to help you land your dream job.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Browse by Topic</h2>
+                <p>Find exactly what you need</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" onclick="window.location.href='#'">
+                    <div class="category-icon"><i class="fas fa-file-alt"></i></div>
+                    <h4>Resume Writing</h4>
+                    <p>12 templates & guides</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='#'">
+                    <div class="category-icon"><i class="fas fa-comments"></i></div>
+                    <h4>Interview Prep</h4>
+                    <p>25+ expert tips</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='#'">
+                    <div class="category-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Career Growth</h4>
+                    <p>15 articles</p>
+                </div>
+                <div class="category-card" onclick="window.location.href='#'">
+                    <div class="category-icon"><i class="fas fa-briefcase"></i></div>
+                    <h4>Job Search</h4>
+                    <p>8 strategies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Guides -->
+    <section class="guides-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Guides</h2>
+                <p>In‑depth resources to boost your career</p>
+            </div>
+            <div class="guides-grid">
+                <div class="guide-card">
+                    <div class="guide-image"><i class="fas fa-file-pdf"></i></div>
+                    <div class="guide-content">
+                        <div class="guide-tags">
+                            <span class="guide-tag">Resume</span>
+                            <span class="guide-tag">PDF</span>
+                        </div>
+                        <h3>The Ultimate Resume Guide</h3>
+                        <p>Learn how to craft a resume that gets you noticed.</p>
+                        <a href="#" class="guide-link">Download Free <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-image"><i class="fas fa-chart-pie"></i></div>
+                    <div class="guide-content">
+                        <div class="guide-tags">
+                            <span class="guide-tag">Salary</span>
+                            <span class="guide-tag">Report</span>
+                        </div>
+                        <h3>Salary Negotiation Handbook</h3>
+                        <p>Know your worth and get the salary you deserve.</p>
+                        <a href="#" class="guide-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-image"><i class="fas fa-video"></i></div>
+                    <div class="guide-content">
+                        <div class="guide-tags">
+                            <span class="guide-tag">Interview</span>
+                            <span class="guide-tag">Video</span>
+                        </div>
+                        <h3>Master the Interview</h3>
+                        <p>Common questions and how to make a lasting impression.</p>
+                        <a href="#" class="guide-link">Watch Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Section -->
+    <section class="templates-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Downloadable Templates</h2>
+                <p>Ready‑to‑use, professional templates</p>
+            </div>
+            <div class="templates-grid">
+                <div class="template-card">
+                    <div class="template-icon"><i class="fas fa-file-word"></i></div>
+                    <h4>Modern Resume</h4>
+                    <p>DOCX · ATS‑friendly</p>
+                    <button class="download-btn">Download</button>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon"><i class="fas fa-file-lines"></i></div>
+                    <h4>Cover Letter</h4>
+                    <p>DOCX · 3 styles</p>
+                    <button class="download-btn">Download</button>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon"><i class="fas fa-list-check"></i></div>
+                    <h4>Interview Tracker</h4>
+                    <p>Excel · Track applications</p>
+                    <button class="download-btn">Download</button>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon"><i class="fas fa-people-arrows"></i></div>
+                    <h4>Reference List</h4>
+                    <p>PDF · Professional format</p>
+                    <button class="download-btn">Download</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Articles -->
+    <section class="articles-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Latest Articles</h2>
+                <p>Insights from industry experts</p>
+            </div>
+            <div class="articles-grid">
+                <div class="article-card">
+                    <div class="article-image"><i class="fas fa-pen"></i></div>
+                    <div class="article-content">
+                        <div class="article-meta"><span>May 12, 2026</span><span>5 min read</span></div>
+                        <h3>Top 10 Skills Employers Look for in 2026</h3>
+                        <p>Stay ahead of the curve with these in‑demand skills.</p>
+                        <a href="#" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image"><i class="fas fa-building"></i></div>
+                    <div class="article-content">
+                        <div class="article-meta"><span>May 5, 2026</span><span>7 min read</span></div>
+                        <h3>How to Research a Company Before an Interview</h3>
+                        <p>Impress interviewers with deep company knowledge.</p>
+                        <a href="#" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image"><i class="fas fa-handshake"></i></div>
+                    <div class="article-content">
+                        <div class="article-meta"><span>Apr 28, 2026</span><span>6 min read</span></div>
+                        <h3>Networking Strategies That Actually Work</h3>
+                        <p>Build meaningful professional connections.</p>
+                        <a href="#" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter-section">
+        <div class="container">
+            <h2>Get Weekly Career Insights</h2>
+            <p>Join 10,000+ professionals who receive our newsletter</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Your email address">
+                <button>Subscribe</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo"><span class="logo-icon">TJ</span><span class="logo-text">TrueJobs</span></div>
+                    <p>Your trusted partner for global job opportunities.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul><li><a href="about.html">About</a></li><li><a href="findjobs.html">Find Jobs</a></li><li><a href="companies.html">Companies</a></li><li><a href="contact.html">Contact</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul><li><a href="#">Career Guides</a></li><li><a href="#">Resume Tips</a></li><li><a href="#">Interview Prep</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TrueJobs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
+
