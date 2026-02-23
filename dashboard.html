@@ -53,20 +53,10 @@
             --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
         }
 
-        /* Animations */
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 15px rgba(245, 158, 11, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-            }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
         }
 
         @keyframes float {
@@ -406,6 +396,46 @@
             gap: 0.3rem;
         }
 
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--gray-50);
+            border-radius: 20px;
+            border: 2px dashed var(--gray-300);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: var(--gray-500);
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .empty-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
         .applications-list {
             display: flex;
             flex-direction: column;
@@ -421,6 +451,12 @@
             border-radius: 16px;
             border: 1px solid var(--gray-200);
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .application-item:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
         }
 
         .app-info {
@@ -521,6 +557,13 @@
             padding: 1.2rem;
             border: 1px solid var(--gray-200);
             position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .saved-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
         }
 
         .saved-card .remove-btn {
@@ -529,6 +572,11 @@
             right: 0.8rem;
             color: var(--gray-400);
             cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .saved-card .remove-btn:hover {
+            color: var(--danger);
         }
 
         .saved-card h4 {
@@ -566,14 +614,12 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            animation: pulse 2s infinite;
             transition: all 0.3s ease;
         }
 
         .apply-now:hover {
             transform: scale(1.05);
             box-shadow: var(--shadow-xl);
-            animation: none;
         }
 
         .chart-container {
@@ -640,11 +686,30 @@
             padding: 0.8rem;
             background: var(--gray-50);
             border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-item:hover {
+            background: var(--gray-100);
+            transform: translateX(5px);
+        }
+
+        .profile-item i.fa-check-circle {
+            color: var(--success);
+        }
+
+        .profile-item i.fa-times-circle {
+            color: var(--danger);
         }
 
         .profile-item .status {
-            color: var(--success);
+            margin-left: auto;
             font-weight: 600;
+        }
+
+        .profile-item .status.complete {
+            color: var(--success);
         }
 
         .profile-item .status.missing {
@@ -673,9 +738,14 @@
         .footer-links a {
             color: var(--gray-500);
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
-        /* ===== MOBILE COMPACT STYLES ===== */
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Mobile Styles */
         @media (max-width: 1024px) {
             .main-grid {
                 grid-template-columns: 1fr;
@@ -705,7 +775,6 @@
                 display: flex;
             }
 
-            /* Smaller logo on mobile */
             .logo-icon {
                 width: 35px;
                 height: 35px;
@@ -715,77 +784,24 @@
                 font-size: 1.4rem;
             }
 
-            .user-menu {
-                gap: 0.8rem;
-            }
-
-            .notifications i {
-                font-size: 1.1rem;
-            }
-
-            .user-profile {
-                padding: 0.3rem 0.6rem;
-            }
-
-            .avatar {
-                width: 32px;
-                height: 32px;
-                font-size: 0.9rem;
-            }
-
-            .user-info {
-                display: none;
-            }
-
-            /* Thinner welcome card */
             .welcome-card {
-                padding: 1rem;
+                padding: 1.5rem;
             }
             .welcome-content h1 {
-                font-size: 1.4rem;
-                margin-bottom: 0.3rem;
-            }
-            .welcome-content p {
-                font-size: 0.85rem;
-                margin-bottom: 0.8rem;
+                font-size: 1.6rem;
             }
             .welcome-stats {
-                gap: 0.8rem;
-            }
-            .welcome-stat {
-                gap: 0.5rem;
-            }
-            .welcome-stat i {
-                font-size: 1.2rem;
-            }
-            .welcome-stat .stat-info h3 {
-                font-size: 1.1rem;
-            }
-            .welcome-stat .stat-info p {
-                font-size: 0.7rem;
+                gap: 1.5rem;
             }
 
-            /* Smaller stat cards */
             .stats-grid {
-                gap: 0.8rem;
+                gap: 1rem;
             }
             .stat-card {
-                padding: 1rem;
-            }
-            .stat-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.3rem;
-                margin-bottom: 0.5rem;
-            }
-            .stat-card h3 {
-                font-size: 0.8rem;
+                padding: 1.2rem;
             }
             .stat-number {
-                font-size: 1.3rem;
-            }
-            .stat-trend {
-                font-size: 0.7rem;
+                font-size: 1.6rem;
             }
 
             .saved-grid {
@@ -795,6 +811,7 @@
             .application-item {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 1rem;
             }
             .app-status {
                 width: 100%;
@@ -809,27 +826,6 @@
             .footer-links {
                 flex-wrap: wrap;
                 justify-content: center;
-            }
-
-            .stat-card, .applications-section, .activity-section,
-            .saved-jobs-section, .chart-section, .profile-section {
-                padding: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 0.8rem;
-            }
-            .nav-container {
-                padding: 0 0.8rem;
-            }
-            .welcome-content h1 {
-                font-size: 1.3rem;
-            }
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
             }
         }
     </style>
@@ -854,12 +850,12 @@
                 <li><a href="dashboard.html" class="active">Dashboard</a></li>
             </ul>
             <div class="user-menu">
-                <div class="notifications">
+                <div class="notifications" onclick="window.location.href='notifications.html'">
                     <i class="fas fa-bell"></i>
-                    <span class="badge">3</span>
+                    <span class="badge" id="notificationCount">0</span>
                 </div>
-                <div class="user-profile">
-                    <div class="avatar">JD</div>
+                <div class="user-profile" onclick="window.location.href='profile.html'">
+                    <div class="avatar" id="userAvatar">JD</div>
                     <div class="user-info">
                         <div class="name" id="userName">John Doe</div>
                         <div class="role">Job Seeker</div>
@@ -870,32 +866,32 @@
         </div>
     </nav>
 
-    <!-- Welcome Section – ultra thin now -->
+    <!-- Welcome Section -->
     <section class="welcome-section">
         <div class="container">
             <div class="welcome-card">
                 <div class="welcome-content">
-                    <h1>Welcome back to <span id="welcomeName">John</span>! 👋</h1>
-                    <p>Your job search journey is progressing well. Here's what's happening today.</p>
+                    <h1>Welcome back, <span id="welcomeName">John</span>! 👋</h1>
+                    <p id="welcomeMessage">Your job search journey is progressing well. Here's what's happening today.</p>
                     <div class="welcome-stats">
                         <div class="welcome-stat">
                             <i class="fas fa-eye"></i>
                             <div class="stat-info">
-                                <h3>128</h3>
+                                <h3 id="profileViews">0</h3>
                                 <p>Profile Views</p>
                             </div>
                         </div>
                         <div class="welcome-stat">
                             <i class="fas fa-file-alt"></i>
                             <div class="stat-info">
-                                <h3>12</h3>
+                                <h3 id="totalApplications">0</h3>
                                 <p>Applications</p>
                             </div>
                         </div>
                         <div class="welcome-stat">
                             <i class="fas fa-bookmark"></i>
                             <div class="stat-info">
-                                <h3>8</h3>
+                                <h3 id="totalSaved">0</h3>
                                 <p>Saved Jobs</p>
                             </div>
                         </div>
@@ -905,31 +901,31 @@
         </div>
     </section>
 
-    <!-- Stats Cards – reduced size, still animated -->
+    <!-- Stats Cards -->
     <section class="stats-grid container">
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-paper-plane"></i></div>
             <h3>Applications Sent</h3>
-            <div class="stat-number">24</div>
-            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +12%</div>
+            <div class="stat-number" id="applicationsSent">0</div>
+            <div class="stat-trend" id="applicationsTrend"></div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-clock"></i></div>
             <h3>Under Review</h3>
-            <div class="stat-number">8</div>
-            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +3 this week</div>
+            <div class="stat-number" id="underReview">0</div>
+            <div class="stat-trend" id="reviewTrend"></div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
             <h3>Interviews</h3>
-            <div class="stat-number">3</div>
-            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> 2 upcoming</div>
+            <div class="stat-number" id="interviews">0</div>
+            <div class="stat-trend" id="interviewTrend"></div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-trophy"></i></div>
             <h3>Offers Received</h3>
-            <div class="stat-number">2</div>
-            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> 1 pending</div>
+            <div class="stat-number" id="offers">0</div>
+            <div class="stat-trend" id="offersTrend"></div>
         </div>
     </section>
 
@@ -938,103 +934,14 @@
         <section class="applications-section">
             <div class="section-header">
                 <h2>Recent Applications</h2>
-                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                <a href="applications.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="applications-list">
-                <div class="application-item">
-                    <div class="app-info">
-                        <div class="app-logo">MC</div>
-                        <div class="app-details">
-                            <h4>Senior Nurse</h4>
-                            <div class="company">Mediclinic Hospital</div>
-                        </div>
-                    </div>
-                    <div class="app-status">
-                        <span class="status-badge status-review">Under Review</span>
-                        <span class="app-date">2 days ago</span>
-                    </div>
-                </div>
-                <div class="application-item">
-                    <div class="app-info">
-                        <div class="app-logo">QA</div>
-                        <div class="app-details">
-                            <h4>Security Supervisor</h4>
-                            <div class="company">Qatar Airways</div>
-                        </div>
-                    </div>
-                    <div class="app-status">
-                        <span class="status-badge status-interview">Interview</span>
-                        <span class="app-date">5 days ago</span>
-                    </div>
-                </div>
-                <div class="application-item">
-                    <div class="app-info">
-                        <div class="app-logo">DP</div>
-                        <div class="app-details">
-                            <h4>Logistics Coordinator</h4>
-                            <div class="company">DP World</div>
-                        </div>
-                    </div>
-                    <div class="app-status">
-                        <span class="status-badge status-pending">Pending</span>
-                        <span class="app-date">1 week ago</span>
-                    </div>
-                </div>
-                <div class="application-item">
-                    <div class="app-info">
-                        <div class="app-logo">JG</div>
-                        <div class="app-details">
-                            <h4>Hotel Manager</h4>
-                            <div class="company">Jumeirah Group</div>
-                        </div>
-                    </div>
-                    <div class="app-status">
-                        <span class="status-badge status-rejected">Not Selected</span>
-                        <span class="app-date">2 weeks ago</span>
-                    </div>
-                </div>
-            </div>
+            <div id="applicationsList" class="applications-list"></div>
         </section>
 
         <section class="activity-section">
             <div class="section-header"><h2>Recent Activity</h2></div>
-            <div class="activity-list">
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-eye"></i></div>
-                    <div class="activity-details">
-                        <p>Profile viewed by <strong>Qatar Airways</strong></p>
-                        <span class="time">2 hours ago</span>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-file-alt"></i></div>
-                    <div class="activity-details">
-                        <p>Status changed to <strong>Interview</strong> at Mediclinic</p>
-                        <span class="time">Yesterday</span>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-bookmark"></i></div>
-                    <div class="activity-details">
-                        <p>Saved <strong>Security Supervisor</strong> at G4S</p>
-                        <span class="time">2 days ago</span>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-calendar"></i></div>
-                    <div class="activity-details">
-                        <p>Interview with <strong>Emirates Group</strong> tomorrow</p>
-                        <span class="time">3 days ago</span>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-download"></i></div>
-                    <div class="activity-details">
-                        <p>CV downloaded by <strong>DP World</strong></p>
-                        <span class="time">4 days ago</span>
-                    </div>
-                </div>
-            </div>
+            <div id="activityList" class="activity-list"></div>
         </section>
     </div>
 
@@ -1042,31 +949,9 @@
     <section class="saved-jobs-section container">
         <div class="section-header">
             <h2>Saved Jobs</h2>
-            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            <a href="saved-jobs.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
         </div>
-        <div class="saved-grid">
-            <div class="saved-card">
-                <i class="fas fa-times remove-btn"></i>
-                <h4>Registered Nurse</h4>
-                <div class="company">Mediclinic Hospital</div>
-                <div class="location"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</div>
-                <button class="apply-now">Apply Now</button>
-            </div>
-            <div class="saved-card">
-                <i class="fas fa-times remove-btn"></i>
-                <h4>Security Manager</h4>
-                <div class="company">G4S Security</div>
-                <div class="location"><i class="fas fa-map-marker-alt"></i> Doha, Qatar</div>
-                <button class="apply-now">Apply Now</button>
-            </div>
-            <div class="saved-card">
-                <i class="fas fa-times remove-btn"></i>
-                <h4>Construction Supervisor</h4>
-                <div class="company">Al Habtoor Group</div>
-                <div class="location"><i class="fas fa-map-marker-alt"></i> Abu Dhabi, UAE</div>
-                <button class="apply-now">Apply Now</button>
-            </div>
-        </div>
+        <div id="savedJobsGrid" class="saved-grid"></div>
     </section>
 
     <!-- Chart -->
@@ -1078,23 +963,17 @@
     <!-- Profile Completion -->
     <section class="profile-section container">
         <div class="profile-header">
-            <div class="profile-avatar">JD</div>
+            <div class="profile-avatar" id="profileAvatar">JD</div>
             <div class="profile-info">
                 <h3 id="profileName">John Doe</h3>
-                <p>Member since January 2026</p>
+                <p id="memberSince">Member since January 2026</p>
             </div>
         </div>
         <div class="completion-bar">
-            <div class="completion-label"><span>Profile Completion</span><span>75%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+            <div class="completion-label"><span>Profile Completion</span><span id="completionPercentage">0%</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="completionBar" style="width:0%"></div></div>
         </div>
-        <div class="profile-items">
-            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Personal Information</span><span class="status">Complete</span></div>
-            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Work Experience</span><span class="status">Complete</span></div>
-            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Skills & Qualifications</span><span class="status">Complete</span></div>
-            <div class="profile-item"><i class="fas fa-times-circle"></i><span>Education</span><span class="status missing">Missing</span></div>
-            <div class="profile-item"><i class="fas fa-times-circle"></i><span>Certifications</span><span class="status missing">Missing</span></div>
-        </div>
+        <div class="profile-items" id="profileItems"></div>
     </section>
 
     <!-- Footer -->
@@ -1113,29 +992,301 @@
     </footer>
 
     <script>
+        // Toggle mobile menu
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('show');
         }
 
+        // Load user data from localStorage
         function loadUserData() {
-            const user = JSON.parse(localStorage.getItem('currentUser')) || { firstName: 'John' };
+            const user = JSON.parse(localStorage.getItem('currentUser')) || { 
+                firstName: 'John',
+                lastName: 'Doe',
+                email: 'john@example.com',
+                memberSince: 'January 2026'
+            };
+            
+            const initials = (user.firstName?.[0] || 'J') + (user.lastName?.[0] || 'D');
+            
             document.getElementById('welcomeName').textContent = user.firstName || 'John';
-            document.getElementById('userName').textContent = user.firstName ? `${user.firstName} Doe` : 'John Doe';
-            document.getElementById('profileName').textContent = user.firstName ? `${user.firstName} Doe` : 'John Doe';
+            document.getElementById('userName').textContent = `${user.firstName || 'John'} ${user.lastName || 'Doe'}`;
+            document.getElementById('profileName').textContent = `${user.firstName || 'John'} ${user.lastName || 'Doe'}`;
+            document.getElementById('userAvatar').textContent = initials;
+            document.getElementById('profileAvatar').textContent = initials;
+            document.getElementById('memberSince').textContent = `Member since ${user.memberSince || 'January 2026'}`;
         }
 
-        function initChart() {
+        // Load dashboard data from localStorage
+        function loadDashboardData() {
+            // Get saved jobs
+            const savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
+            
+            // Get applications
+            const applications = JSON.parse(localStorage.getItem('applications')) || [];
+            
+            // Get profile views (increment when employers view profile)
+            const profileViews = parseInt(localStorage.getItem('profileViews')) || 0;
+            
+            // Calculate stats
+            const applicationsSent = applications.length;
+            const underReview = applications.filter(app => app.status === 'Under Review').length;
+            const interviews = applications.filter(app => app.status === 'Interview').length;
+            const offers = applications.filter(app => app.status === 'Offer').length;
+            
+            // Update welcome stats
+            document.getElementById('profileViews').textContent = profileViews;
+            document.getElementById('totalApplications').textContent = applicationsSent;
+            document.getElementById('totalSaved').textContent = savedJobs.length;
+            
+            // Update stat cards
+            document.getElementById('applicationsSent').textContent = applicationsSent;
+            document.getElementById('underReview').textContent = underReview;
+            document.getElementById('interviews').textContent = interviews;
+            document.getElementById('offers').textContent = offers;
+            
+            // Update trends (demo data - in real app, this would compare with previous period)
+            if (applicationsSent > 0) {
+                document.getElementById('applicationsTrend').innerHTML = '<i class="fas fa-arrow-up"></i> +' + applicationsSent + ' total';
+            }
+            if (underReview > 0) {
+                document.getElementById('reviewTrend').innerHTML = '<i class="fas fa-arrow-up"></i> ' + underReview + ' active';
+            }
+            if (interviews > 0) {
+                document.getElementById('interviewTrend').innerHTML = '<i class="fas fa-arrow-up"></i> ' + interviews + ' upcoming';
+            }
+            if (offers > 0) {
+                document.getElementById('offersTrend').innerHTML = '<i class="fas fa-arrow-up"></i> ' + offers + ' pending';
+            }
+            
+            // Update notification count
+            const notificationCount = applications.filter(app => app.status === 'Interview' || app.status === 'Offer').length;
+            document.getElementById('notificationCount').textContent = notificationCount;
+            
+            // Display applications
+            displayApplications(applications);
+            
+            // Display saved jobs
+            displaySavedJobs(savedJobs);
+            
+            // Display activity
+            displayActivity(applications, savedJobs, profileViews);
+            
+            // Update profile completion
+            updateProfileCompletion();
+            
+            // Initialize chart
+            initChart(applications);
+        }
+
+        function displayApplications(applications) {
+            const container = document.getElementById('applicationsList');
+            
+            if (applications.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>No applications yet</h3>
+                        <p>Start applying to jobs to see them here</p>
+                        <button class="empty-btn" onclick="window.location.href='findjobs.html'">Browse Jobs</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show only last 4 applications
+            const recentApps = applications.slice(0, 4);
+            container.innerHTML = recentApps.map(app => {
+                let statusClass = '';
+                let statusText = app.status || 'Pending';
+                
+                switch(app.status) {
+                    case 'Under Review': statusClass = 'status-review'; break;
+                    case 'Interview': statusClass = 'status-interview'; break;
+                    case 'Offer': statusClass = 'status-interview'; break;
+                    case 'Rejected': statusClass = 'status-rejected'; break;
+                    default: statusClass = 'status-pending';
+                }
+                
+                return `
+                    <div class="application-item" onclick="viewApplication(${app.id})">
+                        <div class="app-info">
+                            <div class="app-logo">${app.company.substring(0,2).toUpperCase()}</div>
+                            <div class="app-details">
+                                <h4>${app.title}</h4>
+                                <div class="company">${app.company}</div>
+                            </div>
+                        </div>
+                        <div class="app-status">
+                            <span class="status-badge ${statusClass}">${app.status || 'Pending'}</span>
+                            <span class="app-date">${app.date || 'Recently'}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displaySavedJobs(savedJobs) {
+            const container = document.getElementById('savedJobsGrid');
+            
+            if (savedJobs.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1">
+                        <div class="empty-state">
+                            <i class="fas fa-bookmark"></i>
+                            <h3>No saved jobs</h3>
+                            <p>Save jobs you're interested in to apply later</p>
+                            <button class="empty-btn" onclick="window.location.href='findjobs.html'">Browse Jobs</button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show only last 3 saved jobs
+            const recentSaved = savedJobs.slice(0, 3);
+            container.innerHTML = recentSaved.map(job => `
+                <div class="saved-card">
+                    <i class="fas fa-times remove-btn" onclick="removeSavedJob(${job.id}, event)"></i>
+                    <h4>${job.title}</h4>
+                    <div class="company">${job.company}</div>
+                    <div class="location"><i class="fas fa-map-marker-alt"></i> ${job.location || 'Location TBD'}</div>
+                    <button class="apply-now" onclick="applyForJob(${job.id})">Apply Now</button>
+                </div>
+            `).join('');
+        }
+
+        function displayActivity(applications, savedJobs, profileViews) {
+            const container = document.getElementById('activityList');
+            const activities = [];
+            
+            // Add profile view activity
+            if (profileViews > 0) {
+                activities.push({
+                    icon: 'fa-eye',
+                    text: `Your profile has been viewed ${profileViews} time${profileViews > 1 ? 's' : ''}`,
+                    time: 'Today'
+                });
+            }
+            
+            // Add application activities
+            applications.slice(0, 3).forEach(app => {
+                activities.push({
+                    icon: 'fa-file-alt',
+                    text: `Applied to ${app.title} at ${app.company}`,
+                    time: app.date || 'Recently'
+                });
+            });
+            
+            // Add saved job activities
+            savedJobs.slice(0, 2).forEach(job => {
+                activities.push({
+                    icon: 'fa-bookmark',
+                    text: `Saved ${job.title} at ${job.company}`,
+                    time: 'Recently'
+                });
+            });
+            
+            if (activities.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <h3>No activity yet</h3>
+                        <p>Your recent actions will appear here</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = activities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-icon"><i class="fas ${activity.icon}"></i></div>
+                    <div class="activity-details">
+                        <p>${activity.text}</p>
+                        <span class="time">${activity.time}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateProfileCompletion() {
+            const profile = JSON.parse(localStorage.getItem('userProfile')) || {
+                personalInfo: false,
+                experience: false,
+                skills: false,
+                education: false,
+                certifications: false
+            };
+            
+            const items = [
+                { name: 'Personal Information', key: 'personalInfo', complete: profile.personalInfo || false },
+                { name: 'Work Experience', key: 'experience', complete: profile.experience || false },
+                { name: 'Skills & Qualifications', key: 'skills', complete: profile.skills || false },
+                { name: 'Education', key: 'education', complete: profile.education || false },
+                { name: 'Certifications', key: 'certifications', complete: profile.certifications || false }
+            ];
+            
+            const completed = items.filter(item => item.complete).length;
+            const percentage = Math.round((completed / items.length) * 100);
+            
+            document.getElementById('completionPercentage').textContent = percentage + '%';
+            document.getElementById('completionBar').style.width = percentage + '%';
+            
+            const container = document.getElementById('profileItems');
+            container.innerHTML = items.map(item => `
+                <div class="profile-item" onclick="window.location.href='profile.html#${item.key}'">
+                    <i class="fas ${item.complete ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                    <span>${item.name}</span>
+                    <span class="status ${item.complete ? 'complete' : 'missing'}">${item.complete ? 'Complete' : 'Missing'}</span>
+                </div>
+            `).join('');
+        }
+
+        function removeSavedJob(jobId, event) {
+            event.stopPropagation();
+            let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
+            savedJobs = savedJobs.filter(job => job.id !== jobId);
+            localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
+            loadDashboardData(); // Refresh the dashboard
+        }
+
+        function applyForJob(jobId) {
+            window.location.href = `apply.html?job=${jobId}`;
+        }
+
+        function viewApplication(appId) {
+            window.location.href = `application-details.html?id=${appId}`;
+        }
+
+        function initChart(applications) {
             const ctx = document.getElementById('applicationChart').getContext('2d');
+            
+            // Generate weekly data based on actual applications
+            const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
+            const appData = [0, 0, 0, 0, 0, 0];
+            const interviewData = [0, 0, 0, 0, 0, 0];
+            
+            // Distribute applications across weeks (demo logic)
+            applications.forEach((app, index) => {
+                const weekIndex = Math.min(Math.floor(index / 3), 5);
+                if (weekIndex < 6) {
+                    appData[weekIndex]++;
+                    if (app.status === 'Interview' || app.status === 'Offer') {
+                        interviewData[weekIndex]++;
+                    }
+                }
+            });
+            
             const gradient = ctx.createLinearGradient(0,0,0,400);
             gradient.addColorStop(0,'rgba(245,158,11,0.8)');
             gradient.addColorStop(1,'rgba(15,43,75,0.8)');
+            
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Week1','Week2','Week3','Week4','Week5','Week6'],
+                    labels: weeks,
                     datasets: [{
                         label: 'Applications Sent',
-                        data: [5,8,12,15,20,24],
+                        data: appData,
                         borderColor: '#f59e0b',
                         backgroundColor: gradient,
                         tension: 0.4,
@@ -1143,9 +1294,9 @@
                         pointBackgroundColor: '#0f2b4b',
                         pointBorderColor: '#fff',
                         pointRadius: 6
-                    },{
+                    }, {
                         label: 'Interviews',
-                        data: [1,2,3,4,3,3],
+                        data: interviewData,
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16,185,129,0.1)',
                         tension: 0.4,
@@ -1157,27 +1308,57 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
                 }
             });
         }
 
-        document.querySelectorAll('.remove-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.parentElement.remove();
-                alert('Job removed');
-            });
-        });
-
-        document.querySelectorAll('.apply-now').forEach(btn => {
-            btn.addEventListener('click', () => window.location.href = 'apply.html');
-        });
-
+        // Initialize dashboard
         window.addEventListener('load', () => {
             loadUserData();
-            initChart();
+            loadDashboardData();
         });
+
+        // For demo purposes: Add sample data for new users to test
+        function addSampleData() {
+            if (!localStorage.getItem('applications')) {
+                const sampleApps = [
+                    { id: 1, title: 'Senior Nurse', company: 'Mediclinic Hospital', status: 'Under Review', date: '2 days ago' },
+                    { id: 2, title: 'Security Supervisor', company: 'Qatar Airways', status: 'Interview', date: '5 days ago' },
+                    { id: 3, title: 'Logistics Coordinator', company: 'DP World', status: 'Pending', date: '1 week ago' }
+                ];
+                localStorage.setItem('applications', JSON.stringify(sampleApps));
+            }
+            
+            if (!localStorage.getItem('savedJobs')) {
+                const sampleSaved = [
+                    { id: 101, title: 'Registered Nurse', company: 'Mediclinic Hospital', location: 'Dubai, UAE' },
+                    { id: 102, title: 'Security Manager', company: 'G4S Security', location: 'Doha, Qatar' }
+                ];
+                localStorage.setItem('savedJobs', JSON.stringify(sampleSaved));
+            }
+            
+            if (!localStorage.getItem('profileViews')) {
+                localStorage.setItem('profileViews', '128');
+            }
+            
+            loadDashboardData();
+        }
+
+        // Uncomment the line below to add sample data for testing
+        // addSampleData();
     </script>
 </body>
 </html>
