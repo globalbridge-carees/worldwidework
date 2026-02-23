@@ -1088,6 +1088,52 @@
             font-size: 0.65rem;
         }
 
+        /* WhatsApp Floating Button Styles */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.4);
+        }
+
+        .whatsapp-float i {
+            font-size: 34px;
+            line-height: 60px;
+        }
+
+        /* Responsive adjustments for WhatsApp button */
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+                bottom: 15px;
+                right: 15px;
+            }
+            .whatsapp-float i {
+                font-size: 28px;
+                line-height: 50px;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .menu-toggle {
@@ -1444,6 +1490,12 @@
                 <div class="footer-col">
                     <div class="footer-logo"><span class="logo-icon">TJ</span><span class="logo-text">TrueJobs</span></div>
                     <p>Your trusted partner for global job opportunities.</p>
+                    <!-- WhatsApp link in footer -->
+                    <p style="margin-top: 10px;">
+                        <a href="https://wa.me/254707001191?text=Hi%20TrueJobs%2C%20I%20need%20assistance%20with..." target="_blank" style="color: #25D366; text-decoration: none;">
+                            <i class="fab fa-whatsapp" style="font-size: 1.2rem; vertical-align: middle;"></i> Chat on WhatsApp
+                        </a>
+                    </p>
                 </div>
                 <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="about.html">About</a></li><li><a href="findjobs.html">Find Jobs</a></li><li><a href="companies.html">Companies</a></li><li><a href="contact.html">Contact</a></li></ul></div>
                 <div class="footer-col"><h4>Resources</h4><ul><li><a href="resources.html">Career Guides</a></li><li><a href="#">Resume Tips</a></li><li><a href="#">Interview Prep</a></li></ul></div>
@@ -1452,6 +1504,11 @@
             <div class="footer-bottom"><p>&copy; 2026 TrueJobs. All rights reserved.</p></div>
         </div>
     </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/254707001191?text=Hi%20TrueJobs%2C%20I%20need%20assistance%20with..." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <script>
         function toggleMenu() {
