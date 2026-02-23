@@ -53,10 +53,20 @@
             --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
         }
 
+        /* Animations */
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(245, 158, 11, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+            }
         }
 
         @keyframes float {
@@ -396,46 +406,6 @@
             gap: 0.3rem;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: var(--gray-50);
-            border-radius: 20px;
-            border: 2px dashed var(--gray-300);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: var(--gray-400);
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h3 {
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state p {
-            color: var(--gray-500);
-            margin-bottom: 1.5rem;
-        }
-
-        .empty-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .empty-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
         .applications-list {
             display: flex;
             flex-direction: column;
@@ -451,12 +421,6 @@
             border-radius: 16px;
             border: 1px solid var(--gray-200);
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .application-item:hover {
-            transform: translateX(5px);
-            border-color: var(--accent);
         }
 
         .app-info {
@@ -557,13 +521,6 @@
             padding: 1.2rem;
             border: 1px solid var(--gray-200);
             position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .saved-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-lg);
         }
 
         .saved-card .remove-btn {
@@ -572,11 +529,6 @@
             right: 0.8rem;
             color: var(--gray-400);
             cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .saved-card .remove-btn:hover {
-            color: var(--danger);
         }
 
         .saved-card h4 {
@@ -614,12 +566,14 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
+            animation: pulse 2s infinite;
             transition: all 0.3s ease;
         }
 
         .apply-now:hover {
             transform: scale(1.05);
             box-shadow: var(--shadow-xl);
+            animation: none;
         }
 
         .chart-container {
@@ -686,30 +640,11 @@
             padding: 0.8rem;
             background: var(--gray-50);
             border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .profile-item:hover {
-            background: var(--gray-100);
-            transform: translateX(5px);
-        }
-
-        .profile-item i.fa-check-circle {
-            color: var(--success);
-        }
-
-        .profile-item i.fa-times-circle {
-            color: var(--danger);
         }
 
         .profile-item .status {
-            margin-left: auto;
-            font-weight: 600;
-        }
-
-        .profile-item .status.complete {
             color: var(--success);
+            font-weight: 600;
         }
 
         .profile-item .status.missing {
@@ -738,14 +673,50 @@
         .footer-links a {
             color: var(--gray-500);
             text-decoration: none;
-            transition: color 0.3s ease;
         }
 
-        .footer-links a:hover {
-            color: var(--accent);
+        /* Empty state styles */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--gray-50);
+            border-radius: 20px;
+            border: 2px dashed var(--gray-300);
         }
 
-        /* Mobile Styles */
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: var(--gray-500);
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .empty-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== MOBILE COMPACT STYLES ===== */
         @media (max-width: 1024px) {
             .main-grid {
                 grid-template-columns: 1fr;
@@ -775,6 +746,7 @@
                 display: flex;
             }
 
+            /* Smaller logo on mobile */
             .logo-icon {
                 width: 35px;
                 height: 35px;
@@ -784,24 +756,77 @@
                 font-size: 1.4rem;
             }
 
-            .welcome-card {
-                padding: 1.5rem;
-            }
-            .welcome-content h1 {
-                font-size: 1.6rem;
-            }
-            .welcome-stats {
-                gap: 1.5rem;
+            .user-menu {
+                gap: 0.8rem;
             }
 
+            .notifications i {
+                font-size: 1.1rem;
+            }
+
+            .user-profile {
+                padding: 0.3rem 0.6rem;
+            }
+
+            .avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+
+            .user-info {
+                display: none;
+            }
+
+            /* Thinner welcome card */
+            .welcome-card {
+                padding: 1rem;
+            }
+            .welcome-content h1 {
+                font-size: 1.4rem;
+                margin-bottom: 0.3rem;
+            }
+            .welcome-content p {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+            }
+            .welcome-stats {
+                gap: 0.8rem;
+            }
+            .welcome-stat {
+                gap: 0.5rem;
+            }
+            .welcome-stat i {
+                font-size: 1.2rem;
+            }
+            .welcome-stat .stat-info h3 {
+                font-size: 1.1rem;
+            }
+            .welcome-stat .stat-info p {
+                font-size: 0.7rem;
+            }
+
+            /* Smaller stat cards */
             .stats-grid {
-                gap: 1rem;
+                gap: 0.8rem;
             }
             .stat-card {
-                padding: 1.2rem;
+                padding: 1rem;
+            }
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+                margin-bottom: 0.5rem;
+            }
+            .stat-card h3 {
+                font-size: 0.8rem;
             }
             .stat-number {
-                font-size: 1.6rem;
+                font-size: 1.3rem;
+            }
+            .stat-trend {
+                font-size: 0.7rem;
             }
 
             .saved-grid {
@@ -811,7 +836,6 @@
             .application-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
             }
             .app-status {
                 width: 100%;
@@ -826,6 +850,27 @@
             .footer-links {
                 flex-wrap: wrap;
                 justify-content: center;
+            }
+
+            .stat-card, .applications-section, .activity-section,
+            .saved-jobs-section, .chart-section, .profile-section {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.8rem;
+            }
+            .nav-container {
+                padding: 0 0.8rem;
+            }
+            .welcome-content h1 {
+                font-size: 1.3rem;
+            }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -872,7 +917,7 @@
             <div class="welcome-card">
                 <div class="welcome-content">
                     <h1>Welcome back, <span id="welcomeName">John</span>! 👋</h1>
-                    <p id="welcomeMessage">Your job search journey is progressing well. Here's what's happening today.</p>
+                    <p id="welcomeMessage">Your job search journey starts here. Complete your profile and start applying!</p>
                     <div class="welcome-stats">
                         <div class="welcome-stat">
                             <i class="fas fa-eye"></i>
@@ -934,7 +979,7 @@
         <section class="applications-section">
             <div class="section-header">
                 <h2>Recent Applications</h2>
-                <a href="applications.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div id="applicationsList" class="applications-list"></div>
         </section>
@@ -949,7 +994,7 @@
     <section class="saved-jobs-section container">
         <div class="section-header">
             <h2>Saved Jobs</h2>
-            <a href="saved-jobs.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
         </div>
         <div id="savedJobsGrid" class="saved-grid"></div>
     </section>
@@ -992,12 +1037,10 @@
     </footer>
 
     <script>
-        // Toggle mobile menu
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        // Load user data from localStorage
         function loadUserData() {
             const user = JSON.parse(localStorage.getItem('currentUser')) || { 
                 firstName: 'John',
@@ -1016,20 +1059,15 @@
             document.getElementById('memberSince').textContent = `Member since ${user.memberSince || 'January 2026'}`;
         }
 
-        // Load dashboard data from localStorage
         function loadDashboardData() {
-            // Get saved jobs
+            // Get data from localStorage
             const savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
-            
-            // Get applications
             const applications = JSON.parse(localStorage.getItem('applications')) || [];
-            
-            // Get profile views (increment when employers view profile)
             const profileViews = parseInt(localStorage.getItem('profileViews')) || 0;
             
             // Calculate stats
             const applicationsSent = applications.length;
-            const underReview = applications.filter(app => app.status === 'Under Review').length;
+            const underReview = applications.filter(app => app.status === 'Under Review' || app.status === 'Pending').length;
             const interviews = applications.filter(app => app.status === 'Interview').length;
             const offers = applications.filter(app => app.status === 'Offer').length;
             
@@ -1043,20 +1081,6 @@
             document.getElementById('underReview').textContent = underReview;
             document.getElementById('interviews').textContent = interviews;
             document.getElementById('offers').textContent = offers;
-            
-            // Update trends (demo data - in real app, this would compare with previous period)
-            if (applicationsSent > 0) {
-                document.getElementById('applicationsTrend').innerHTML = '<i class="fas fa-arrow-up"></i> +' + applicationsSent + ' total';
-            }
-            if (underReview > 0) {
-                document.getElementById('reviewTrend').innerHTML = '<i class="fas fa-arrow-up"></i> ' + underReview + ' active';
-            }
-            if (interviews > 0) {
-                document.getElementById('interviewTrend').innerHTML = '<i class="fas fa-arrow-up"></i> ' + interviews + ' upcoming';
-            }
-            if (offers > 0) {
-                document.getElementById('offersTrend').innerHTML = '<i class="fas fa-arrow-up"></i> ' + offers + ' pending';
-            }
             
             // Update notification count
             const notificationCount = applications.filter(app => app.status === 'Interview' || app.status === 'Offer').length;
@@ -1073,9 +1097,6 @@
             
             // Update profile completion
             updateProfileCompletion();
-            
-            // Initialize chart
-            initChart(applications);
         }
 
         function displayApplications(applications) {
@@ -1236,7 +1257,7 @@
                 <div class="profile-item" onclick="window.location.href='profile.html#${item.key}'">
                     <i class="fas ${item.complete ? 'fa-check-circle' : 'fa-times-circle'}"></i>
                     <span>${item.name}</span>
-                    <span class="status ${item.complete ? 'complete' : 'missing'}">${item.complete ? 'Complete' : 'Missing'}</span>
+                    <span class="status ${item.complete ? '' : 'missing'}">${item.complete ? 'Complete' : 'Missing'}</span>
                 </div>
             `).join('');
         }
@@ -1246,7 +1267,7 @@
             let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
             savedJobs = savedJobs.filter(job => job.id !== jobId);
             localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
-            loadDashboardData(); // Refresh the dashboard
+            loadDashboardData();
         }
 
         function applyForJob(jobId) {
@@ -1257,15 +1278,15 @@
             window.location.href = `application-details.html?id=${appId}`;
         }
 
-        function initChart(applications) {
+        function initChart() {
             const ctx = document.getElementById('applicationChart').getContext('2d');
+            const applications = JSON.parse(localStorage.getItem('applications')) || [];
             
-            // Generate weekly data based on actual applications
+            // Generate weekly data
             const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
             const appData = [0, 0, 0, 0, 0, 0];
             const interviewData = [0, 0, 0, 0, 0, 0];
             
-            // Distribute applications across weeks (demo logic)
             applications.forEach((app, index) => {
                 const weekIndex = Math.min(Math.floor(index / 3), 5);
                 if (weekIndex < 6) {
@@ -1308,19 +1329,8 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1
-                            }
-                        }
-                    }
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
                 }
             });
         }
@@ -1329,39 +1339,15 @@
         window.addEventListener('load', () => {
             loadUserData();
             loadDashboardData();
+            initChart();
         });
 
-        // For demo purposes: Add sample data for new users to test
-        function addSampleData() {
-            if (!localStorage.getItem('applications')) {
-                const sampleApps = [
-                    { id: 1, title: 'Senior Nurse', company: 'Mediclinic Hospital', status: 'Under Review', date: '2 days ago' },
-                    { id: 2, title: 'Security Supervisor', company: 'Qatar Airways', status: 'Interview', date: '5 days ago' },
-                    { id: 3, title: 'Logistics Coordinator', company: 'DP World', status: 'Pending', date: '1 week ago' }
-                ];
-                localStorage.setItem('applications', JSON.stringify(sampleApps));
-            }
-            
-            if (!localStorage.getItem('savedJobs')) {
-                const sampleSaved = [
-                    { id: 101, title: 'Registered Nurse', company: 'Mediclinic Hospital', location: 'Dubai, UAE' },
-                    { id: 102, title: 'Security Manager', company: 'G4S Security', location: 'Doha, Qatar' }
-                ];
-                localStorage.setItem('savedJobs', JSON.stringify(sampleSaved));
-            }
-            
-            if (!localStorage.getItem('profileViews')) {
-                localStorage.setItem('profileViews', '128');
-            }
-            
-            loadDashboardData();
-        }
-
-        // Uncomment the line below to add sample data for testing
-        // addSampleData();
+        // For demo purposes - to show empty state for new users, don't add sample data
+        // New users will see all zeros and empty states
     </script>
 </body>
 </html>
+
 
 
 
