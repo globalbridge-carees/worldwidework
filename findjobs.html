@@ -267,50 +267,6 @@
             border-radius: 3px;
         }
 
-        /* Dashboard link now matches other nav links - special styling removed */
-        /* .dashboard-link styling has been removed to match other links */
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-outline {
-            padding: 0.6rem 1.5rem;
-            border: 2px solid var(--gray-300);
-            background: transparent;
-            color: var(--gray-700);
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            padding: 0.6rem 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
-            border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
         .menu-toggle {
             display: none;
             font-size: 1.5rem;
@@ -1172,14 +1128,6 @@
                 display: block;
                 padding: 0.5rem 0;
             }
-            .auth-buttons {
-                width: 100%;
-                flex-direction: column;
-                margin-top: 1rem;
-            }
-            .auth-buttons button {
-                width: 100%;
-            }
 
             .hero-section {
                 padding: 0.8rem 0;
@@ -1348,7 +1296,7 @@
     </style>
 </head>
 <body>
-    <!-- Navigation - Updated with Dashboard after Find Jobs and matching style -->
+    <!-- Navigation - Updated with Dashboard after Find Jobs and no auth buttons -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -1367,15 +1315,11 @@
                 <li><a href="companies.html">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <li class="auth-buttons">
-                    <button class="btn-outline" onclick="location.href='login.html'">Sign In</button>
-                    <button class="btn-primary" onclick="location.href='signup.html'">Sign Up</button>
-                </li>
+                <!-- Sign In and Sign Up buttons removed -->
             </ul>
         </div>
     </nav>
 
-    <!-- Rest of your HTML remains exactly the same... -->
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
@@ -1667,8 +1611,6 @@
     </script>
 </body>
 </html>
-
-
 
 
 
