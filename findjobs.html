@@ -52,6 +52,14 @@
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
             --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            
+            /* Company card colors */
+            --company-1: #ff6b6b;
+            --company-2: #4ecdc4;
+            --company-3: #45b7d1;
+            --company-4: #96ceb4;
+            --company-5: #ffeaa7;
+            --company-6: #d4a5a5;
         }
 
         /* Animations */
@@ -73,6 +81,29 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
         }
 
+        /* New puzzle piece animations */
+        @keyframes puzzlePop {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(2deg); }
+            50% { transform: scale(1.05) rotate(-2deg); }
+            75% { transform: scale(1.08) rotate(1deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes puzzleShake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-3px) rotate(-1deg); }
+            50% { transform: translateX(3px) rotate(1deg); }
+            75% { transform: translateX(-2px) rotate(-0.5deg); }
+            100% { transform: translateX(0) rotate(0); }
+        }
+
+        @keyframes tickPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(10deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
         .pulse-btn {
             animation: pulse 2s infinite;
         }
@@ -83,6 +114,67 @@
 
         .pulse-purple {
             animation: pulsePurple 2s infinite;
+        }
+
+        /* New puzzle classes for buttons */
+        .job-badge {
+            position: absolute;
+            top: 0.4rem;
+            right: 0.4rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            z-index: 2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            clip-path: polygon(0% 0%, 100% 0%, 95% 50%, 100% 100%, 0% 100%, 5% 50%);
+            transform-origin: center;
+        }
+
+        .job-badge:hover {
+            animation: puzzlePop 0.5s ease;
+            filter: brightness(1.1);
+            transform: scale(1.05);
+        }
+
+        .badge-featured { 
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark)); 
+            color: var(--white); 
+        }
+        .badge-urgent { 
+            background: linear-gradient(135deg, #ef4444, #dc2626); 
+            color: var(--white); 
+        }
+        .badge-new { 
+            background: linear-gradient(135deg, #10b981, #059669); 
+            color: var(--white); 
+        }
+
+        /* Puzzle effect for verified ticks */
+        .verified-icon {
+            color: var(--success);
+            font-size: 0.7rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .verified-icon:hover {
+            animation: tickPop 0.4s ease;
+            color: var(--accent);
+        }
+
+        /* Puzzle effect for all icons in badges and details */
+        .badge-item i, .action-btn i, .detail-item i {
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .badge-item:hover i, .action-btn:hover i, .detail-item:hover i {
+            animation: tickPop 0.4s ease;
+            transform: scale(1.2);
         }
 
         .container {
@@ -449,7 +541,7 @@
             color: var(--white);
         }
 
-        /* Jobs Grid – ultra compact (already) */
+        /* Jobs Grid */
         .jobs-section {
             padding: 0 0 4rem;
         }
@@ -482,22 +574,6 @@
         .job-card:nth-child(3n+1) .job-title { color: #0369a1; }
         .job-card:nth-child(3n+2) .job-title { color: #059669; }
         .job-card:nth-child(3n+3) .job-title { color: #b45309; }
-
-        .job-badge {
-            position: absolute;
-            top: 0.4rem;
-            right: 0.4rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            z-index: 2;
-        }
-
-        .badge-featured { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: var(--white); }
-        .badge-urgent { background: linear-gradient(135deg, #ef4444, #dc2626); color: var(--white); }
-        .badge-new { background: linear-gradient(135deg, #10b981, #059669); color: var(--white); }
 
         .job-header {
             display: flex;
@@ -537,8 +613,6 @@
             font-size: 0.7rem;
         }
 
-        .verified-icon { color: var(--success); font-size: 0.7rem; }
-
         .job-details {
             display: flex;
             flex-wrap: wrap;
@@ -559,9 +633,26 @@
             padding: 0.1rem 0.5rem;
             border-radius: 30px;
             border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
         }
 
-        .detail-item i { color: var(--accent); font-size: 0.7rem; }
+        .detail-item:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .detail-item i { 
+            color: var(--accent); 
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover i {
+            color: white;
+            animation: tickPop 0.4s ease;
+        }
 
         .salary-highlight {
             color: var(--success);
@@ -596,6 +687,13 @@
             color: var(--gray-600);
             border: 1px solid var(--gray-200);
             font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
         }
 
         .job-footer {
@@ -623,8 +721,8 @@
         }
 
         .apply-btn:hover {
-            transform: translateX(2px);
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            transform: translateX(2px) scale(1.02);
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
         }
 
         .save-btn {
@@ -645,7 +743,7 @@
         .save-btn:hover {
             border-color: var(--accent);
             color: var(--accent);
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(10deg);
         }
 
         .save-btn.saved {
@@ -677,12 +775,15 @@
             color: var(--gray-600);
             font-weight: 600;
             font-size: 0.9rem;
+            text-decoration: none;
         }
 
         .page-btn:hover {
             border-color: var(--accent);
             color: var(--accent);
             transform: scale(1.1);
+            background: var(--accent);
+            color: white;
         }
 
         .page-btn.active {
@@ -697,7 +798,7 @@
             border-radius: 40px;
         }
 
-        /* Trust Badges & Quick Actions – horizontal scrolling on mobile */
+        /* Trust Badges & Quick Actions */
         .trust-section {
             background: var(--white);
             padding: 2rem 0;
@@ -718,17 +819,37 @@
             align-items: center;
             gap: 0.6rem;
             white-space: nowrap;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .badge-item:hover {
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            transform: translateY(-3px) scale(1.05);
+            color: white;
         }
 
         .badge-item i {
             font-size: 1.5rem;
             color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .badge-item:hover i {
+            color: white;
+            animation: tickPop 0.4s ease;
         }
 
         .badge-item span {
             font-weight: 600;
             color: var(--gray-700);
             font-size: 0.9rem;
+        }
+
+        .badge-item:hover span {
+            color: white;
         }
 
         .actions-container {
@@ -754,14 +875,19 @@
         }
 
         .action-btn:hover {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: var(--white);
-            border-color: var(--accent);
-            transform: translateY(-2px);
+            border-color: var(--primary);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: var(--shadow-md);
         }
 
-        /* Featured Companies */
+        .action-btn:hover i {
+            animation: tickPop 0.4s ease;
+            color: var(--accent);
+        }
+
+        /* Featured Companies - Now Colorful */
         .featured-companies {
             padding: 4rem 0;
             background: var(--white);
@@ -813,28 +939,56 @@
             text-align: center;
             border: 1px solid var(--gray-200);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
+        .company-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transition: all 0.3s ease;
+        }
+
+        /* Colorful company cards */
+        .company-card:nth-child(1) { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .company-card:nth-child(2) { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+        .company-card:nth-child(3) { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
+        .company-card:nth-child(4) { background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; }
+        .company-card:nth-child(5) { background: linear-gradient(135deg, #fa709a, #fee140); color: white; }
+        .company-card:nth-child(6) { background: linear-gradient(135deg, #30cfd0, #330867); color: white; }
+
         .company-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent);
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+            border-color: transparent;
         }
 
         .company-card i {
             font-size: 2rem;
-            color: var(--primary);
+            color: inherit;
             margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .company-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--accent);
         }
 
         .company-card h4 {
-            color: var(--primary);
             margin-bottom: 0.3rem;
             font-size: 1rem;
+            color: inherit;
+            font-weight: 700;
         }
 
         .company-card p {
-            color: var(--gray-500);
+            color: rgba(255,255,255,0.9);
             font-size: 0.8rem;
         }
 
@@ -885,8 +1039,9 @@
         }
 
         .newsletter-form button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: var(--shadow-xl);
+            background: var(--accent-dark);
         }
 
         /* Footer */
@@ -950,6 +1105,8 @@
 
         .footer-col a:hover {
             color: var(--accent);
+            transform: translateX(5px);
+            display: inline-block;
         }
 
         .social-links {
@@ -974,7 +1131,7 @@
         .social-link:hover {
             background: var(--accent);
             color: var(--primary);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.1);
         }
 
         .footer-bottom {
@@ -985,7 +1142,7 @@
             font-size: 0.9rem;
         }
 
-        /* Mobile Responsive – very thin hero */
+        /* Mobile Responsive */
         @media (max-width: 1200px) {
             .jobs-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1037,7 +1194,6 @@
                 width: 100%;
             }
 
-            /* Extremely thin hero */
             .hero-section {
                 padding: 0.8rem 0;
             }
@@ -1134,7 +1290,6 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            /* Trust badges & actions – horizontal scrolling */
             .badges-container {
                 flex-wrap: nowrap;
                 overflow-x: auto;
@@ -1233,7 +1388,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section – now very thin on mobile -->
+    <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
@@ -1277,7 +1432,7 @@
         </div>
     </section>
 
-    <!-- Results Header with attractive gradient buttons and pulse animations -->
+    <!-- Results Header -->
     <section class="results-section">
         <div class="container">
             <div class="results-header">
@@ -1298,7 +1453,7 @@
         </div>
     </section>
 
-    <!-- Jobs Grid (ultra compact cards) -->
+    <!-- Jobs Grid -->
     <section class="jobs-section">
         <div class="container">
             <div class="jobs-grid" id="jobsGrid"></div>
@@ -1306,7 +1461,7 @@
         </div>
     </section>
 
-    <!-- Trust Badges & Quick Actions (horizontal scroll on mobile) -->
+    <!-- Trust Badges & Quick Actions -->
     <section class="trust-section">
         <div class="container">
             <div class="badges-container">
@@ -1327,7 +1482,7 @@
         </div>
     </section>
 
-    <!-- Featured Companies -->
+    <!-- Featured Companies - Now Colorful -->
     <section class="featured-companies">
         <div class="container">
             <div class="section-title">
@@ -1524,7 +1679,6 @@
     </script>
 </body>
 </html>
-
 
 
 
