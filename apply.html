@@ -1235,13 +1235,16 @@
                 <i class="fas fa-check"></i>
             </div>
             <h2>Application Submitted!</h2>
-            <p>Your application has been sent. Redirecting to dashboard...</p>
+            <p>Your application has been sent. A confirmation email has been sent to your inbox.</p>
             <div class="modal-actions">
                 <button class="modal-btn secondary" onclick="goToJobs()">Browse Jobs</button>
                 <button class="modal-btn primary" onclick="goToDashboard()">Dashboard</button>
             </div>
         </div>
     </div>
+
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script>
         // Mobile menu toggle
@@ -1459,20 +1462,130 @@
             }
         });
 
+        // ========== EMAILJS INTEGRATION ==========
+        // Initialize EmailJS with your public key
+        (function() {
+            emailjs.init("N-29tB7_gzyZCM1uL");
+        })();
+
+        // Function to send confirmation email
+        function sendConfirmationEmail(applicationData) {
+            // Prepare the template parameters
+            const templateParams = {
+                to_name: applicationData.firstName,
+                to_email: applicationData.email,
+                job_title: applicationData.jobTitle,
+                company_name: applicationData.companyName,
+                application_date: new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }),
+                dashboard_link: 'https://truejobs.com/dashboard.html',
+                from_name: 'TrueJobs Team'
+            };
+
+            // Send email using EmailJS
+            return emailjs.send(
+                'service_ts2kgyl',
+                'template_zcspc4o',
+                templateParams
+            );
+        }
+
+        // Function to save application to localStorage for dashboard
+        function saveApplicationToDashboard(data) {
+            // Get existing applications
+            let applications = JSON.parse(localStorage.getItem('applications')) || [];
+            
+            // Create new application object
+            const newApplication = {
+                id: Date.now(),
+                title: data.jobTitle,
+                company: data.companyName,
+                status: 'Under Review',
+                date: new Date().toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric',
+                    year: 'numeric'
+                }),
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                phone: data.phone
+            };
+            
+            // Add to applications array
+            applications.unshift(newApplication);
+            
+            // Save back to localStorage
+            localStorage.setItem('applications', JSON.stringify(applications));
+            
+            // Increment profile views
+            let profileViews = parseInt(localStorage.getItem('profileViews')) || 0;
+            profileViews += 1;
+            localStorage.setItem('profileViews', profileViews.toString());
+        }
+
+        // Updated submitApplication function with email
         function submitApplication() {
             if (!document.getElementById('terms').checked) {
                 alert('Please accept the terms and conditions');
                 return;
             }
 
-            // Show success modal
-            const modal = document.getElementById('successModal');
-            modal.classList.add('show');
+            // Collect application data
+            const applicationData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                jobTitle: document.getElementById('jobTitle').textContent,
+                companyName: document.getElementById('companyName').textContent,
+                position: document.getElementById('position').value,
+                experience: document.getElementById('experience').value,
+                skills: document.getElementById('skills').value,
+                coverLetter: document.getElementById('coverLetter').value,
+                applicationDate: new Date().toISOString()
+            };
 
-            // Redirect to dashboard after 2.5 seconds
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 2500);
+            // Save to localStorage for dashboard
+            saveApplicationToDashboard(applicationData);
+
+            // Show loading state on button
+            const submitBtn = document.getElementById('nextBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+
+            // Send confirmation email
+            sendConfirmationEmail(applicationData)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response);
+                    
+                    // Show success modal
+                    const modal = document.getElementById('successModal');
+                    modal.classList.add('show');
+                    
+                    // Update modal message to include email confirmation
+                    const modalContent = modal.querySelector('p');
+                    modalContent.innerHTML = 'Your application has been sent.<br>A confirmation email has been sent to your inbox.';
+                })
+                .catch(function(error) {
+                    console.error('Email sending failed:', error);
+                    
+                    // Still show success but with different message
+                    const modal = document.getElementById('successModal');
+                    modal.classList.add('show');
+                    
+                    const modalContent = modal.querySelector('p');
+                    modalContent.innerHTML = 'Your application has been sent.<br>Email confirmation could not be sent, but your application is received.';
+                })
+                .finally(function() {
+                    // Restore button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
         }
 
         function goToDashboard() {
