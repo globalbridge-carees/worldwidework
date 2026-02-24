@@ -1585,6 +1585,11 @@
                     // Restore button
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
+                    
+                    // Redirect to dashboard after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 3000);
                 });
         }
 
