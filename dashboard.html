@@ -109,36 +109,6 @@
             align-items: center;
         }
 
-        /* Left notification - where three-line menu used to be */
-        .left-notification {
-            position: relative;
-            cursor: pointer;
-            margin-right: 1rem;
-        }
-
-        .left-notification i {
-            font-size: 1.3rem;
-            color: var(--gray-600);
-            transition: color 0.3s ease;
-        }
-
-        .left-notification:hover i {
-            color: var(--accent);
-        }
-
-        .badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--danger);
-            color: var(--white);
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        /* Logo in the middle */
         .logo {
             display: flex;
             align-items: center;
@@ -168,11 +138,68 @@
             transition: all 0.3s ease;
         }
 
-        /* Right menu with user profile and three-line toggle */
-        .right-menu {
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .user-menu {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
+        }
+
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notifications i {
+            font-size: 1.3rem;
+            color: var(--gray-600);
+            transition: color 0.3s ease;
+        }
+
+        .notifications:hover i {
+            color: var(--accent);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: var(--white);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 600;
         }
 
         .user-profile {
@@ -222,55 +249,9 @@
         }
 
         .menu-toggle {
-            display: block;
-            font-size: 1.5rem;
-            color: var(--gray-600);
-            cursor: pointer;
-        }
-
-        .nav-menu {
             display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: var(--white);
-            padding: 1rem;
-            box-shadow: var(--shadow-lg);
-            flex-direction: column;
-            gap: 1rem;
-            list-style: none;
-            border-top: 2px solid var(--accent);
-        }
-
-        .nav-menu.show {
-            display: flex;
-        }
-
-        .nav-menu a {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            position: relative;
-            display: block;
-            padding: 0.5rem 0;
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: var(--primary);
-        }
-
-        .nav-menu a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 3px;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
 
         /* Welcome Section */
@@ -694,47 +675,6 @@
             text-decoration: none;
         }
 
-        /* Empty state styles */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: var(--gray-50);
-            border-radius: 20px;
-            border: 2px dashed var(--gray-300);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: var(--gray-400);
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h3 {
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state p {
-            color: var(--gray-500);
-            margin-bottom: 1.5rem;
-        }
-
-        .empty-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .empty-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
         /* ===== MOBILE COMPACT STYLES ===== */
         @media (max-width: 1024px) {
             .main-grid {
@@ -746,11 +686,24 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
+            .menu-toggle {
+                display: block;
             }
-            .nav-container {
-                padding: 0 1rem;
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+                flex-direction: column;
+                gap: 1rem;
+                z-index: 999;
+            }
+            .nav-menu.show {
+                display: flex;
             }
 
             /* Smaller logo on mobile */
@@ -763,12 +716,12 @@
                 font-size: 1.4rem;
             }
 
-            .left-notification i {
-                font-size: 1.1rem;
+            .user-menu {
+                gap: 0.8rem;
             }
-            
-            .right-menu {
-                gap: 0.5rem;
+
+            .notifications i {
+                font-size: 1.1rem;
             }
 
             .user-profile {
@@ -866,6 +819,12 @@
         }
 
         @media (max-width: 480px) {
+            .container {
+                padding: 0 0.8rem;
+            }
+            .nav-container {
+                padding: 0 0.8rem;
+            }
             .welcome-content h1 {
                 font-size: 1.3rem;
             }
@@ -877,74 +836,75 @@
     </style>
 </head>
 <body>
-    <!-- Navigation - Updated with new layout -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <!-- Notification icon on the left (where three-line menu used to be) -->
-            <div class="left-notification" onclick="window.location.href='notifications.html'">
-                <i class="fas fa-bell"></i>
-                <span class="badge" id="notificationCount">0</span>
-            </div>
-            
-            <!-- Logo in the middle -->
             <a href="index.html" class="logo">
                 <span class="logo-icon">TJ</span>
                 <span class="logo-text">TrueJobs</span>
             </a>
             
-            <!-- User profile and menu toggle on the right -->
-            <div class="right-menu">
-                <div class="user-profile" onclick="window.location.href='profile.html'">
-                    <div class="avatar" id="userAvatar">JD</div>
+            <!-- Notification icon moved here (where three-line menu used to be) -->
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            
+            <!-- Three-line menu stays on the right -->
+            <span class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </span>
+            
+            <!-- Navigation menu with Dashboard after Find Jobs -->
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="findjobs.html">Find Jobs</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="companies.html">Companies</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            
+            <div class="user-menu">
+                <div class="user-profile">
+                    <div class="avatar">JD</div>
                     <div class="user-info">
                         <div class="name" id="userName">John Doe</div>
                         <div class="role">Job Seeker</div>
                     </div>
                     <i class="fas fa-chevron-down"></i>
                 </div>
-                <span class="menu-toggle" onclick="toggleMenu()">
-                    <i class="fas fa-bars"></i>
-                </span>
             </div>
         </div>
-        
-        <!-- Navigation menu (hidden by default, shown when menu toggle clicked) -->
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="findjobs.html">Find Jobs</a></li>
-            <li><a href="dashboard.html" class="active">Dashboard</a></li>
-            <li><a href="companies.html">Companies</a></li>
-            <li><a href="resources.html">Resources</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
     </nav>
 
+    <!-- Rest of the HTML remains exactly the same -->
     <!-- Welcome Section -->
     <section class="welcome-section">
         <div class="container">
             <div class="welcome-card">
                 <div class="welcome-content">
-                    <h1>Welcome back, <span id="welcomeName">John</span>! 👋</h1>
-                    <p id="welcomeMessage">Your job search journey starts here. Complete your profile and start applying!</p>
+                    <h1>Welcome back to <span id="welcomeName">John</span>! 👋</h1>
+                    <p>Your job search journey is progressing well. Here's what's happening today.</p>
                     <div class="welcome-stats">
                         <div class="welcome-stat">
                             <i class="fas fa-eye"></i>
                             <div class="stat-info">
-                                <h3 id="profileViews">0</h3>
+                                <h3>128</h3>
                                 <p>Profile Views</p>
                             </div>
                         </div>
                         <div class="welcome-stat">
                             <i class="fas fa-file-alt"></i>
                             <div class="stat-info">
-                                <h3 id="totalApplications">0</h3>
+                                <h3>12</h3>
                                 <p>Applications</p>
                             </div>
                         </div>
                         <div class="welcome-stat">
                             <i class="fas fa-bookmark"></i>
                             <div class="stat-info">
-                                <h3 id="totalSaved">0</h3>
+                                <h3>8</h3>
                                 <p>Saved Jobs</p>
                             </div>
                         </div>
@@ -959,26 +919,26 @@
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-paper-plane"></i></div>
             <h3>Applications Sent</h3>
-            <div class="stat-number" id="applicationsSent">0</div>
-            <div class="stat-trend" id="applicationsTrend"></div>
+            <div class="stat-number">24</div>
+            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +12%</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-clock"></i></div>
             <h3>Under Review</h3>
-            <div class="stat-number" id="underReview">0</div>
-            <div class="stat-trend" id="reviewTrend"></div>
+            <div class="stat-number">8</div>
+            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +3 this week</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
             <h3>Interviews</h3>
-            <div class="stat-number" id="interviews">0</div>
-            <div class="stat-trend" id="interviewTrend"></div>
+            <div class="stat-number">3</div>
+            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> 2 upcoming</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-trophy"></i></div>
             <h3>Offers Received</h3>
-            <div class="stat-number" id="offers">0</div>
-            <div class="stat-trend" id="offersTrend"></div>
+            <div class="stat-number">2</div>
+            <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> 1 pending</div>
         </div>
     </section>
 
@@ -989,12 +949,101 @@
                 <h2>Recent Applications</h2>
                 <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div id="applicationsList" class="applications-list"></div>
+            <div class="applications-list">
+                <div class="application-item">
+                    <div class="app-info">
+                        <div class="app-logo">MC</div>
+                        <div class="app-details">
+                            <h4>Senior Nurse</h4>
+                            <div class="company">Mediclinic Hospital</div>
+                        </div>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-review">Under Review</span>
+                        <span class="app-date">2 days ago</span>
+                    </div>
+                </div>
+                <div class="application-item">
+                    <div class="app-info">
+                        <div class="app-logo">QA</div>
+                        <div class="app-details">
+                            <h4>Security Supervisor</h4>
+                            <div class="company">Qatar Airways</div>
+                        </div>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-interview">Interview</span>
+                        <span class="app-date">5 days ago</span>
+                    </div>
+                </div>
+                <div class="application-item">
+                    <div class="app-info">
+                        <div class="app-logo">DP</div>
+                        <div class="app-details">
+                            <h4>Logistics Coordinator</h4>
+                            <div class="company">DP World</div>
+                        </div>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-pending">Pending</span>
+                        <span class="app-date">1 week ago</span>
+                    </div>
+                </div>
+                <div class="application-item">
+                    <div class="app-info">
+                        <div class="app-logo">JG</div>
+                        <div class="app-details">
+                            <h4>Hotel Manager</h4>
+                            <div class="company">Jumeirah Group</div>
+                        </div>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-rejected">Not Selected</span>
+                        <span class="app-date">2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="activity-section">
             <div class="section-header"><h2>Recent Activity</h2></div>
-            <div id="activityList" class="activity-list"></div>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon"><i class="fas fa-eye"></i></div>
+                    <div class="activity-details">
+                        <p>Profile viewed by <strong>Qatar Airways</strong></p>
+                        <span class="time">2 hours ago</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="activity-details">
+                        <p>Status changed to <strong>Interview</strong> at Mediclinic</p>
+                        <span class="time">Yesterday</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon"><i class="fas fa-bookmark"></i></div>
+                    <div class="activity-details">
+                        <p>Saved <strong>Security Supervisor</strong> at G4S</p>
+                        <span class="time">2 days ago</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon"><i class="fas fa-calendar"></i></div>
+                    <div class="activity-details">
+                        <p>Interview with <strong>Emirates Group</strong> tomorrow</p>
+                        <span class="time">3 days ago</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon"><i class="fas fa-download"></i></div>
+                    <div class="activity-details">
+                        <p>CV downloaded by <strong>DP World</strong></p>
+                        <span class="time">4 days ago</span>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -1004,7 +1053,29 @@
             <h2>Saved Jobs</h2>
             <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
         </div>
-        <div id="savedJobsGrid" class="saved-grid"></div>
+        <div class="saved-grid">
+            <div class="saved-card">
+                <i class="fas fa-times remove-btn"></i>
+                <h4>Registered Nurse</h4>
+                <div class="company">Mediclinic Hospital</div>
+                <div class="location"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</div>
+                <button class="apply-now">Apply Now</button>
+            </div>
+            <div class="saved-card">
+                <i class="fas fa-times remove-btn"></i>
+                <h4>Security Manager</h4>
+                <div class="company">G4S Security</div>
+                <div class="location"><i class="fas fa-map-marker-alt"></i> Doha, Qatar</div>
+                <button class="apply-now">Apply Now</button>
+            </div>
+            <div class="saved-card">
+                <i class="fas fa-times remove-btn"></i>
+                <h4>Construction Supervisor</h4>
+                <div class="company">Al Habtoor Group</div>
+                <div class="location"><i class="fas fa-map-marker-alt"></i> Abu Dhabi, UAE</div>
+                <button class="apply-now">Apply Now</button>
+            </div>
+        </div>
     </section>
 
     <!-- Chart -->
@@ -1016,17 +1087,23 @@
     <!-- Profile Completion -->
     <section class="profile-section container">
         <div class="profile-header">
-            <div class="profile-avatar" id="profileAvatar">JD</div>
+            <div class="profile-avatar">JD</div>
             <div class="profile-info">
                 <h3 id="profileName">John Doe</h3>
-                <p id="memberSince">Member since January 2026</p>
+                <p>Member since January 2026</p>
             </div>
         </div>
         <div class="completion-bar">
-            <div class="completion-label"><span>Profile Completion</span><span id="completionPercentage">0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" id="completionBar" style="width:0%"></div></div>
+            <div class="completion-label"><span>Profile Completion</span><span>75%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
         </div>
-        <div class="profile-items" id="profileItems"></div>
+        <div class="profile-items">
+            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Personal Information</span><span class="status">Complete</span></div>
+            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Work Experience</span><span class="status">Complete</span></div>
+            <div class="profile-item"><i class="fas fa-check-circle"></i><span>Skills & Qualifications</span><span class="status">Complete</span></div>
+            <div class="profile-item"><i class="fas fa-times-circle"></i><span>Education</span><span class="status missing">Missing</span></div>
+            <div class="profile-item"><i class="fas fa-times-circle"></i><span>Certifications</span><span class="status missing">Missing</span></div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -1050,272 +1127,24 @@
         }
 
         function loadUserData() {
-            const user = JSON.parse(localStorage.getItem('currentUser')) || { 
-                firstName: 'John',
-                lastName: 'Doe',
-                email: 'john@example.com',
-                memberSince: 'January 2026'
-            };
-            
-            const initials = (user.firstName?.[0] || 'J') + (user.lastName?.[0] || 'D');
-            
+            const user = JSON.parse(localStorage.getItem('currentUser')) || { firstName: 'John' };
             document.getElementById('welcomeName').textContent = user.firstName || 'John';
-            document.getElementById('userName').textContent = `${user.firstName || 'John'} ${user.lastName || 'Doe'}`;
-            document.getElementById('profileName').textContent = `${user.firstName || 'John'} ${user.lastName || 'Doe'}`;
-            document.getElementById('userAvatar').textContent = initials;
-            document.getElementById('profileAvatar').textContent = initials;
-            document.getElementById('memberSince').textContent = `Member since ${user.memberSince || 'January 2026'}`;
-        }
-
-        function loadDashboardData() {
-            // Get data from localStorage
-            const savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
-            const applications = JSON.parse(localStorage.getItem('applications')) || [];
-            const profileViews = parseInt(localStorage.getItem('profileViews')) || 0;
-            
-            // Calculate stats
-            const applicationsSent = applications.length;
-            const underReview = applications.filter(app => app.status === 'Under Review' || app.status === 'Pending').length;
-            const interviews = applications.filter(app => app.status === 'Interview').length;
-            const offers = applications.filter(app => app.status === 'Offer').length;
-            
-            // Update welcome stats
-            document.getElementById('profileViews').textContent = profileViews;
-            document.getElementById('totalApplications').textContent = applicationsSent;
-            document.getElementById('totalSaved').textContent = savedJobs.length;
-            
-            // Update stat cards
-            document.getElementById('applicationsSent').textContent = applicationsSent;
-            document.getElementById('underReview').textContent = underReview;
-            document.getElementById('interviews').textContent = interviews;
-            document.getElementById('offers').textContent = offers;
-            
-            // Update notification count
-            const notificationCount = applications.filter(app => app.status === 'Interview' || app.status === 'Offer').length;
-            document.getElementById('notificationCount').textContent = notificationCount;
-            
-            // Display applications
-            displayApplications(applications);
-            
-            // Display saved jobs
-            displaySavedJobs(savedJobs);
-            
-            // Display activity
-            displayActivity(applications, savedJobs, profileViews);
-            
-            // Update profile completion
-            updateProfileCompletion();
-        }
-
-        function displayApplications(applications) {
-            const container = document.getElementById('applicationsList');
-            
-            if (applications.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-file-alt"></i>
-                        <h3>No applications yet</h3>
-                        <p>Start applying to jobs to see them here</p>
-                        <button class="empty-btn" onclick="window.location.href='findjobs.html'">Browse Jobs</button>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Show only last 4 applications
-            const recentApps = applications.slice(0, 4);
-            container.innerHTML = recentApps.map(app => {
-                let statusClass = '';
-                let statusText = app.status || 'Pending';
-                
-                switch(app.status) {
-                    case 'Under Review': statusClass = 'status-review'; break;
-                    case 'Interview': statusClass = 'status-interview'; break;
-                    case 'Offer': statusClass = 'status-interview'; break;
-                    case 'Rejected': statusClass = 'status-rejected'; break;
-                    default: statusClass = 'status-pending';
-                }
-                
-                return `
-                    <div class="application-item" onclick="viewApplication(${app.id})">
-                        <div class="app-info">
-                            <div class="app-logo">${app.company.substring(0,2).toUpperCase()}</div>
-                            <div class="app-details">
-                                <h4>${app.title}</h4>
-                                <div class="company">${app.company}</div>
-                            </div>
-                        </div>
-                        <div class="app-status">
-                            <span class="status-badge ${statusClass}">${app.status || 'Pending'}</span>
-                            <span class="app-date">${app.date || 'Recently'}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function displaySavedJobs(savedJobs) {
-            const container = document.getElementById('savedJobsGrid');
-            
-            if (savedJobs.length === 0) {
-                container.innerHTML = `
-                    <div style="grid-column: 1/-1">
-                        <div class="empty-state">
-                            <i class="fas fa-bookmark"></i>
-                            <h3>No saved jobs</h3>
-                            <p>Save jobs you're interested in to apply later</p>
-                            <button class="empty-btn" onclick="window.location.href='findjobs.html'">Browse Jobs</button>
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Show only last 3 saved jobs
-            const recentSaved = savedJobs.slice(0, 3);
-            container.innerHTML = recentSaved.map(job => `
-                <div class="saved-card">
-                    <i class="fas fa-times remove-btn" onclick="removeSavedJob(${job.id}, event)"></i>
-                    <h4>${job.title}</h4>
-                    <div class="company">${job.company}</div>
-                    <div class="location"><i class="fas fa-map-marker-alt"></i> ${job.location || 'Location TBD'}</div>
-                    <button class="apply-now" onclick="applyForJob(${job.id})">Apply Now</button>
-                </div>
-            `).join('');
-        }
-
-        function displayActivity(applications, savedJobs, profileViews) {
-            const container = document.getElementById('activityList');
-            const activities = [];
-            
-            // Add profile view activity
-            if (profileViews > 0) {
-                activities.push({
-                    icon: 'fa-eye',
-                    text: `Your profile has been viewed ${profileViews} time${profileViews > 1 ? 's' : ''}`,
-                    time: 'Today'
-                });
-            }
-            
-            // Add application activities
-            applications.slice(0, 3).forEach(app => {
-                activities.push({
-                    icon: 'fa-file-alt',
-                    text: `Applied to ${app.title} at ${app.company}`,
-                    time: app.date || 'Recently'
-                });
-            });
-            
-            // Add saved job activities
-            savedJobs.slice(0, 2).forEach(job => {
-                activities.push({
-                    icon: 'fa-bookmark',
-                    text: `Saved ${job.title} at ${job.company}`,
-                    time: 'Recently'
-                });
-            });
-            
-            if (activities.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-history"></i>
-                        <h3>No activity yet</h3>
-                        <p>Your recent actions will appear here</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = activities.map(activity => `
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas ${activity.icon}"></i></div>
-                    <div class="activity-details">
-                        <p>${activity.text}</p>
-                        <span class="time">${activity.time}</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function updateProfileCompletion() {
-            const profile = JSON.parse(localStorage.getItem('userProfile')) || {
-                personalInfo: false,
-                experience: false,
-                skills: false,
-                education: false,
-                certifications: false
-            };
-            
-            const items = [
-                { name: 'Personal Information', key: 'personalInfo', complete: profile.personalInfo || false },
-                { name: 'Work Experience', key: 'experience', complete: profile.experience || false },
-                { name: 'Skills & Qualifications', key: 'skills', complete: profile.skills || false },
-                { name: 'Education', key: 'education', complete: profile.education || false },
-                { name: 'Certifications', key: 'certifications', complete: profile.certifications || false }
-            ];
-            
-            const completed = items.filter(item => item.complete).length;
-            const percentage = Math.round((completed / items.length) * 100);
-            
-            document.getElementById('completionPercentage').textContent = percentage + '%';
-            document.getElementById('completionBar').style.width = percentage + '%';
-            
-            const container = document.getElementById('profileItems');
-            container.innerHTML = items.map(item => `
-                <div class="profile-item" onclick="window.location.href='profile.html#${item.key}'">
-                    <i class="fas ${item.complete ? 'fa-check-circle' : 'fa-times-circle'}"></i>
-                    <span>${item.name}</span>
-                    <span class="status ${item.complete ? '' : 'missing'}">${item.complete ? 'Complete' : 'Missing'}</span>
-                </div>
-            `).join('');
-        }
-
-        function removeSavedJob(jobId, event) {
-            event.stopPropagation();
-            let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
-            savedJobs = savedJobs.filter(job => job.id !== jobId);
-            localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
-            loadDashboardData();
-        }
-
-        function applyForJob(jobId) {
-            window.location.href = `apply.html?job=${jobId}`;
-        }
-
-        function viewApplication(appId) {
-            window.location.href = `application-details.html?id=${appId}`;
+            document.getElementById('userName').textContent = user.firstName ? `${user.firstName} Doe` : 'John Doe';
+            document.getElementById('profileName').textContent = user.firstName ? `${user.firstName} Doe` : 'John Doe';
         }
 
         function initChart() {
             const ctx = document.getElementById('applicationChart').getContext('2d');
-            const applications = JSON.parse(localStorage.getItem('applications')) || [];
-            
-            // Generate weekly data
-            const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
-            const appData = [0, 0, 0, 0, 0, 0];
-            const interviewData = [0, 0, 0, 0, 0, 0];
-            
-            applications.forEach((app, index) => {
-                const weekIndex = Math.min(Math.floor(index / 3), 5);
-                if (weekIndex < 6) {
-                    appData[weekIndex]++;
-                    if (app.status === 'Interview' || app.status === 'Offer') {
-                        interviewData[weekIndex]++;
-                    }
-                }
-            });
-            
             const gradient = ctx.createLinearGradient(0,0,0,400);
             gradient.addColorStop(0,'rgba(245,158,11,0.8)');
             gradient.addColorStop(1,'rgba(15,43,75,0.8)');
-            
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: weeks,
+                    labels: ['Week1','Week2','Week3','Week4','Week5','Week6'],
                     datasets: [{
                         label: 'Applications Sent',
-                        data: appData,
+                        data: [5,8,12,15,20,24],
                         borderColor: '#f59e0b',
                         backgroundColor: gradient,
                         tension: 0.4,
@@ -1323,9 +1152,9 @@
                         pointBackgroundColor: '#0f2b4b',
                         pointBorderColor: '#fff',
                         pointRadius: 6
-                    }, {
+                    },{
                         label: 'Interviews',
-                        data: interviewData,
+                        data: [1,2,3,4,3,3],
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16,185,129,0.1)',
                         tension: 0.4,
@@ -1337,23 +1166,30 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } },
-                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                    plugins: { legend: { position: 'bottom' } }
                 }
             });
         }
 
-        // Initialize dashboard
-        window.addEventListener('load', () => {
-            loadUserData();
-            loadDashboardData();
-            initChart();
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.parentElement.remove();
+                alert('Job removed');
+            });
         });
 
-        // For demo purposes - to show empty state for new users, don't add sample data
-        // New users will see all zeros and empty states
+        document.querySelectorAll('.apply-now').forEach(btn => {
+            btn.addEventListener('click', () => window.location.href = 'apply.html');
+        });
+
+        window.addEventListener('load', () => {
+            loadUserData();
+            initChart();
+        });
     </script>
 </body>
 </html>
+
 
 
