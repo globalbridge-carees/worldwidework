@@ -109,6 +109,36 @@
             align-items: center;
         }
 
+        /* Left notification - where three-line menu used to be */
+        .left-notification {
+            position: relative;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        .left-notification i {
+            font-size: 1.3rem;
+            color: var(--gray-600);
+            transition: color 0.3s ease;
+        }
+
+        .left-notification:hover i {
+            color: var(--accent);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: var(--white);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Logo in the middle */
         .logo {
             display: flex;
             align-items: center;
@@ -138,68 +168,11 @@
             transition: all 0.3s ease;
         }
 
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-menu a {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: var(--primary);
-        }
-
-        .nav-menu a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 3px;
-        }
-
-        .user-menu {
+        /* Right menu with user profile and three-line toggle */
+        .right-menu {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-        }
-
-        .notifications {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .notifications i {
-            font-size: 1.3rem;
-            color: var(--gray-600);
-            transition: color 0.3s ease;
-        }
-
-        .notifications:hover i {
-            color: var(--accent);
-        }
-
-        .badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--danger);
-            color: var(--white);
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 20px;
-            font-weight: 600;
+            gap: 1rem;
         }
 
         .user-profile {
@@ -248,7 +221,57 @@
             color: var(--gray-500);
         }
 
-        /* Menu toggle removed - notification icon now in corner */
+        .menu-toggle {
+            display: block;
+            font-size: 1.5rem;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: var(--shadow-lg);
+            flex-direction: column;
+            gap: 1rem;
+            list-style: none;
+            border-top: 2px solid var(--accent);
+        }
+
+        .nav-menu.show {
+            display: flex;
+        }
+
+        .nav-menu a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
 
         /* Welcome Section */
         .welcome-section {
@@ -723,20 +746,11 @@
         }
 
         @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--white);
-                padding: 1rem;
-                box-shadow: var(--shadow-lg);
-                flex-direction: column;
-                gap: 1rem;
+            .container {
+                padding: 0 1rem;
             }
-            .nav-menu.show {
-                display: flex;
+            .nav-container {
+                padding: 0 1rem;
             }
 
             /* Smaller logo on mobile */
@@ -749,12 +763,12 @@
                 font-size: 1.4rem;
             }
 
-            .user-menu {
-                gap: 0.8rem;
-            }
-
-            .notifications i {
+            .left-notification i {
                 font-size: 1.1rem;
+            }
+            
+            .right-menu {
+                gap: 0.5rem;
             }
 
             .user-profile {
@@ -852,12 +866,6 @@
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 0 0.8rem;
-            }
-            .nav-container {
-                padding: 0 0.8rem;
-            }
             .welcome-content h1 {
                 font-size: 1.3rem;
             }
@@ -869,27 +877,23 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation - Updated with new layout -->
     <nav class="navbar">
         <div class="nav-container">
+            <!-- Notification icon on the left (where three-line menu used to be) -->
+            <div class="left-notification" onclick="window.location.href='notifications.html'">
+                <i class="fas fa-bell"></i>
+                <span class="badge" id="notificationCount">0</span>
+            </div>
+            
+            <!-- Logo in the middle -->
             <a href="index.html" class="logo">
                 <span class="logo-icon">TJ</span>
                 <span class="logo-text">TrueJobs</span>
             </a>
-            <!-- Menu toggle removed from here - now notification is in corner -->
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="findjobs.html">Find Jobs</a></li>
-                <li><a href="dashboard.html" class="active">Dashboard</a></li>
-                <li><a href="companies.html">Companies</a></li>
-                <li><a href="resources.html">Resources</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-            <div class="user-menu">
-                <div class="notifications" onclick="window.location.href='notifications.html'">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge" id="notificationCount">0</span>
-                </div>
+            
+            <!-- User profile and menu toggle on the right -->
+            <div class="right-menu">
                 <div class="user-profile" onclick="window.location.href='profile.html'">
                     <div class="avatar" id="userAvatar">JD</div>
                     <div class="user-info">
@@ -898,11 +902,23 @@
                     </div>
                     <i class="fas fa-chevron-down"></i>
                 </div>
+                <span class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </span>
             </div>
         </div>
+        
+        <!-- Navigation menu (hidden by default, shown when menu toggle clicked) -->
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="findjobs.html">Find Jobs</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="companies.html">Companies</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
     </nav>
 
-    <!-- Rest of the HTML remains exactly the same -->
     <!-- Welcome Section -->
     <section class="welcome-section">
         <div class="container">
@@ -1339,7 +1355,5 @@
     </script>
 </body>
 </html>
-
-
 
 
