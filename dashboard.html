@@ -248,11 +248,7 @@
             color: var(--gray-500);
         }
 
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
+        /* Menu toggle removed - notification icon now in corner */
 
         /* Welcome Section */
         .welcome-section {
@@ -727,9 +723,6 @@
         }
 
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
             .nav-menu {
                 display: none;
                 position: absolute;
@@ -883,16 +876,14 @@
                 <span class="logo-icon">TJ</span>
                 <span class="logo-text">TrueJobs</span>
             </a>
-            <span class="menu-toggle" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </span>
+            <!-- Menu toggle removed from here - now notification is in corner -->
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="findjobs.html">Find Jobs</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
                 <li><a href="companies.html">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="dashboard.html" class="active">Dashboard</a></li>
             </ul>
             <div class="user-menu">
                 <div class="notifications" onclick="window.location.href='notifications.html'">
@@ -911,6 +902,7 @@
         </div>
     </nav>
 
+    <!-- Rest of the HTML remains exactly the same -->
     <!-- Welcome Section -->
     <section class="welcome-section">
         <div class="container">
