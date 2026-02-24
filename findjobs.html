@@ -267,21 +267,8 @@
             border-radius: 3px;
         }
 
-        .dashboard-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            color: var(--white) !important;
-            padding: 0.6rem 1.5rem;
-            border-radius: 40px;
-            font-weight: 600 !important;
-            box-shadow: var(--shadow-md);
-        }
-
-        .dashboard-link i {
-            color: var(--white);
-        }
+        /* Dashboard link now matches other nav links - special styling removed */
+        /* .dashboard-link styling has been removed to match other links */
 
         .auth-buttons {
             display: flex;
@@ -1361,7 +1348,7 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation - Updated with Dashboard after Find Jobs and matching style -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -1376,10 +1363,10 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="findjobs.html" class="active">Find Jobs</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
                 <li><a href="companies.html">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="dashboard.html" class="dashboard-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li class="auth-buttons">
                     <button class="btn-outline" onclick="location.href='login.html'">Sign In</button>
                     <button class="btn-primary" onclick="location.href='signup.html'">Sign Up</button>
@@ -1388,6 +1375,7 @@
         </div>
     </nav>
 
+    <!-- Rest of your HTML remains exactly the same... -->
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
@@ -1679,6 +1667,7 @@
     </script>
 </body>
 </html>
+
 
 
 
