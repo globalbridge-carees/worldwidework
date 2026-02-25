@@ -77,6 +77,18 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245,158,11,0); }
         }
 
+        /* Shimmer animation for the CV upload box */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
         /* Navigation Bar */
         .navbar {
             background: rgba(255,255,255,0.98);
@@ -497,6 +509,33 @@
             color: var(--accent);
         }
 
+        /* Phone input validation styling */
+        .input-wrapper input.error {
+            border-color: var(--danger);
+            background-color: rgba(239, 68, 68, 0.05);
+        }
+
+        .input-wrapper input.error:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .input-wrapper input.error + i {
+            color: var(--danger);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.7rem;
+            margin-top: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .error-message i {
+            font-size: 0.7rem;
+        }
+
         /* File Upload */
         .file-upload-area {
             border: 2px dashed var(--gray-300);
@@ -535,6 +574,51 @@
         .file-hint {
             color: var(--gray-400);
             font-size: 0.7rem;
+        }
+
+        /* Special styling for CV upload box */
+        .cv-upload-area {
+            border: 3px dashed;
+            border-image: linear-gradient(135deg, var(--accent), var(--success)) 1;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(245, 158, 11, 0.05));
+            position: relative;
+            overflow: hidden;
+            animation: glowPulse 2s infinite;
+        }
+
+        .cv-upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        .cv-upload-area i {
+            color: var(--success);
+            font-size: 2rem;
+        }
+
+        .cv-upload-area h4 {
+            color: var(--success);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .cv-upload-area .boost-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 0.3rem;
+            animation: pulse 2s infinite;
         }
 
         .uploaded-file {
@@ -1002,7 +1086,10 @@
                         </label>
                         <div class="input-wrapper">
                             <i class="fas fa-phone"></i>
-                            <input type="tel" id="phone" placeholder="+971 XX XXX XXXX">
+                            <input type="tel" id="phone" placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="error-message" id="phoneError" style="display: none;">
+                            <i class="fas fa-exclamation-circle"></i> Please include your country code (e.g., +1, +44, +254)
                         </div>
                     </div>
 
@@ -1024,15 +1111,84 @@
                             <i class="fas fa-globe"></i>
                             <select id="country">
                                 <option value="">Select country</option>
+                                <!-- Middle East -->
                                 <option value="uae">United Arab Emirates</option>
                                 <option value="qatar">Qatar</option>
                                 <option value="ksa">Saudi Arabia</option>
                                 <option value="kuwait">Kuwait</option>
                                 <option value="oman">Oman</option>
                                 <option value="bahrain">Bahrain</option>
-                                <option value="egypt">Egypt</option>
                                 <option value="jordan">Jordan</option>
+                                <option value="lebanon">Lebanon</option>
+                                <option value="iraq">Iraq</option>
+                                <option value="yemen">Yemen</option>
+                                <option value="palestine">Palestine</option>
+                                <option value="syria">Syria</option>
+                                
+                                <!-- North Africa -->
+                                <option value="egypt">Egypt</option>
+                                <option value="libya">Libya</option>
+                                <option value="tunisia">Tunisia</option>
+                                <option value="algeria">Algeria</option>
+                                <option value="morocco">Morocco</option>
+                                <option value="sudan">Sudan</option>
+                                
+                                <!-- East Africa -->
                                 <option value="kenya">Kenya</option>
+                                <option value="tanzania">Tanzania</option>
+                                <option value="uganda">Uganda</option>
+                                <option value="rwanda">Rwanda</option>
+                                <option value="burundi">Burundi</option>
+                                <option value="ethiopia">Ethiopia</option>
+                                <option value="somalia">Somalia</option>
+                                <option value="djibouti">Djibouti</option>
+                                <option value="eritrea">Eritrea</option>
+                                <option value="south sudan">South Sudan</option>
+                                
+                                <!-- West Africa -->
+                                <option value="nigeria">Nigeria</option>
+                                <option value="ghana">Ghana</option>
+                                <option value="senegal">Senegal</option>
+                                <option value="mali">Mali</option>
+                                <option value="cote d'ivoire">Côte d'Ivoire</option>
+                                <option value="cameroon">Cameroon</option>
+                                <option value="liberia">Liberia</option>
+                                <option value="sierra leone">Sierra Leone</option>
+                                <option value="guinea">Guinea</option>
+                                <option value="burkina faso">Burkina Faso</option>
+                                <option value="benin">Benin</option>
+                                <option value="togo">Togo</option>
+                                <option value="niger">Niger</option>
+                                <option value="mauritania">Mauritania</option>
+                                <option value="gambia">Gambia</option>
+                                <option value="guinea-bissau">Guinea-Bissau</option>
+                                <option value="cape verde">Cape Verde</option>
+                                
+                                <!-- Central Africa -->
+                                <option value="drc">DR Congo</option>
+                                <option value="congo">Congo</option>
+                                <option value="angola">Angola</option>
+                                <option value="gabon">Gabon</option>
+                                <option value="equatorial guinea">Equatorial Guinea</option>
+                                <option value="chad">Chad</option>
+                                <option value="central african republic">Central African Republic</option>
+                                
+                                <!-- Southern Africa -->
+                                <option value="south africa">South Africa</option>
+                                <option value="zimbabwe">Zimbabwe</option>
+                                <option value="zambia">Zambia</option>
+                                <option value="malawi">Malawi</option>
+                                <option value="mozambique">Mozambique</option>
+                                <option value="botswana">Botswana</option>
+                                <option value="namibia">Namibia</option>
+                                <option value="eswatini">Eswatini</option>
+                                <option value="lesotho">Lesotho</option>
+                                <option value="madagascar">Madagascar</option>
+                                <option value="mauritius">Mauritius</option>
+                                <option value="comoros">Comoros</option>
+                                <option value="seychelles">Seychelles</option>
+                                
+                                <!-- Other -->
                                 <option value="other">Other</option>
                             </select>
                         </div>
@@ -1144,7 +1300,7 @@
                 </div>
                 <div id="nationalId-info" style="display: none;"></div>
 
-                <!-- Certificates Upload (optional) - with camera capture -->
+                <!-- Certificates Upload (optional) -->
                 <div class="file-upload-area" onclick="document.getElementById('certificates').click()" style="margin-top: 0.5rem;">
                     <input type="file" id="certificates" style="display: none;" multiple accept="image/*" capture="environment">
                     <i class="fas fa-images"></i>
@@ -1153,6 +1309,19 @@
                     <div class="file-hint">Image format, multiple allowed (max 5MB each)</div>
                 </div>
                 <div id="certificates-info" style="display: none;"></div>
+
+                <!-- NEW: CV/Resume Upload (Optional) - with boost message -->
+                <div class="file-upload-area cv-upload-area" onclick="document.getElementById('cv').click()" style="margin-top: 0.5rem;">
+                    <input type="file" id="cv" style="display: none;" accept=".pdf,.doc,.docx" multiple>
+                    <i class="fas fa-file-pdf"></i>
+                    <h4>Upload CV/Resume <span style="color: var(--success);">(Highly Recommended)</span></h4>
+                    <p>Showcase your professional experience</p>
+                    <div class="boost-badge">
+                        <i class="fas fa-star"></i> +80% higher chance of getting hired! <i class="fas fa-star"></i>
+                    </div>
+                    <div class="file-hint">PDF, DOC, DOCX format (max 5MB)</div>
+                </div>
+                <div id="cv-info" style="display: none;"></div>
             </div>
 
             <!-- STEP 4: Review -->
@@ -1199,6 +1368,10 @@
                     <div class="review-item">
                         <div class="review-label">National ID:</div>
                         <div class="review-value" id="reviewNationalId">Not uploaded</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">CV/Resume:</div>
+                        <div class="review-value" id="reviewCv">Not uploaded</div>
                     </div>
                 </div>
 
@@ -1287,6 +1460,30 @@
             e.target.value = value;
         });
 
+        // Phone number validation with country code detection
+        const phoneInput = document.getElementById('phone');
+        const phoneError = document.getElementById('phoneError');
+
+        phoneInput.addEventListener('input', function() {
+            const value = phoneInput.value.trim();
+            // Check if it starts with + and has at least 8 characters after
+            if (value && !value.startsWith('+')) {
+                phoneInput.classList.add('error');
+                phoneError.style.display = 'flex';
+            } else {
+                phoneInput.classList.remove('error');
+                phoneError.style.display = 'none';
+            }
+        });
+
+        phoneInput.addEventListener('blur', function() {
+            const value = phoneInput.value.trim();
+            if (value && !value.startsWith('+')) {
+                phoneInput.classList.add('error');
+                phoneError.style.display = 'flex';
+            }
+        });
+
         // Progress tracking
         let currentStep = 1;
 
@@ -1357,6 +1554,15 @@
                         alert('Please enter a valid email address');
                         return false;
                     }
+                    
+                    // Validate phone has country code
+                    if (!phone.startsWith('+')) {
+                        alert('Please include your country code in the phone number (e.g., +1, +44, +254)');
+                        phoneInput.classList.add('error');
+                        phoneError.style.display = 'flex';
+                        return false;
+                    }
+                    
                     const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
                     if (!datePattern.test(dob)) {
                         alert('Please enter date of birth in DD/MM/YYYY format');
@@ -1399,8 +1605,26 @@
             const country = document.getElementById('country').value;
             const countryNames = {
                 'uae': 'United Arab Emirates', 'qatar': 'Qatar', 'ksa': 'Saudi Arabia',
-                'kuwait': 'Kuwait', 'oman': 'Oman', 'bahrain': 'Bahrain',
-                'egypt': 'Egypt', 'jordan': 'Jordan', 'kenya': 'Kenya', 'other': 'Other'
+                'kuwait': 'Kuwait', 'oman': 'Oman', 'bahrain': 'Bahrain', 'jordan': 'Jordan',
+                'lebanon': 'Lebanon', 'iraq': 'Iraq', 'yemen': 'Yemen', 'palestine': 'Palestine',
+                'syria': 'Syria', 'egypt': 'Egypt', 'libya': 'Libya', 'tunisia': 'Tunisia',
+                'algeria': 'Algeria', 'morocco': 'Morocco', 'sudan': 'Sudan', 'kenya': 'Kenya',
+                'tanzania': 'Tanzania', 'uganda': 'Uganda', 'rwanda': 'Rwanda', 'burundi': 'Burundi',
+                'ethiopia': 'Ethiopia', 'somalia': 'Somalia', 'djibouti': 'Djibouti',
+                'eritrea': 'Eritrea', 'south sudan': 'South Sudan', 'nigeria': 'Nigeria',
+                'ghana': 'Ghana', 'senegal': 'Senegal', 'mali': 'Mali',
+                "cote d'ivoire": "Côte d'Ivoire", 'cameroon': 'Cameroon', 'liberia': 'Liberia',
+                'sierra leone': 'Sierra Leone', 'guinea': 'Guinea', 'burkina faso': 'Burkina Faso',
+                'benin': 'Benin', 'togo': 'Togo', 'niger': 'Niger', 'mauritania': 'Mauritania',
+                'gambia': 'Gambia', 'guinea-bissau': 'Guinea-Bissau', 'cape verde': 'Cape Verde',
+                'drc': 'DR Congo', 'congo': 'Congo', 'angola': 'Angola', 'gabon': 'Gabon',
+                'equatorial guinea': 'Equatorial Guinea', 'chad': 'Chad',
+                'central african republic': 'Central African Republic', 'south africa': 'South Africa',
+                'zimbabwe': 'Zimbabwe', 'zambia': 'Zambia', 'malawi': 'Malawi',
+                'mozambique': 'Mozambique', 'botswana': 'Botswana', 'namibia': 'Namibia',
+                'eswatini': 'Eswatini', 'lesotho': 'Lesotho', 'madagascar': 'Madagascar',
+                'mauritius': 'Mauritius', 'comoros': 'Comoros', 'seychelles': 'Seychelles',
+                'other': 'Other'
             };
             document.getElementById('reviewCountry').textContent = countryNames[country] || country;
 
@@ -1416,6 +1640,9 @@
             
             const nationalIdFile = document.getElementById('nationalId').files[0];
             document.getElementById('reviewNationalId').textContent = nationalIdFile ? nationalIdFile.name : 'Not uploaded';
+            
+            const cvFile = document.getElementById('cv').files[0];
+            document.getElementById('reviewCv').textContent = cvFile ? cvFile.name : 'Not uploaded';
         }
 
         // File upload handlers
@@ -1459,6 +1686,27 @@
                     `;
                 }
                 info.innerHTML = html;
+            }
+        });
+
+        // NEW: CV file upload handler
+        document.getElementById('cv').addEventListener('change', function(e) {
+            if (e.target.files[0]) {
+                const file = e.target.files[0];
+                const info = document.getElementById('cv-info');
+                info.style.display = 'block';
+                info.innerHTML = `
+                    <div class="uploaded-file">
+                        <div class="file-info">
+                            <i class="fas fa-file-pdf"></i>
+                            <div>
+                                <div class="file-name">${file.name}</div>
+                                <div class="file-size">${(file.size / 1024).toFixed(1)} KB</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-times remove-file" onclick="this.parentElement.remove(); document.getElementById('cv').value = ''; this.parentElement.style.display='none'"></i>
+                    </div>
+                `;
             }
         });
 
