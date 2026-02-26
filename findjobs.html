@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Job Details - TrueJobs | Senior Nurse at Mediclinic Hospital</title>
+    <title>Job Details - TrueJobs | Your Trusted Career Partner</title>
     
-    <!-- Font Awesome 6 -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         * {
@@ -38,8 +38,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 30%),
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 30%),
                 linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             z-index: -1;
             animation: gradientShift 15s ease infinite;
@@ -58,20 +58,19 @@
             --accent-light: #fbbf24;
             --accent-dark: #d97706;
             --success: #10b981;
-            --success-light: #34d399;
-            --danger: #ef4444;
-            --warning: #f59e0b;
             --info: #3b82f6;
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
-            --gray-900: #0f172a;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
             --white: #ffffff;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
@@ -82,8 +81,9 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
+            padding: 0 2rem;
         }
 
         /* Glassmorphism Navigation */
@@ -92,15 +92,14 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 1rem 0;
+            padding: 0.8rem 0;
             border-radius: 100px;
             margin-bottom: 2rem;
             box-shadow: var(--shadow-2xl);
-            animation: slideInDown 0.8s ease;
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 0 2rem;
             display: flex;
@@ -145,7 +144,7 @@
 
         .nav-menu {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             align-items: center;
             list-style: none;
         }
@@ -187,6 +186,38 @@
             cursor: pointer;
         }
 
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            color: var(--white);
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: inline-flex;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .breadcrumb a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 1;
+        }
+
+        .breadcrumb i {
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
         /* Main Card */
         .job-details-card {
             background: rgba(255, 255, 255, 0.95);
@@ -196,9 +227,9 @@
             padding: 3rem;
             box-shadow: var(--shadow-3xl);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: fadeInUp 1s ease;
             position: relative;
             overflow: hidden;
+            margin-bottom: 3rem;
         }
 
         .job-details-card::before {
@@ -225,7 +256,6 @@
             gap: 2rem;
             margin-bottom: 3rem;
             flex-wrap: wrap;
-            position: relative;
         }
 
         .company-logo-large {
@@ -240,9 +270,9 @@
             font-size: 3rem;
             font-weight: 700;
             box-shadow: var(--shadow-2xl);
-            animation: pulse 2s infinite;
             position: relative;
             overflow: hidden;
+            animation: float 3s ease-in-out infinite;
         }
 
         .company-logo-large::after {
@@ -260,6 +290,11 @@
         @keyframes shine {
             0% { transform: translateX(-100%) rotate(45deg); }
             20%, 100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .job-title-section {
@@ -293,7 +328,7 @@
         }
 
         .verified-badge-large {
-            background: linear-gradient(135deg, var(--success), var(--success-light));
+            background: linear-gradient(135deg, var(--success), #34d399);
             color: var(--white);
             padding: 0.3rem 1.2rem;
             border-radius: 50px;
@@ -307,7 +342,7 @@
 
         .job-meta-large {
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
@@ -316,8 +351,8 @@
             align-items: center;
             gap: 0.8rem;
             color: var(--gray-600);
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.2rem;
             background: var(--gray-50);
             border-radius: 50px;
             border: 1px solid var(--gray-200);
@@ -333,16 +368,14 @@
 
         .meta-item-large i {
             color: var(--accent);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .salary-large {
             color: var(--success);
             font-weight: 700;
-            font-size: 1.2rem;
             background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
+            border-color: #a7f3d0;
         }
 
         /* Action Buttons */
@@ -447,7 +480,6 @@
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--gray-200);
             transition: all 0.3s ease;
-            animation: fadeIn 1s ease;
         }
 
         .info-card:hover {
@@ -504,19 +536,17 @@
             padding: 1rem 0;
             border-bottom: 1px solid var(--gray-200);
             color: var(--gray-700);
-            animation: fadeInRight 0.5s ease;
-            animation-fill-mode: both;
+            transition: all 0.3s ease;
         }
 
         .requirements-list li:last-child {
             border-bottom: none;
         }
 
-        .requirements-list li:nth-child(1) { animation-delay: 0.1s; }
-        .requirements-list li:nth-child(2) { animation-delay: 0.2s; }
-        .requirements-list li:nth-child(3) { animation-delay: 0.3s; }
-        .requirements-list li:nth-child(4) { animation-delay: 0.4s; }
-        .requirements-list li:nth-child(5) { animation-delay: 0.5s; }
+        .requirements-list li:hover {
+            transform: translateX(5px);
+            color: var(--primary);
+        }
 
         .requirements-list li i {
             color: var(--success);
@@ -642,6 +672,11 @@
             font-weight: 700;
             margin: 0 auto 1rem;
             box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .company-card:hover .company-logo-medium {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .company-card h3 {
@@ -685,6 +720,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .view-website:hover {
@@ -694,7 +733,51 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* Similar Jobs */
+        /* Share Section */
+        .share-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 50px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .share-section span {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .share-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .share-icon.facebook { background: #1877f2; }
+        .share-icon.twitter { background: #1da1f2; }
+        .share-icon.linkedin { background: #0077b5; }
+        .share-icon.whatsapp { background: #25d366; }
+
+        .share-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Similar Jobs Section */
         .similar-jobs {
             margin-top: 3rem;
         }
@@ -720,10 +803,11 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.5rem;
             background: rgba(255,255,255,0.1);
             border-radius: 50px;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
             transition: all 0.3s ease;
         }
 
@@ -753,6 +837,7 @@
             border: 1px solid rgba(255,255,255,0.2);
             transition: all 0.3s ease;
             cursor: pointer;
+            color: var(--white);
         }
 
         .similar-card:hover {
@@ -776,7 +861,7 @@
         .similar-card .meta {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
             color: rgba(255,255,255,0.7);
             font-size: 0.8rem;
             margin-bottom: 1rem;
@@ -784,94 +869,91 @@
 
         .similar-card .meta i {
             color: var(--accent);
+            margin-right: 0.2rem;
         }
 
         .similar-card .salary {
             color: var(--success);
             font-weight: 600;
-        }
-
-        /* Breadcrumb */
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-            color: var(--white);
             font-size: 0.9rem;
-        }
-
-        .breadcrumb a {
-            color: var(--white);
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-
-        .breadcrumb a:hover {
-            opacity: 1;
-        }
-
-        .breadcrumb i {
-            font-size: 0.7rem;
-            opacity: 0.6;
-        }
-
-        /* Share Section */
-        .share-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding: 1rem;
-            background: var(--gray-50);
-            border-radius: 50px;
-        }
-
-        .share-section span {
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .share-icons {
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .share-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .share-icon.facebook { background: #1877f2; }
-        .share-icon.twitter { background: #1da1f2; }
-        .share-icon.linkedin { background: #0077b5; }
-        .share-icon.whatsapp { background: #25d366; }
-
-        .share-icon:hover {
-            transform: translateY(-3px) scale(1.1);
-            box-shadow: var(--shadow-lg);
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 4rem;
             color: var(--white);
             opacity: 0.8;
             font-size: 0.9rem;
             padding: 2rem 0;
         }
 
-        /* Responsive */
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--success), #34d399);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: var(--shadow-2xl);
+            z-index: 9999;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                padding: 1.5rem;
+                border-radius: 20px;
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 0.5rem;
+            }
+
+            .nav-menu.show {
+                display: flex;
+            }
+
             .job-details-card {
                 padding: 1.5rem;
             }
@@ -899,26 +981,9 @@
                 justify-content: center;
             }
 
-            .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(255,255,255,0.1);
-                backdrop-filter: blur(20px);
-                padding: 1rem;
-                border-radius: 20px;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-menu.show {
-                display: flex;
-            }
-
-            .menu-toggle {
-                display: block;
+            .meta-item-large {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
             }
         }
     </style>
@@ -949,23 +1014,21 @@
 
     <div class="container">
         <!-- Breadcrumb -->
-        <div class="breadcrumb animate__animated animate__fadeIn">
+        <div class="breadcrumb" data-aos="fade-down">
             <a href="index.html">Home</a>
             <i class="fas fa-chevron-right"></i>
             <a href="findjobs.html">Find Jobs</a>
             <i class="fas fa-chevron-right"></i>
-            <span>Senior Nurse</span>
+            <span id="breadcrumbJob">Job Details</span>
         </div>
 
         <!-- Main Job Details Card -->
-        <div class="job-details-card" id="jobDetailsCard">
+        <div class="job-details-card" data-aos="fade-up" data-aos-duration="1000">
             <!-- Job Header -->
             <div class="job-header">
-                <div class="company-logo-large animate__animated animate__zoomIn">
-                    MH
-                </div>
+                <div class="company-logo-large" id="companyLogo" data-aos="zoom-in">MH</div>
                 
-                <div class="job-title-section animate__animated animate__fadeInUp">
+                <div class="job-title-section" data-aos="fade-left">
                     <h1 id="jobTitle">Senior Nurse</h1>
                     
                     <div class="company-name-large">
@@ -991,7 +1054,7 @@
                     </div>
                 </div>
                 
-                <div class="action-buttons animate__animated animate__fadeInRight">
+                <div class="action-buttons" data-aos="fade-right">
                     <button class="btn-save" id="saveBtn" onclick="toggleSaveJob()">
                         <i class="far fa-bookmark"></i> Save Job
                     </button>
@@ -1006,7 +1069,7 @@
                 <!-- Left Column -->
                 <div class="left-column">
                     <!-- Job Description -->
-                    <div class="info-card animate__animated animate__fadeInLeft">
+                    <div class="info-card" data-aos="fade-up" data-aos-delay="100">
                         <div class="card-header">
                             <i class="fas fa-align-left"></i>
                             <h2>Job Description</h2>
@@ -1018,7 +1081,7 @@
                     </div>
 
                     <!-- Requirements -->
-                    <div class="info-card animate__animated animate__fadeInLeft" style="animation-delay: 0.1s;">
+                    <div class="info-card" data-aos="fade-up" data-aos-delay="200">
                         <div class="card-header">
                             <i class="fas fa-list-ul"></i>
                             <h2>Requirements</h2>
@@ -1033,7 +1096,7 @@
                     </div>
 
                     <!-- Skills & Tags -->
-                    <div class="info-card animate__animated animate__fadeInLeft" style="animation-delay: 0.2s;">
+                    <div class="info-card" data-aos="fade-up" data-aos-delay="300">
                         <div class="card-header">
                             <i class="fas fa-tags"></i>
                             <h2>Required Skills</h2>
@@ -1043,7 +1106,7 @@
                             <span class="tag-large">Emergency Care</span>
                             <span class="tag-large">Patient Assessment</span>
                             <span class="tag-large">Team Leadership</span>
-                            <span class="tag-large">Electronic Medical Records</span>
+                            <span class="tag-large">EMR Systems</span>
                             <span class="tag-large">Critical Thinking</span>
                         </div>
                     </div>
@@ -1052,12 +1115,12 @@
                 <!-- Right Column -->
                 <div class="right-column">
                     <!-- Job Stats -->
-                    <div class="stats-card animate__animated animate__fadeInRight">
+                    <div class="stats-card" data-aos="fade-up" data-aos-delay="150">
                         <div class="stat-item-large">
                             <i class="fas fa-users"></i>
                             <div class="stat-info-large">
-                                <h4>Applicants</h4>
-                                <p>24 applied</p>
+                                <h4>Total Applicants</h4>
+                                <p id="applicants">24 applied</p>
                             </div>
                         </div>
                         <div class="stat-item-large">
@@ -1071,21 +1134,21 @@
                             <i class="fas fa-hourglass-half"></i>
                             <div class="stat-info-large">
                                 <h4>Deadline</h4>
-                                <p>Apr 15, 2026</p>
+                                <p id="deadline">Apr 15, 2026</p>
                             </div>
                         </div>
                         <div class="stat-item-large">
                             <i class="fas fa-eye"></i>
                             <div class="stat-info-large">
                                 <h4>Views</h4>
-                                <p>1,234 views</p>
+                                <p id="views">1,234 views</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Company Info -->
-                    <div class="company-card animate__animated animate__fadeInRight" style="animation-delay: 0.1s;">
-                        <div class="company-logo-medium" id="companyLogo">MH</div>
+                    <div class="company-card" data-aos="fade-up" data-aos-delay="250">
+                        <div class="company-logo-medium" id="companyLogoMedium">MH</div>
                         <h3 id="companyFullName">Mediclinic Hospital</h3>
                         <p id="companyLocation"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</p>
                         
@@ -1106,8 +1169,8 @@
                     </div>
 
                     <!-- Share Section -->
-                    <div class="share-section animate__animated animate__fadeInRight" style="animation-delay: 0.2s;">
-                        <span>Share job:</span>
+                    <div class="share-section" data-aos="fade-up" data-aos-delay="350">
+                        <span>Share this job:</span>
                         <div class="share-icons">
                             <div class="share-icon facebook" onclick="shareJob('facebook')">
                                 <i class="fab fa-facebook-f"></i>
@@ -1129,7 +1192,7 @@
 
         <!-- Similar Jobs Section -->
         <section class="similar-jobs">
-            <div class="section-header animate__animated animate__fadeInUp">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Similar Jobs You Might Like</h2>
                 <a href="findjobs.html" class="view-all-link">
                     View All <i class="fas fa-arrow-right"></i>
@@ -1138,9 +1201,9 @@
             
             <div class="similar-grid" id="similarJobsGrid">
                 <!-- Job Card 1 -->
-                <div class="similar-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;" onclick="window.location.href='job-details.html?id=2'">
+                <div class="similar-card" data-aos="fade-up" data-aos-delay="100" onclick="window.location.href='job-details.html?id=2'">
                     <h4>Registered Nurse</h4>
-                    <div class="company">American Hospital</div>
+                    <div class="company">American Hospital Dubai</div>
                     <div class="meta">
                         <span><i class="fas fa-map-marker-alt"></i> Dubai</span>
                         <span><i class="fas fa-clock"></i> Full Time</span>
@@ -1149,9 +1212,9 @@
                 </div>
                 
                 <!-- Job Card 2 -->
-                <div class="similar-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;" onclick="window.location.href='job-details.html?id=3'">
+                <div class="similar-card" data-aos="fade-up" data-aos-delay="200" onclick="window.location.href='job-details.html?id=3'">
                     <h4>ICU Nurse</h4>
-                    <div class="company">Cleveland Clinic</div>
+                    <div class="company">Cleveland Clinic Abu Dhabi</div>
                     <div class="meta">
                         <span><i class="fas fa-map-marker-alt"></i> Abu Dhabi</span>
                         <span><i class="fas fa-clock"></i> Full Time</span>
@@ -1160,7 +1223,7 @@
                 </div>
                 
                 <!-- Job Card 3 -->
-                <div class="similar-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s;" onclick="window.location.href='job-details.html?id=5'">
+                <div class="similar-card" data-aos="fade-up" data-aos-delay="300" onclick="window.location.href='job-details.html?id=5'">
                     <h4>Charge Nurse</h4>
                     <div class="company">Mediclinic Hospital</div>
                     <div class="meta">
@@ -1178,17 +1241,29 @@
         <p>&copy; 2026 TrueJobs. All rights reserved. Your trusted partner for global employment.</p>
     </footer>
 
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
         // Toggle mobile menu
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        // Get job ID from URL (for dynamic content)
+        // Get job ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const jobId = urlParams.get('id') || '1';
         
-        // Job data (would normally come from a database)
+        // Update breadcrumb
+        document.getElementById('breadcrumbJob').textContent = jobId === '1' ? 'Senior Nurse' : 'Job Details';
+
+        // Job data (matching your findjobs.html)
         const jobs = {
             1: {
                 id: 1,
@@ -1207,7 +1282,7 @@
                     "BLS and ACLS certification",
                     "Excellent communication and leadership skills"
                 ],
-                skills: ["ICU Experience", "Emergency Care", "Patient Assessment", "Team Leadership", "Electronic Medical Records", "Critical Thinking"],
+                skills: ["ICU Experience", "Emergency Care", "Patient Assessment", "Team Leadership", "EMR Systems", "Critical Thinking"],
                 posted: "2 days ago",
                 deadline: "Apr 15, 2026",
                 views: "1,234",
@@ -1216,13 +1291,13 @@
             2: {
                 id: 2,
                 title: "Registered Nurse",
-                company: "American Hospital",
+                company: "American Hospital Dubai",
                 logo: "AH",
                 location: "Dubai, UAE",
                 type: "Full Time",
                 experience: "2+ Years",
                 salary: "$3,200 - $4,000/mo",
-                description: "American Hospital Dubai is looking for a dedicated Registered Nurse to join our team. You will provide direct patient care, administer medications, and collaborate with healthcare professionals.",
+                description: "American Hospital Dubai is looking for a dedicated Registered Nurse to join our team. You will provide direct patient care, administer medications, and collaborate with healthcare professionals to ensure optimal patient outcomes.",
                 requirements: [
                     "Bachelor's degree in Nursing",
                     "DHA license",
@@ -1238,13 +1313,13 @@
             3: {
                 id: 3,
                 title: "ICU Nurse",
-                company: "Cleveland Clinic",
+                company: "Cleveland Clinic Abu Dhabi",
                 logo: "CC",
                 location: "Abu Dhabi, UAE",
                 type: "Full Time",
                 experience: "3+ Years",
                 salary: "$3,800 - $4,500/mo",
-                description: "Cleveland Clinic Abu Dhabi is seeking an experienced ICU Nurse to provide critical care to patients in our Intensive Care Unit.",
+                description: "Cleveland Clinic Abu Dhabi is seeking an experienced ICU Nurse to provide critical care to patients in our Intensive Care Unit. You will monitor vital signs, administer medications, and collaborate with a team of healthcare professionals.",
                 requirements: [
                     "Bachelor's degree in Nursing",
                     "HAAD/DOH license",
@@ -1259,18 +1334,18 @@
             }
         };
 
-        // Load job details
+        // Get job data or use default
         const job = jobs[jobId] || jobs[1];
         
+        // Populate job details
         document.getElementById('jobTitle').textContent = job.title;
         document.getElementById('companyName').textContent = job.company;
         document.getElementById('companyFullName').textContent = job.company;
         document.getElementById('companyLocation').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${job.location}`;
+        
+        // Update logos
         document.getElementById('companyLogo').textContent = job.logo;
-        document.querySelector('.company-logo-large').textContent = job.logo;
-        document.querySelector('.company-logo-medium').textContent = job.logo;
-        document.getElementById('jobDescription').innerHTML = `<p>${job.description.replace(/\n/g, '</p><p>')}</p>`;
-        document.getElementById('postedDate').textContent = job.posted;
+        document.getElementById('companyLogoMedium').textContent = job.logo;
         
         // Update job meta
         document.getElementById('jobMeta').innerHTML = `
@@ -1280,17 +1355,29 @@
             <span class="meta-item-large salary-large"><i class="fas fa-money-bill-wave"></i> ${job.salary}</span>
         `;
         
+        // Update job description
+        document.getElementById('jobDescription').innerHTML = `<p>${job.description.replace(/\n/g, '</p><p>')}</p>`;
+        
         // Update requirements
         document.getElementById('requirementsList').innerHTML = job.requirements.map(req => 
             `<li><i class="fas fa-check-circle"></i> ${req}</li>`
         ).join('');
         
-        // Update skills tags
+        // Update skills
         document.getElementById('skillsTags').innerHTML = job.skills.map(skill => 
             `<span class="tag-large">${skill}</span>`
         ).join('');
         
-        // Check if job is saved
+        // Update stats
+        document.getElementById('postedDate').textContent = job.posted;
+        document.getElementById('deadline').textContent = job.deadline;
+        document.getElementById('views').textContent = job.views + ' views';
+        document.getElementById('applicants').textContent = job.applicants + ' applied';
+        
+        // Update breadcrumb
+        document.getElementById('breadcrumbJob').textContent = job.title;
+
+        // Saved jobs functionality
         let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
         const saveBtn = document.getElementById('saveBtn');
         
@@ -1306,22 +1393,19 @@
         
         updateSaveButton();
         
-        // Toggle save job
         function toggleSaveJob() {
             const index = savedJobs.indexOf(job.id);
             if (index === -1) {
                 savedJobs.push(job.id);
+                showNotification('Job saved successfully!');
             } else {
                 savedJobs.splice(index, 1);
+                showNotification('Job removed from saved');
             }
             localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
             updateSaveButton();
-            
-            // Show notification
-            showNotification(index === -1 ? 'Job saved!' : 'Job removed');
         }
         
-        // Apply for job
         function applyForJob() {
             sessionStorage.setItem('applyingFor', JSON.stringify({ 
                 id: job.id, 
@@ -1331,7 +1415,6 @@
             window.location.href = `apply.html?job=${encodeURIComponent(job.title)}&company=${encodeURIComponent(job.company)}`;
         }
         
-        // Share job
         function shareJob(platform) {
             const url = window.location.href;
             const text = `Check out this job: ${job.title} at ${job.company}`;
@@ -1355,22 +1438,9 @@
             window.open(shareUrl, '_blank', 'width=600,height=400');
         }
         
-        // Show notification
         function showNotification(message) {
             const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, var(--success), var(--success-light));
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 50px;
-                font-weight: 600;
-                box-shadow: var(--shadow-2xl);
-                z-index: 9999;
-                animation: slideInRight 0.3s ease;
-            `;
+            notification.className = 'notification';
             notification.textContent = message;
             document.body.appendChild(notification);
             
@@ -1379,33 +1449,6 @@
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
-        
-        // Add animation styles
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes fadeOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
