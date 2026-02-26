@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Job Details - TrueJobs | Your Trusted Career Partner</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 30%),
+                linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        :root {
+            --primary: #0f2b4b;
+            --primary-light: #1e3a6a;
+            --primary-dark: #0a1f36;
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --accent-dark: #d97706;
+            --success: #10b981;
+            --info: #3b82f6;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --shadow-3xl: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Glassmorphism Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 0;
+            border-radius: 100px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--accent);
+            width: 45px;
+            height: 45px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            box-shadow: var(--shadow-lg);
+            transform: rotate(0deg);
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(360deg);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: -1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::before,
+        .nav-menu a.active::before {
+            width: 100%;
+        }
+
+        .nav-menu a.active {
+            font-weight: 600;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--white);
+            cursor: pointer;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            color: var(--white);
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: inline-flex;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .breadcrumb a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 1;
+        }
+
+        .breadcrumb i {
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
+        /* Main Card */
+        .job-details-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 3rem;
+            box-shadow: var(--shadow-3xl);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .job-details-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary), var(--success), var(--info));
+            background-size: 300% 100%;
+            animation: gradientMove 5s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Header Section */
+        .job-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .company-logo-large {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-dark));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-2xl);
+            position: relative;
+            overflow: hidden;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .company-logo-large::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            20%, 100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .job-title-section {
+            flex: 1;
+        }
+
+        .job-title-section h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .company-name-large {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .company-name-large h3 {
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            font-weight: 600;
+        }
+
+        .verified-badge-large {
+            background: linear-gradient(135deg, var(--success), #34d399);
+            color: var(--white);
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .job-meta-large {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item-large {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--gray-50);
+            border-radius: 50px;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .meta-item-large:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        .meta-item-large i {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .salary-large {
+            color: var(--success);
+            font-weight: 700;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: #a7f3d0;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-left: auto;
+        }
+
+        .btn-apply {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-apply::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .btn-apply:hover::before {
+            left: 100%;
+        }
+
+        .btn-save {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid var(--gray-200);
+            color: var(--gray-700);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-save:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-save.saved {
+            background: var(--accent);
+            color: var(--white);
+            border-color: var(--accent);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Left Column */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-2xl);
+            border-color: var(--accent);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header i {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .description-text {
+            color: var(--gray-700);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .description-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* Requirements List */
+        .requirements-list {
+            list-style: none;
+        }
+
+        .requirements-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            color: var(--gray-700);
+            transition: all 0.3s ease;
+        }
+
+        .requirements-list li:last-child {
+            border-bottom: none;
+        }
+
+        .requirements-list li:hover {
+            transform: translateX(5px);
+            color: var(--primary);
+        }
+
+        .requirements-list li i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        /* Tags */
+        .tags-container {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tag-large {
+            background: linear-gradient(135deg, var(--gray-50), var(--white));
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tag-large:hover {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Right Column */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 30px;
+            padding: 2rem;
+            color: var(--white);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .stat-item-large {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item-large:last-child {
+            border-bottom: none;
+        }
+
+        .stat-item-large i {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .stat-info-large h4 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-info-large p {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Company Card */
+        .company-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+        }
+
+        .company-logo-medium {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-dark));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .company-card:hover .company-logo-medium {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .company-card h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .company-stat {
+            text-align: center;
+        }
+
+        .company-stat .number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .company-stat .label {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        .view-website {
+            background: var(--gray-100);
+            color: var(--primary);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .view-website:hover {
+            background: var(--accent);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Share Section */
+        .share-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 50px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .share-section span {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .share-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .share-icon.facebook { background: #1877f2; }
+        .share-icon.twitter { background: #1da1f2; }
+        .share-icon.linkedin { background: #0077b5; }
+        .share-icon.whatsapp { background: #25d366; }
+
+        .share-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Similar Jobs Section */
+        .similar-jobs {
+            margin-top: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            color: var(--white);
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .view-all-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .view-all-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .similar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .similar-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .similar-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: var(--white);
+        }
+
+        .similar-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255,255,255,0.15);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .similar-card h4 {
+            color: var(--white);
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .similar-card .company {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .similar-card .meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .similar-card .meta i {
+            color: var(--accent);
+            margin-right: 0.2rem;
+        }
+
+        .similar-card .salary {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--white);
+            opacity: 0.8;
+            font-size: 0.9rem;
+            padding: 2rem 0;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--success), #34d399);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: var(--shadow-2xl);
+            z-index: 9999;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(20px);
+                padding: 1.5rem;
+                border-radius: 20px;
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 0.5rem;
+            }
+
+            .nav-menu.show {
+                display: flex;
+            }
+
+            .job-details-card {
+                padding: 1.5rem;
+            }
+
+            .job-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .action-buttons {
+                margin-left: 0;
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .job-title-section h1 {
+                font-size: 2rem;
+            }
+
+            .company-name-large {
+                justify-content: center;
+            }
+
+            .job-meta-large {
+                justify-content: center;
+            }
+
+            .meta-item-large {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .content-grid {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .job-title-section h1 {
+                font-size: 1.5rem;
+            }
+
+            .company-name-large h3 {
+                font-size: 1.2rem;
+            }
+
+            .meta-item-large {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .btn-apply, .btn-save {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">TJ</span>
+                <span class="logo-text">TrueJobs</span>
+            </a>
+            
+            <span class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </span>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="findjobs.html" class="active">Find Jobs</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="companies.html">Companies</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb" data-aos="fade-down">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="findjobs.html">Find Jobs</a>
+            <i class="fas fa-chevron-right"></i>
+            <span id="breadcrumbJob">Job Details</span>
+        </div>
+
+        <!-- Main Job Details Card -->
+        <div class="job-details-card" data-aos="fade-up" data-aos-duration="1000">
+            <!-- Job Header -->
+            <div class="job-header">
+                <div class="company-logo-large" id="companyLogo" data-aos="zoom-in">MH</div>
+                
+                <div class="job-title-section" data-aos="fade-left">
+                    <h1 id="jobTitle">Senior Nurse</h1>
+                    
+                    <div class="company-name-large">
+                        <h3 id="companyName">Mediclinic Hospital</h3>
+                        <span class="verified-badge-large">
+                            <i class="fas fa-check-circle"></i> Verified Employer
+                        </span>
+                    </div>
+                    
+                    <div class="job-meta-large" id="jobMeta">
+                        <span class="meta-item-large">
+                            <i class="fas fa-map-marker-alt"></i> Dubai, UAE
+                        </span>
+                        <span class="meta-item-large">
+                            <i class="fas fa-clock"></i> Full Time
+                        </span>
+                        <span class="meta-item-large">
+                            <i class="fas fa-briefcase"></i> 3+ Years
+                        </span>
+                        <span class="meta-item-large salary-large">
+                            <i class="fas fa-money-bill-wave"></i> $3,500 - $4,500/mo
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="action-buttons" data-aos="fade-right">
+                    <button class="btn-save" id="saveBtn" onclick="toggleSaveJob()">
+                        <i class="far fa-bookmark"></i> Save Job
+                    </button>
+                    <button class="btn-apply" onclick="applyForJob()">
+                        Apply Now <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Job Description -->
+                    <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-header">
+                            <i class="fas fa-align-left"></i>
+                            <h2>Job Description</h2>
+                        </div>
+                        <div class="description-text" id="jobDescription">
+                            <p>We are seeking an experienced and compassionate Senior Nurse to join our leading hospital in Dubai. The ideal candidate will have strong clinical skills, leadership abilities, and a commitment to providing exceptional patient care.</p>
+                            <p>As a Senior Nurse, you will supervise nursing staff, coordinate patient care, and ensure compliance with healthcare regulations. You will work closely with doctors and other healthcare professionals to deliver the highest standard of medical care.</p>
+                        </div>
+                    </div>
+
+                    <!-- Requirements -->
+                    <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-header">
+                            <i class="fas fa-list-ul"></i>
+                            <h2>Requirements</h2>
+                        </div>
+                        <ul class="requirements-list" id="requirementsList">
+                            <li><i class="fas fa-check-circle"></i> Bachelor's degree in Nursing</li>
+                            <li><i class="fas fa-check-circle"></i> Valid DHA license or eligibility</li>
+                            <li><i class="fas fa-check-circle"></i> Minimum 3 years of clinical experience</li>
+                            <li><i class="fas fa-check-circle"></i> BLS and ACLS certification</li>
+                            <li><i class="fas fa-check-circle"></i> Excellent communication and leadership skills</li>
+                        </ul>
+                    </div>
+
+                    <!-- Skills & Tags -->
+                    <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card-header">
+                            <i class="fas fa-tags"></i>
+                            <h2>Required Skills</h2>
+                        </div>
+                        <div class="tags-container" id="skillsTags">
+                            <span class="tag-large">ICU Experience</span>
+                            <span class="tag-large">Emergency Care</span>
+                            <span class="tag-large">Patient Assessment</span>
+                            <span class="tag-large">Team Leadership</span>
+                            <span class="tag-large">EMR Systems</span>
+                            <span class="tag-large">Critical Thinking</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Job Stats -->
+                    <div class="stats-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="stat-item-large">
+                            <i class="fas fa-users"></i>
+                            <div class="stat-info-large">
+                                <h4>Total Applicants</h4>
+                                <p id="applicants">24 applied</p>
+                            </div>
+                        </div>
+                        <div class="stat-item-large">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div class="stat-info-large">
+                                <h4>Posted</h4>
+                                <p id="postedDate">2 days ago</p>
+                            </div>
+                        </div>
+                        <div class="stat-item-large">
+                            <i class="fas fa-hourglass-half"></i>
+                            <div class="stat-info-large">
+                                <h4>Deadline</h4>
+                                <p id="deadline">Apr 15, 2026</p>
+                            </div>
+                        </div>
+                        <div class="stat-item-large">
+                            <i class="fas fa-eye"></i>
+                            <div class="stat-info-large">
+                                <h4>Views</h4>
+                                <p id="views">1,234 views</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Company Info -->
+                    <div class="company-card" data-aos="fade-up" data-aos-delay="250">
+                        <div class="company-logo-medium" id="companyLogoMedium">MH</div>
+                        <h3 id="companyFullName">Mediclinic Hospital</h3>
+                        <p id="companyLocation"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</p>
+                        
+                        <div class="company-stats">
+                            <div class="company-stat">
+                                <div class="number">50+</div>
+                                <div class="label">Jobs Posted</div>
+                            </div>
+                            <div class="company-stat">
+                                <div class="number">5K+</div>
+                                <div class="label">Employees</div>
+                            </div>
+                        </div>
+                        
+                        <button class="view-website" onclick="window.open('#', '_blank')">
+                            <i class="fas fa-globe"></i> Visit Website
+                        </button>
+                    </div>
+
+                    <!-- Share Section -->
+                    <div class="share-section" data-aos="fade-up" data-aos-delay="350">
+                        <span>Share this job:</span>
+                        <div class="share-icons">
+                            <div class="share-icon facebook" onclick="shareJob('facebook')">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <div class="share-icon twitter" onclick="shareJob('twitter')">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                            <div class="share-icon linkedin" onclick="shareJob('linkedin')">
+                                <i class="fab fa-linkedin-in"></i>
+                            </div>
+                            <div class="share-icon whatsapp" onclick="shareJob('whatsapp')">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Similar Jobs Section -->
+        <section class="similar-jobs">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Similar Jobs You Might Like</h2>
+                <a href="findjobs.html" class="view-all-link">
+                    View All <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="similar-grid" id="similarJobsGrid">
+                <!-- Job Card 1 -->
+                <div class="similar-card" data-aos="fade-up" data-aos-delay="100" onclick="window.location.href='job-details.html?id=2'">
+                    <h4>Registered Nurse</h4>
+                    <div class="company">American Hospital Dubai</div>
+                    <div class="meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Dubai</span>
+                        <span><i class="fas fa-clock"></i> Full Time</span>
+                    </div>
+                    <div class="salary">$3,200 - $4,000/mo</div>
+                </div>
+                
+                <!-- Job Card 2 -->
+                <div class="similar-card" data-aos="fade-up" data-aos-delay="200" onclick="window.location.href='job-details.html?id=3'">
+                    <h4>ICU Nurse</h4>
+                    <div class="company">Cleveland Clinic Abu Dhabi</div>
+                    <div class="meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Abu Dhabi</span>
+                        <span><i class="fas fa-clock"></i> Full Time</span>
+                    </div>
+                    <div class="salary">$3,800 - $4,500/mo</div>
+                </div>
+                
+                <!-- Job Card 3 -->
+                <div class="similar-card" data-aos="fade-up" data-aos-delay="300" onclick="window.location.href='job-details.html?id=5'">
+                    <h4>Charge Nurse</h4>
+                    <div class="company">Mediclinic Hospital</div>
+                    <div class="meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Dubai</span>
+                        <span><i class="fas fa-clock"></i> Full Time</span>
+                    </div>
+                    <div class="salary">$4,000 - $5,000/mo</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 TrueJobs. All rights reserved. Your trusted partner for global employment.</p>
+    </footer>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('show');
+        }
+
+        // Get job ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = urlParams.get('id') || '1';
+        
+        // Job data (matching your findjobs.html exactly)
+        const jobs = {
+            1: {
+                id: 1,
+                title: "Senior Care Giver",
+                company: "Golden Care Center",
+                logo: "GC",
+                location: "Dubai, UAE",
+                type: "Full Time",
+                experience: "3+ Years",
+                salary: "$2,200/month",
+                description: "Experienced care giver needed for elderly patients. Must have first aid certification and minimum 3 years experience. Accommodation provided.",
+                requirements: [
+                    "First Aid Certification",
+                    "CPR Certified",
+                    "3+ years experience",
+                    "Elderly care experience",
+                    "Valid work visa"
+                ],
+                skills: ["Elderly Care", "First Aid", "CPR", "Live-in"],
+                posted: "2 days ago",
+                deadline: "Apr 15, 2026",
+                views: "1,234",
+                applicants: "24"
+            },
+            2: {
+                id: 2,
+                title: "Registered Nurse",
+                company: "Mediclinic Hospital",
+                logo: "MH",
+                location: "Abu Dhabi, UAE",
+                type: "Full Time",
+                experience: "2+ Years",
+                salary: "$3,500/month",
+                description: "Registered nurse needed for leading hospital. Must have DHA license and ICU experience. Competitive benefits package.",
+                requirements: [
+                    "DHA License",
+                    "ICU experience",
+                    "Bachelor's degree",
+                    "2+ years experience",
+                    "BLS certification"
+                ],
+                skills: ["DHA License", "ICU", "Emergency", "Bachelor's"],
+                posted: "1 day ago",
+                deadline: "Apr 20, 2026",
+                views: "876",
+                applicants: "18"
+            },
+            3: {
+                id: 3,
+                title: "Home Nurse Assistant",
+                company: "HomeCare Plus",
+                logo: "HC",
+                location: "Doha, Qatar",
+                type: "Live-in",
+                experience: "2+ Years",
+                salary: "$1,900/month",
+                description: "Home nurse assistant needed for elderly patient. Must have nursing license and experience with bedridden patients. Private room provided.",
+                requirements: [
+                    "Nursing License",
+                    "2+ years experience",
+                    "Live-in availability",
+                    "First aid certified",
+                    "Elderly care experience"
+                ],
+                skills: ["Nursing License", "Elderly Care", "Live-in", "Medical Training"],
+                posted: "3 days ago",
+                deadline: "Apr 25, 2026",
+                views: "567",
+                applicants: "12"
+            }
+        };
+
+        // Get job data or use default
+        const job = jobs[jobId] || jobs[1];
+        
+        // Update breadcrumb
+        document.getElementById('breadcrumbJob').textContent = job.title;
+        
+        // Populate job details
+        document.getElementById('jobTitle').textContent = job.title;
+        document.getElementById('companyName').textContent = job.company;
+        document.getElementById('companyFullName').textContent = job.company;
+        document.getElementById('companyLocation').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${job.location}`;
+        
+        // Update logos
+        document.getElementById('companyLogo').textContent = job.logo;
+        document.getElementById('companyLogoMedium').textContent = job.logo;
+        
+        // Update job meta
+        document.getElementById('jobMeta').innerHTML = `
+            <span class="meta-item-large"><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
+            <span class="meta-item-large"><i class="fas fa-clock"></i> ${job.type}</span>
+            <span class="meta-item-large"><i class="fas fa-briefcase"></i> ${job.experience}</span>
+            <span class="meta-item-large salary-large"><i class="fas fa-money-bill-wave"></i> ${job.salary}</span>
+        `;
+        
+        // Update job description
+        document.getElementById('jobDescription').innerHTML = `<p>${job.description.replace(/\n/g, '</p><p>')}</p>`;
+        
+        // Update requirements (create array if not exists)
+        const requirements = job.requirements || [
+            "Relevant experience required",
+            "Valid certification",
+            "Good communication skills",
+            "Team player",
+            "Flexible schedule"
+        ];
+        document.getElementById('requirementsList').innerHTML = requirements.map(req => 
+            `<li><i class="fas fa-check-circle"></i> ${req}</li>`
+        ).join('');
+        
+        // Update skills
+        const skills = job.skills || ["Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5"];
+        document.getElementById('skillsTags').innerHTML = skills.map(skill => 
+            `<span class="tag-large">${skill}</span>`
+        ).join('');
+        
+        // Update stats
+        document.getElementById('postedDate').textContent = job.posted;
+        document.getElementById('deadline').textContent = job.deadline;
+        document.getElementById('views').textContent = job.views + ' views';
+        document.getElementById('applicants').textContent = job.applicants + ' applied';
+
+        // Saved jobs functionality
+        let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
+        const saveBtn = document.getElementById('saveBtn');
+        
+        function updateSaveButton() {
+            if (savedJobs.includes(job.id)) {
+                saveBtn.classList.add('saved');
+                saveBtn.innerHTML = '<i class="fas fa-bookmark"></i> Saved';
+            } else {
+                saveBtn.classList.remove('saved');
+                saveBtn.innerHTML = '<i class="far fa-bookmark"></i> Save Job';
+            }
+        }
+        
+        updateSaveButton();
+        
+        function toggleSaveJob() {
+            const index = savedJobs.indexOf(job.id);
+            if (index === -1) {
+                savedJobs.push(job.id);
+                showNotification('Job saved successfully!');
+            } else {
+                savedJobs.splice(index, 1);
+                showNotification('Job removed from saved');
+            }
+            localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
+            updateSaveButton();
+        }
+        
+        function applyForJob() {
+            sessionStorage.setItem('applyingFor', JSON.stringify({ 
+                id: job.id, 
+                title: job.title, 
+                company: job.company 
+            }));
+            window.location.href = `apply.html?job=${encodeURIComponent(job.title)}&company=${encodeURIComponent(job.company)}`;
+        }
+        
+        function shareJob(platform) {
+            const url = window.location.href;
+            const text = `Check out this job: ${job.title} at ${job.company}`;
+            
+            let shareUrl = '';
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+                    break;
+            }
+            
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
