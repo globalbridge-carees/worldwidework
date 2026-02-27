@@ -81,15 +81,13 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
         }
 
-        /* Sliding images animation */
-        @keyframes slideLeft {
+        /* Sliding images animation - modified for horizontal slide */
+        @keyframes slideHorizontal {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        @keyframes slideRight {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100%); }
+            25% { transform: translateX(-20px); }
+            50% { transform: translateX(0); }
+            75% { transform: translateX(20px); }
+            100% { transform: translateX(0); }
         }
 
         /* New puzzle piece animations */
@@ -285,7 +283,7 @@
             cursor: pointer;
         }
 
-        /* Hero Section - Simplified with sliding images */
+        /* Hero Section - Updated with rectangular sliding images */
         .hero-section {
             position: relative;
             padding: 3rem 0;
@@ -312,7 +310,7 @@
             z-index: 2;
         }
 
-        /* Sliding Images Container */
+        /* Sliding Images Container - Updated for rectangular images and horizontal slide */
         .sliding-images-container {
             display: flex;
             justify-content: center;
@@ -324,22 +322,22 @@
         }
 
         .sliding-image {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 250px;
             border-radius: 20px;
             position: relative;
             overflow: hidden;
             box-shadow: var(--shadow-2xl);
             transition: transform 0.5s ease;
-            animation: float 3s ease-in-out infinite;
+            animation: slideHorizontal 8s ease-in-out infinite;
         }
 
         .sliding-image.left {
-            animation: slideLeft 10s linear infinite alternate;
+            animation-delay: 0s;
         }
 
         .sliding-image.right {
-            animation: slideRight 10s linear infinite alternate;
+            animation-delay: 1s;
         }
 
         .sliding-image img {
@@ -353,6 +351,7 @@
         .sliding-image:hover {
             transform: scale(1.05);
             z-index: 10;
+            animation-play-state: paused;
         }
 
         .sliding-image:hover img {
@@ -383,20 +382,19 @@
             opacity: 0.9;
         }
 
-        /* Search Section */
+        /* Search Section - Updated with separate input and button */
         .search-section {
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 60px;
-            padding: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            padding: 0;
         }
 
         .search-container {
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
         }
 
         .search-input-wrapper {
@@ -407,6 +405,7 @@
             border-radius: 50px;
             padding: 0.3rem 1rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .search-input-wrapper i {
@@ -441,7 +440,7 @@
             transition: all 0.3s ease;
             white-space: nowrap;
             box-shadow: var(--shadow-lg);
-            flex: 1;
+            flex: 0 0 auto;
             min-width: 140px;
         }
 
@@ -1371,8 +1370,8 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             .sliding-image {
-                width: 250px;
-                height: 250px;
+                width: 350px;
+                height: 220px;
             }
         }
 
@@ -1417,8 +1416,8 @@
             }
 
             .sliding-image {
-                width: 200px;
-                height: 200px;
+                width: 280px;
+                height: 180px;
             }
 
             .sliding-image .image-overlay h3 {
@@ -1434,11 +1433,18 @@
             }
 
             .search-container {
-                flex-direction: column;
+                flex-direction: row;
+                gap: 0.5rem;
+            }
+
+            .search-input-wrapper {
+                flex: 2;
             }
 
             .search-btn {
-                width: 100%;
+                flex: 1;
+                min-width: 100px;
+                padding: 0.8rem 1rem;
             }
 
             .jobs-grid {
@@ -1555,8 +1561,8 @@
 
         @media (max-width: 480px) {
             .sliding-image {
-                width: 150px;
-                height: 150px;
+                width: 220px;
+                height: 140px;
             }
 
             .sliding-image .image-overlay h3 {
@@ -1565,6 +1571,14 @@
 
             .sliding-image .image-overlay p {
                 font-size: 0.7rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .search-input-wrapper, .search-btn {
+                width: 100%;
             }
         }
     </style>
@@ -1594,13 +1608,13 @@
         </div>
     </nav>
 
-    <!-- Hero Section - Only sliding images and search -->
+    <!-- Hero Section - Sliding images and separate search elements -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <!-- Sliding Images Container -->
+                <!-- Sliding Images Container - Updated to rectangular format -->
                 <div class="sliding-images-container">
-                    <!-- Image 1 - Launch Your Career Today -->
+                    <!-- Image 1 - Launch Your Career Today (rectangle) -->
                     <div class="sliding-image left">
                         <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Launch Your Career Today">
                         <div class="image-overlay">
@@ -1609,7 +1623,7 @@
                         </div>
                     </div>
                     
-                    <!-- Image 2 - Find Your Dream Job -->
+                    <!-- Image 2 - Find Your Dream Job (rectangle) -->
                     <div class="sliding-image right">
                         <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Find Your Dream Job">
                         <div class="image-overlay">
@@ -1619,7 +1633,7 @@
                     </div>
                 </div>
 
-                <!-- Search Section - Two separate inputs in one container -->
+                <!-- Search Section - Separate input and button (detached) -->
                 <div class="search-section">
                     <div class="search-container">
                         <div class="search-input-wrapper">
@@ -2007,6 +2021,7 @@
     </script>
 </body>
 </html>
+
 
 
 
