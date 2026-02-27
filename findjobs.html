@@ -106,7 +106,7 @@
 
         /* Fade animation for image changes */
         @keyframes fadeIn {
-            from { opacity: 0.6; }
+            from { opacity: 0; }
             to { opacity: 1; }
         }
 
@@ -280,7 +280,7 @@
             cursor: pointer;
         }
 
-        /* Hero Section - Updated with dynamic images and horizontal layout */
+        /* Hero Section - Single image carousel */
         .hero-section {
             position: relative;
             padding: 3rem 0;
@@ -307,41 +307,24 @@
             z-index: 2;
         }
 
-        /* Sliding Images Container - Always horizontal, scroll on mobile if needed */
+        /* Single image container */
         .sliding-images-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
+            display: block;
+            text-align: center;
             margin-bottom: 3rem;
-            flex-wrap: nowrap; /* Never wrap */
-            perspective: 1000px;
-            overflow-x: auto; /* Allow horizontal scroll on small screens */
-            padding-bottom: 0.5rem; /* Space for scrollbar */
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-        }
-
-        .sliding-images-container::-webkit-scrollbar {
-            height: 5px;
-        }
-
-        .sliding-images-container::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 5px;
+            width: 100%;
         }
 
         .sliding-image {
-            flex: 0 0 auto; /* Prevent shrinking */
-            width: 400px;
-            height: 250px;
+            width: 100%;
+            max-width: 800px;
+            height: 350px;
             border-radius: 20px;
             position: relative;
             overflow: hidden;
             box-shadow: var(--shadow-2xl);
-            transition: transform 0.5s ease, opacity 0.5s ease;
-            animation: fadeIn 0.5s ease;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease;
         }
 
         .sliding-image img {
@@ -349,16 +332,6 @@
             height: 100%;
             object-fit: cover;
             border-radius: 20px;
-            transition: transform 0.5s ease;
-        }
-
-        .sliding-image:hover {
-            transform: scale(1.05);
-            z-index: 10;
-        }
-
-        .sliding-image:hover img {
-            transform: scale(1.1);
         }
 
         .sliding-image .image-overlay {
@@ -374,18 +347,18 @@
         }
 
         .sliding-image .image-overlay h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.3rem;
             color: var(--accent);
         }
 
         .sliding-image .image-overlay p {
-            font-size: 0.9rem;
+            font-size: 1rem;
             opacity: 0.9;
         }
 
-        /* Search Section - Updated with separate input and button */
+        /* Search Section - unchanged */
         .search-section {
             max-width: 800px;
             margin: 0 auto;
@@ -452,7 +425,7 @@
             box-shadow: var(--shadow-xl);
         }
 
-        /* Results Header */
+        /* Results Header - unchanged */
         .results-section {
             padding: 3rem 0 1.5rem;
         }
@@ -524,7 +497,7 @@
             color: var(--white);
         }
 
-        /* Jobs Grid */
+        /* Jobs Grid - unchanged */
         .jobs-section {
             padding: 0 0 4rem;
         }
@@ -769,7 +742,7 @@
             border-color: var(--accent);
         }
 
-        /* Pagination */
+        /* Pagination - unchanged */
         .pagination {
             display: flex;
             justify-content: center;
@@ -815,7 +788,7 @@
             border-radius: 40px;
         }
 
-        /* Trust Badges & Quick Actions */
+        /* Trust Badges & Quick Actions - unchanged */
         .trust-section {
             background: var(--white);
             padding: 2rem 0;
@@ -904,7 +877,7 @@
             color: var(--accent);
         }
 
-        /* Featured Companies - Now Colorful */
+        /* Featured Companies - unchanged */
         .featured-companies {
             padding: 4rem 0;
             background: var(--white);
@@ -1009,7 +982,7 @@
             font-size: 0.8rem;
         }
 
-        /* Newsletter */
+        /* Newsletter - unchanged */
         .newsletter {
             padding: 4rem 0;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -1061,7 +1034,7 @@
             background: var(--accent-dark);
         }
 
-        /* Footer */
+        /* Footer - unchanged */
         .footer {
             background: var(--gray-900);
             color: var(--white);
@@ -1159,7 +1132,7 @@
             font-size: 0.9rem;
         }
 
-        /* Job Details Modal */
+        /* Job Details Modal - unchanged */
         .modal {
             display: none;
             position: fixed;
@@ -1361,7 +1334,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Mobile Responsive */
+        /* Mobile Responsive - updated for single image */
         @media (max-width: 1200px) {
             .jobs-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1373,8 +1346,7 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             .sliding-image {
-                width: 350px;
-                height: 220px;
+                height: 300px;
             }
         }
 
@@ -1413,23 +1385,16 @@
                 padding: 2rem 0;
             }
 
-            .sliding-images-container {
-                gap: 1rem;
-                margin-bottom: 2rem;
-                justify-content: flex-start; /* Align left for scrolling */
-            }
-
             .sliding-image {
-                width: 280px;
-                height: 180px;
+                height: 220px;
             }
 
             .sliding-image .image-overlay h3 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
 
             .sliding-image .image-overlay p {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
             }
 
             .search-section {
@@ -1583,16 +1548,15 @@
 
         @media (max-width: 480px) {
             .sliding-image {
-                width: 220px;
-                height: 140px;
+                height: 180px;
             }
 
             .sliding-image .image-overlay h3 {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
             .sliding-image .image-overlay p {
-                font-size: 0.7rem;
+                font-size: 0.8rem;
             }
 
             /* Keep search horizontal even on very small screens */
@@ -1606,7 +1570,7 @@
     </style>
 </head>
 <body>
-    <!-- Navigation - Updated with Dashboard after Find Jobs and no auth buttons -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -1625,19 +1589,18 @@
                 <li><a href="companies.html">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <!-- Sign In and Sign Up buttons removed -->
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section - Sliding images and separate search elements -->
+    <!-- Hero Section - Single Image Carousel -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <!-- Sliding Images Container - Now dynamically populated -->
+                <!-- Single Image Container -->
                 <div class="sliding-images-container" id="heroImagesContainer"></div>
 
-                <!-- Search Section - Separate input and button (detached) -->
+                <!-- Search Section -->
                 <div class="search-section">
                     <div class="search-container">
                         <div class="search-input-wrapper">
@@ -1689,9 +1652,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Content will be filled by JavaScript -->
-            </div>
+            <div class="modal-body" id="modalBody"></div>
             <div class="modal-footer">
                 <button class="modal-btn save" id="modalSaveBtn" onclick="modalSaveJob()">
                     <i class="far fa-bookmark"></i> Save Job
@@ -1724,7 +1685,7 @@
         </div>
     </section>
 
-    <!-- Featured Companies - Now Colorful -->
+    <!-- Featured Companies -->
     <section class="featured-companies">
         <div class="container">
             <div class="section-title">
@@ -1806,35 +1767,28 @@
             }
         ];
 
-        // Number of images to display in the row
-        const IMAGES_PER_ROW = 2;
+        // Only one image displayed at a time
+        const IMAGES_PER_ROW = 1;
 
-        // Store current image indices for each slot
-        let currentIndices = [];
+        // Store current image index
+        let currentIndex;
 
         // Get container
         const heroContainer = document.getElementById('heroImagesContainer');
 
-        // Initialize with random images
+        // Initialize with a random image
         function initHeroImages() {
-            // Clear container
             heroContainer.innerHTML = '';
-            // Create image elements
-            for (let i = 0; i < IMAGES_PER_ROW; i++) {
-                const imgDiv = document.createElement('div');
-                imgDiv.className = 'sliding-image';
-                imgDiv.setAttribute('data-slot', i);
-                heroContainer.appendChild(imgDiv);
-            }
-            // Pick random initial images
-            for (let i = 0; i < IMAGES_PER_ROW; i++) {
-                const randomIndex = Math.floor(Math.random() * heroImages.length);
-                currentIndices[i] = randomIndex;
-                updateImageSlot(i, randomIndex);
-            }
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'sliding-image';
+            imgDiv.setAttribute('data-slot', 0);
+            heroContainer.appendChild(imgDiv);
+            
+            currentIndex = Math.floor(Math.random() * heroImages.length);
+            updateImageSlot(0, currentIndex);
         }
 
-        // Update a specific slot with a new image
+        // Update the image slot
         function updateImageSlot(slotIndex, imageIndex) {
             const slot = document.querySelector(`.sliding-image[data-slot="${slotIndex}"]`);
             if (!slot) return;
@@ -1848,15 +1802,14 @@
             `;
         }
 
-        // Change a random slot to a new random image (avoid immediate repeat)
+        // Change to a random new image (avoid immediate repeat)
         function changeRandomImage() {
-            const slotIndex = Math.floor(Math.random() * IMAGES_PER_ROW);
             let newImageIndex;
             do {
                 newImageIndex = Math.floor(Math.random() * heroImages.length);
-            } while (newImageIndex === currentIndices[slotIndex] && heroImages.length > 1);
-            currentIndices[slotIndex] = newImageIndex;
-            updateImageSlot(slotIndex, newImageIndex);
+            } while (newImageIndex === currentIndex && heroImages.length > 1);
+            currentIndex = newImageIndex;
+            updateImageSlot(0, newImageIndex);
         }
 
         // Pause on hover
@@ -1955,16 +1908,13 @@
             
             currentJobId = jobId;
             
-            // Update modal title
             document.getElementById('modalJobTitle').textContent = job.title;
             
-            // Update save button in modal
             const modalSaveBtn = document.getElementById('modalSaveBtn');
             modalSaveBtn.innerHTML = savedJobs.includes(jobId) ? 
                 '<i class="fas fa-bookmark"></i> Saved' : 
                 '<i class="far fa-bookmark"></i> Save Job';
             
-            // Build modal body
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = `
                 <div class="detail-section">
@@ -2012,7 +1962,6 @@
                 </div>
             `;
             
-            // Show modal
             document.getElementById('jobModal').classList.add('show');
         }
 
@@ -2030,7 +1979,6 @@
         function modalSaveJob() {
             if (currentJobId) {
                 toggleSaveJob(currentJobId, event);
-                // Update button text
                 const modalSaveBtn = document.getElementById('modalSaveBtn');
                 modalSaveBtn.innerHTML = savedJobs.includes(currentJobId) ? 
                     '<i class="fas fa-bookmark"></i> Saved' : 
@@ -2126,7 +2074,6 @@
     </script>
 </body>
 </html>
-
 
 
 
