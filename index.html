@@ -264,16 +264,53 @@
             cursor: pointer;
         }
 
-        /* Hero Section – ultra thin */
+        /* Hero Section – with automatic background slideshow */
         .hero {
             position: relative;
             padding: 1.2rem 0;
-            background: linear-gradient(135deg, rgba(30,58,95,0.85), rgba(43,76,124,0.85)), 
-                        url('https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1920');
-            background-size: cover;
-            background-position: center;
             color: var(--white);
             overflow: hidden;
+            /* Base background color as fallback */
+            background: var(--primary);
+        }
+
+        /* Background slides container */
+        .hero-bg-slides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-bg-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .hero-bg-slide.active {
+            opacity: 1;
+        }
+
+        /* Gradient overlay (keeps the dark overlay) */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30,58,95,0.85), rgba(43,76,124,0.85));
+            z-index: 2;
+            pointer-events: none;
         }
 
         .hero-container {
@@ -281,7 +318,7 @@
             margin: 0 auto;
             padding: 0 2rem;
             position: relative;
-            z-index: 2;
+            z-index: 3; /* Above gradient and images */
         }
 
         .hero-content {
@@ -1292,12 +1329,14 @@
         </div>
     </nav>
 
-    <!-- Hero Section – extra thin -->
+    <!-- Hero Section with automatic background slideshow -->
     <section class="hero">
+        <!-- Background images container -->
+        <div class="hero-bg-slides" id="heroBgSlides"></div>
+
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-badge"><i class="fas fa-check-circle"></i> 100% Verified Jobs Worldwide</div>
-                <!-- Dynamic Greeting will be inserted here by JavaScript -->
                 <h1 id="greetingMessage">Find Your <span class="hero-highlight">Dream Job</span> Today</h1>
                 <p>Connect with trusted employers and find the perfect job that matches your skills.</p>
                 <div class="search-input-wrapper">
@@ -1591,6 +1630,46 @@
                 greetingElement.innerHTML = 'Find Your <span class="hero-highlight">Dream Job</span> Today';
             }
         }
+
+        // Hero background slideshow
+        (function() {
+            const heroBgContainer = document.getElementById('heroBgSlides');
+            // Array of background image URLs (professional, high-quality)
+            const bgImages = [
+                'https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80',
+                'https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80',
+                'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80',
+                'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80',
+                'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'
+            ];
+
+            // Create slide divs
+            bgImages.forEach((imgUrl, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'hero-bg-slide';
+                if (index === 0) slide.classList.add('active');
+                slide.style.backgroundImage = `url('${imgUrl}')`;
+                heroBgContainer.appendChild(slide);
+            });
+
+            let currentIndex = 0;
+            const slides = document.querySelectorAll('.hero-bg-slide');
+            const totalSlides = slides.length;
+
+            function nextSlide() {
+                slides[currentIndex].classList.remove('active');
+                // Pick a random next index, different from current
+                let nextIndex;
+                do {
+                    nextIndex = Math.floor(Math.random() * totalSlides);
+                } while (nextIndex === currentIndex && totalSlides > 1);
+                slides[nextIndex].classList.add('active');
+                currentIndex = nextIndex;
+            }
+
+            // Change every 5 seconds
+            setInterval(nextSlide, 5000);
+        })();
 
         // AUTH CHECK and USER MENU
         (function() {
