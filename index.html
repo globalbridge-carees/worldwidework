@@ -461,14 +461,6 @@
             100% { transform: translateY(0px); }
         }
 
-        @keyframes floatHorizontal {
-            0% { transform: translateX(0px); }
-            25% { transform: translateX(3px); }
-            50% { transform: translateX(0px); }
-            75% { transform: translateX(-3px); }
-            100% { transform: translateX(0px); }
-        }
-
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -485,7 +477,6 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            /* FLOATING EFFECT - triggered by scroll */
             animation: floatVertical 4s ease-in-out infinite;
             will-change: transform;
         }
@@ -576,7 +567,6 @@
             cursor: pointer;
             animation: jobPulse 3s ease-in-out infinite;
             transition: all 0.3s ease;
-            /* Gradient backgrounds matching border colors */
             background: linear-gradient(145deg, #ffffff, #fafafa);
         }
 
@@ -1315,7 +1305,6 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="findjobs.html">Find jobs</a></li>
-                <!-- Dashboard after Find jobs -->
                 <li><a href="dashboard.html" class="dashboard-link">Dashboard</a></li>
                 <li><a href="companies.html">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
@@ -1329,7 +1318,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section with automatic background slideshow -->
+    <!-- Hero Section with automatic background slideshow (new diverse images) -->
     <section class="hero">
         <!-- Background images container -->
         <div class="hero-bg-slides" id="heroBgSlides"></div>
@@ -1631,16 +1620,16 @@
             }
         }
 
-        // Hero background slideshow
+        // Hero background slideshow with new diverse images
         (function() {
             const heroBgContainer = document.getElementById('heroBgSlides');
-            // Array of background image URLs (professional, high-quality)
+            // Array of background image URLs – new, diverse, professional, not used in findjobs.html
             const bgImages = [
-                'https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80',
-                'https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80',
-                'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80',
-                'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80',
-                'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'
+                'https://images.unsplash.com/photo-1622253692010-d3f2e563df3c?w=1920&q=80', // African female nurse
+                'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1920&q=80', // African male construction worker
+                'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=1920&q=80', // African female professional with laptop
+                'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1920&q=80', // African male doctor
+                'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&q=80'  // Diverse business team
             ];
 
             // Create slide divs
@@ -1724,4 +1713,3 @@
     </script>
 </body>
 </html>
-
