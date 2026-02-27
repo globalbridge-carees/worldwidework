@@ -81,6 +81,17 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
         }
 
+        /* Image flipping animation */
+        @keyframes flipIn {
+            0% { opacity: 0; transform: perspective(400px) rotateX(90deg); }
+            100% { opacity: 1; transform: perspective(400px) rotateX(0deg); }
+        }
+
+        @keyframes flipOut {
+            0% { opacity: 1; transform: perspective(400px) rotateX(0deg); }
+            100% { opacity: 0; transform: perspective(400px) rotateX(-90deg); }
+        }
+
         /* New puzzle piece animations */
         @keyframes puzzlePop {
             0% { transform: scale(1) rotate(0deg); }
@@ -274,112 +285,171 @@
             cursor: pointer;
         }
 
-        /* Hero Section */
+        /* Hero Section - Simplified with flipping images */
         .hero-section {
             position: relative;
-            padding: 4rem 0;
-            background: linear-gradient(135deg, rgba(15, 43, 75, 0.95), rgba(30, 58, 106, 0.9)), 
-                        url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--white);
-            text-align: center;
+            padding: 3rem 0 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.5;
         }
 
         .hero-content {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
-        .hero-badge {
-            display: inline-flex;
+        /* Flipping Images Container */
+        .flipping-images-container {
+            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 0.5rem;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.3);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            perspective: 1000px;
         }
 
-        .hero-badge i {
-            color: var(--accent);
+        .flipping-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 20px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+            box-shadow: var(--shadow-2xl);
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        .flipping-image.flipping {
+            animation: flipIn 0.8s ease forwards;
         }
 
-        .hero-highlight {
-            color: var(--accent);
+        .flipping-image.flipping-out {
+            animation: flipOut 0.8s ease forwards;
         }
 
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
+        .flipping-image .front,
+        .flipping-image .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .flipping-image .front {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            transform: rotateX(0deg);
+        }
+
+        .flipping-image .back {
+            background: linear-gradient(135deg, var(--info), #1d4ed8);
+            color: white;
+            transform: rotateX(180deg);
+        }
+
+        .flipping-image .front i,
+        .flipping-image .back i {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flipping-image .front h3,
+        .flipping-image .back h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .flipping-image .front p,
+        .flipping-image .back p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        /* Search Section - Now positioned below flipping images */
+        .search-section {
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .search-wrapper {
-            max-width: 800px;
             margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 100px;
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .search-container {
             display: flex;
-            background: var(--white);
-            border-radius: 60px;
-            padding: 0.5rem;
-            box-shadow: var(--shadow-2xl);
-            border: 2px solid rgba(255,255,255,0.5);
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .search-input-wrapper {
-            flex: 1;
+            flex: 2;
+            min-width: 200px;
             display: flex;
             align-items: center;
-            padding: 0 1.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 0.3rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .search-input-wrapper i {
             color: var(--accent);
-            font-size: 1.2rem;
-            margin-right: 0.75rem;
+            margin-right: 0.5rem;
+            font-size: 1rem;
         }
 
         .search-input {
             width: 100%;
-            padding: 1rem 0;
+            padding: 0.8rem 0;
             border: none;
             outline: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            background: transparent;
+            color: white;
         }
 
         .search-input::placeholder {
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .search-btn {
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             color: var(--white);
             border: none;
-            padding: 1rem 3rem;
+            padding: 0.8rem 2rem;
             border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
             box-shadow: var(--shadow-lg);
+            flex: 1;
+            min-width: 120px;
         }
 
         .search-btn:hover {
@@ -387,32 +457,7 @@
             box-shadow: var(--shadow-xl);
         }
 
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 2.5rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Results Header – attractive gradient buttons */
+        /* Results Header */
         .results-section {
             padding: 3rem 0 1.5rem;
         }
@@ -1327,6 +1372,10 @@
             .footer-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
+            .flipping-image {
+                width: 140px;
+                height: 140px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1361,51 +1410,43 @@
             }
 
             .hero-section {
-                padding: 0.8rem 0;
+                padding: 2rem 0 3rem;
             }
-            .hero-badge {
-                font-size: 0.7rem;
-                padding: 0.2rem 0.8rem;
-                margin-bottom: 0.5rem;
+
+            .flipping-images-container {
+                gap: 1rem;
             }
-            .hero-content h1 {
-                font-size: 1.4rem;
-                margin-bottom: 0.3rem;
+
+            .flipping-image {
+                width: 120px;
+                height: 120px;
             }
-            .hero-content p {
-                font-size: 0.8rem;
-                margin-bottom: 0.5rem;
+
+            .flipping-image .front i,
+            .flipping-image .back i {
+                font-size: 2rem;
             }
-            .search-container {
-                flex-direction: column;
-                background: transparent;
-                padding: 0;
-                gap: 0.3rem;
-            }
-            .search-input-wrapper {
-                background: var(--white);
-                border-radius: 50px;
-                padding: 0.1rem 0.8rem;
-                border: 1px solid var(--gray-300);
-            }
-            .search-input {
-                padding: 0.4rem 0;
+
+            .flipping-image .front h3,
+            .flipping-image .back h3 {
                 font-size: 0.85rem;
             }
+
+            .flipping-image .front p,
+            .flipping-image .back p {
+                font-size: 0.7rem;
+            }
+
+            .search-section {
+                max-width: 90%;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
             .search-btn {
                 width: 100%;
-                padding: 0.5rem;
-                font-size: 0.9rem;
-            }
-            .hero-stats {
-                gap: 0.8rem;
-                margin-top: 0.5rem;
-            }
-            .stat-number {
-                font-size: 1.2rem;
-            }
-            .stat-label {
-                font-size: 0.6rem;
             }
 
             .jobs-grid {
@@ -1521,17 +1562,24 @@
         }
 
         @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 1.2rem;
+            .flipping-image {
+                width: 100px;
+                height: 100px;
             }
-            .hero-content p {
-                font-size: 0.7rem;
+
+            .flipping-image .front i,
+            .flipping-image .back i {
+                font-size: 1.5rem;
             }
-            .hero-stats {
-                gap: 0.5rem;
+
+            .flipping-image .front h3,
+            .flipping-image .back h3 {
+                font-size: 0.75rem;
             }
-            .stat-number {
-                font-size: 1rem;
+
+            .flipping-image .front p,
+            .flipping-image .back p {
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -1561,44 +1609,21 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Simplified with flipping images -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Trusted by 50,000+ Professionals Worldwide</span>
-                </div>
-                
-                <h1>
-                    Find Your <span class="hero-highlight">Dream Job</span><br>
-                    With Confidence
-                </h1>
-                
-                <p>Browse thousands of verified opportunities from trusted employers across 45+ countries. Your next career move starts here.</p>
-                
-                <div class="search-wrapper">
+                <!-- Flipping Images Container -->
+                <div class="flipping-images-container" id="flippingImagesContainer"></div>
+
+                <!-- Search Section - Moved down, only two inputs -->
+                <div class="search-section">
                     <div class="search-container">
                         <div class="search-input-wrapper">
-                            <i class="fas fa-search"></i>
+                            <i class="fas fa-briefcase"></i>
                             <input type="text" class="search-input" id="searchInput" placeholder="Job title, skills, or company">
                         </div>
                         <button class="search-btn pulse-btn" onclick="searchJobs()">Search Jobs</button>
-                    </div>
-                </div>
-                
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">15,678+</div>
-                        <div class="stat-label">Active Jobs</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">1,200+</div>
-                        <div class="stat-label">Companies</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">45+</div>
-                        <div class="stat-label">Countries</div>
                     </div>
                 </div>
             </div>
@@ -1729,6 +1754,126 @@
         // Toggle mobile menu
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('show');
+        }
+
+        // Flipping Images Data
+        const flippingImages = [
+            {
+                frontIcon: "fas fa-stethoscope",
+                frontTitle: "Healthcare",
+                frontDesc: "2,345 jobs",
+                backIcon: "fas fa-user-md",
+                backTitle: "Doctors & Nurses",
+                backDesc: "Top hospitals"
+            },
+            {
+                frontIcon: "fas fa-laptop-code",
+                frontTitle: "Technology",
+                frontDesc: "1,876 jobs",
+                backIcon: "fas fa-code",
+                backTitle: "Developers",
+                backDesc: "Remote & onsite"
+            },
+            {
+                frontIcon: "fas fa-hard-hat",
+                frontTitle: "Construction",
+                frontDesc: "1,649 jobs",
+                backIcon: "fas fa-tools",
+                backTitle: "Engineers",
+                backDesc: "Major projects"
+            },
+            {
+                frontIcon: "fas fa-shield-alt",
+                frontTitle: "Security",
+                frontDesc: "892 jobs",
+                backIcon: "fas fa-user-lock",
+                backTitle: "Guards",
+                backDesc: "Top companies"
+            },
+            {
+                frontIcon: "fas fa-utensils",
+                frontTitle: "Hospitality",
+                frontDesc: "1,307 jobs",
+                backIcon: "fas fa-hotel",
+                backTitle: "Hotels",
+                backDesc: "5-star venues"
+            },
+            {
+                frontIcon: "fas fa-chalkboard-teacher",
+                frontTitle: "Education",
+                frontDesc: "1,193 jobs",
+                backIcon: "fas fa-school",
+                backTitle: "Teachers",
+                backDesc: "Schools & Uni"
+            }
+        ];
+
+        // Create flipping images
+        function createFlippingImages() {
+            const container = document.getElementById('flippingImagesContainer');
+            container.innerHTML = flippingImages.map((img, index) => `
+                <div class="flipping-image" id="flipImage${index}" onclick="flipImage(${index})">
+                    <div class="front">
+                        <i class="${img.frontIcon}"></i>
+                        <h3>${img.frontTitle}</h3>
+                        <p>${img.frontDesc}</p>
+                    </div>
+                    <div class="back">
+                        <i class="${img.backIcon}"></i>
+                        <h3>${img.backTitle}</h3>
+                        <p>${img.backDesc}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Start automatic flipping
+            startAutoFlip();
+        }
+
+        // Flip image function
+        function flipImage(index) {
+            const image = document.getElementById(`flipImage${index}`);
+            if (image.style.transform === 'rotateX(180deg)') {
+                image.style.transform = 'rotateX(0deg)';
+            } else {
+                image.style.transform = 'rotateX(180deg)';
+            }
+        }
+
+        // Automatic flipping
+        let flipInterval;
+        let currentFlipIndex = 0;
+
+        function startAutoFlip() {
+            flipInterval = setInterval(() => {
+                // Reset previous image
+                if (currentFlipIndex > 0) {
+                    const prevImage = document.getElementById(`flipImage${currentFlipIndex - 1}`);
+                    if (prevImage) prevImage.style.transform = 'rotateX(0deg)';
+                } else if (currentFlipIndex === 0) {
+                    const lastImage = document.getElementById(`flipImage${flippingImages.length - 1}`);
+                    if (lastImage) lastImage.style.transform = 'rotateX(0deg)';
+                }
+
+                // Flip current image
+                const currentImage = document.getElementById(`flipImage${currentFlipIndex}`);
+                if (currentImage) {
+                    currentImage.style.transform = 'rotateX(180deg)';
+                }
+
+                // Move to next image
+                currentFlipIndex = (currentFlipIndex + 1) % flippingImages.length;
+            }, 2000); // Flip every 2 seconds
+        }
+
+        // Stop auto flip on hover
+        function stopAutoFlip() {
+            clearInterval(flipInterval);
+        }
+
+        // Resume auto flip
+        function resumeAutoFlip() {
+            startAutoFlip();
         }
 
         // Job data (18 jobs)
@@ -1975,11 +2120,12 @@
             document.getElementById('pagination').innerHTML = buttons;
         }
 
+        // Initialize everything
+        createFlippingImages();
         displayJobs();
     </script>
 </body>
 </html>
-
 
 
 
