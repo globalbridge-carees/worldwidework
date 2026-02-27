@@ -81,15 +81,6 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
         }
 
-        /* Sliding images animation - modified for horizontal slide */
-        @keyframes slideHorizontal {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-20px); }
-            50% { transform: translateX(0); }
-            75% { transform: translateX(20px); }
-            100% { transform: translateX(0); }
-        }
-
         /* New puzzle piece animations */
         @keyframes puzzlePop {
             0% { transform: scale(1) rotate(0deg); }
@@ -111,6 +102,12 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.3) rotate(10deg); }
             100% { transform: scale(1) rotate(0); }
+        }
+
+        /* Fade animation for image changes */
+        @keyframes fadeIn {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
         }
 
         .pulse-btn {
@@ -283,7 +280,7 @@
             cursor: pointer;
         }
 
-        /* Hero Section - Updated with rectangular sliding images */
+        /* Hero Section - Updated with dynamic images and horizontal layout */
         .hero-section {
             position: relative;
             padding: 3rem 0;
@@ -303,41 +300,48 @@
         }
 
         .hero-content {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
             text-align: center;
             position: relative;
             z-index: 2;
         }
 
-        /* Sliding Images Container - Updated for rectangular images and horizontal slide */
+        /* Sliding Images Container - Always horizontal, scroll on mobile if needed */
         .sliding-images-container {
             display: flex;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
             gap: 2rem;
             margin-bottom: 3rem;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* Never wrap */
             perspective: 1000px;
+            overflow-x: auto; /* Allow horizontal scroll on small screens */
+            padding-bottom: 0.5rem; /* Space for scrollbar */
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        .sliding-images-container::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .sliding-images-container::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 5px;
         }
 
         .sliding-image {
+            flex: 0 0 auto; /* Prevent shrinking */
             width: 400px;
             height: 250px;
             border-radius: 20px;
             position: relative;
             overflow: hidden;
             box-shadow: var(--shadow-2xl);
-            transition: transform 0.5s ease;
-            animation: slideHorizontal 8s ease-in-out infinite;
-        }
-
-        .sliding-image.left {
-            animation-delay: 0s;
-        }
-
-        .sliding-image.right {
-            animation-delay: 1s;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            animation: fadeIn 0.5s ease;
         }
 
         .sliding-image img {
@@ -351,7 +355,6 @@
         .sliding-image:hover {
             transform: scale(1.05);
             z-index: 10;
-            animation-play-state: paused;
         }
 
         .sliding-image:hover img {
@@ -1413,6 +1416,7 @@
             .sliding-images-container {
                 gap: 1rem;
                 margin-bottom: 2rem;
+                justify-content: flex-start; /* Align left for scrolling */
             }
 
             .sliding-image {
@@ -1612,26 +1616,8 @@
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <!-- Sliding Images Container - Updated to rectangular format -->
-                <div class="sliding-images-container">
-                    <!-- Image 1 - Launch Your Career Today (rectangle) -->
-                    <div class="sliding-image left">
-                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Launch Your Career Today">
-                        <div class="image-overlay">
-                            <h3>Launch Your Career Today!</h3>
-                            <p>Explore top job opportunities in your field.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 2 - Find Your Dream Job (rectangle) -->
-                    <div class="sliding-image right">
-                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Find Your Dream Job">
-                        <div class="image-overlay">
-                            <h3>Find Your Dream Job with Confidence</h3>
-                            <p>at True Jobs Agency</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Sliding Images Container - Now dynamically populated -->
+                <div class="sliding-images-container" id="heroImagesContainer"></div>
 
                 <!-- Search Section - Separate input and button (detached) -->
                 <div class="search-section">
@@ -1773,7 +1759,94 @@
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        // Job data (18 jobs)
+        // Hero Images Array - Add your images here! You can add more objects.
+        const heroImages = [
+            {
+                url: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                title: "Launch Your Career Today!",
+                description: "Explore top job opportunities in your field."
+            },
+            {
+                url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                title: "Find Your Dream Job with Confidence",
+                description: "at True Jobs Agency"
+            }
+            // Add more images here following the same format
+        ];
+
+        // Number of images to display in the row
+        const IMAGES_PER_ROW = 2;
+
+        // Store current image indices for each slot
+        let currentIndices = [];
+
+        // Get container
+        const heroContainer = document.getElementById('heroImagesContainer');
+
+        // Initialize with random images
+        function initHeroImages() {
+            // Clear container
+            heroContainer.innerHTML = '';
+            // Create image elements
+            for (let i = 0; i < IMAGES_PER_ROW; i++) {
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'sliding-image';
+                imgDiv.setAttribute('data-slot', i);
+                heroContainer.appendChild(imgDiv);
+            }
+            // Pick random initial images
+            for (let i = 0; i < IMAGES_PER_ROW; i++) {
+                const randomIndex = Math.floor(Math.random() * heroImages.length);
+                currentIndices[i] = randomIndex;
+                updateImageSlot(i, randomIndex);
+            }
+        }
+
+        // Update a specific slot with a new image
+        function updateImageSlot(slotIndex, imageIndex) {
+            const slot = document.querySelector(`.sliding-image[data-slot="${slotIndex}"]`);
+            if (!slot) return;
+            const image = heroImages[imageIndex];
+            slot.innerHTML = `
+                <img src="${image.url}" alt="${image.title}">
+                <div class="image-overlay">
+                    <h3>${image.title}</h3>
+                    <p>${image.description}</p>
+                </div>
+            `;
+        }
+
+        // Change a random slot to a new random image (avoid immediate repeat)
+        function changeRandomImage() {
+            const slotIndex = Math.floor(Math.random() * IMAGES_PER_ROW);
+            let newImageIndex;
+            do {
+                newImageIndex = Math.floor(Math.random() * heroImages.length);
+            } while (newImageIndex === currentIndices[slotIndex] && heroImages.length > 1);
+            currentIndices[slotIndex] = newImageIndex;
+            updateImageSlot(slotIndex, newImageIndex);
+        }
+
+        // Pause on hover
+        let intervalId;
+        function startImageRotation() {
+            if (intervalId) clearInterval(intervalId);
+            intervalId = setInterval(changeRandomImage, 5000); // 5 seconds
+        }
+
+        function stopImageRotation() {
+            clearInterval(intervalId);
+        }
+
+        // Event listeners for hover
+        heroContainer.addEventListener('mouseenter', stopImageRotation);
+        heroContainer.addEventListener('mouseleave', startImageRotation);
+
+        // Initialize and start
+        initHeroImages();
+        startImageRotation();
+
+        // Job data (18 jobs) - unchanged
         const jobs = [
             { id:1, title:"Senior Care Giver", company:"Golden Care Center", logo:"GC", location:"Dubai, UAE", type:"Full Time", experience:"3+ Years", salary:"$2,200/month", description:"Experienced care giver needed for elderly patients. Must have first aid certification and minimum 3 years experience. Accommodation provided.", tags:["Elderly Care","First Aid","CPR","Live-in"], featured:true, urgent:false, category:"healthcare", posted:"2 days ago" },
             { id:2, title:"Registered Nurse", company:"Mediclinic Hospital", logo:"MH", location:"Abu Dhabi, UAE", type:"Full Time", experience:"2+ Years", salary:"$3,500/month", description:"Registered nurse needed for leading hospital. Must have DHA license and ICU experience. Competitive benefits package.", tags:["DHA License","ICU","Emergency","Bachelor's"], featured:true, urgent:false, category:"healthcare", posted:"1 day ago" },
@@ -2021,6 +2094,7 @@
     </script>
 </body>
 </html>
+
 
 
 
