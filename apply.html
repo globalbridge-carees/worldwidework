@@ -967,7 +967,7 @@
                 <span class="logo-text">TrueJobs</span>
             </a>
             
-            <span class="menu-toggle" onclick="toggleMenu()">
+            <span class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
             </span>
             
@@ -1420,17 +1420,31 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script>
-        // Mobile menu toggle
-        function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            menu.classList.toggle('show');
-        }
-
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navMenu').classList.remove('show');
-            });
+        // ========== MOBILE MENU TOGGLE ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    navMenu.classList.toggle('show');
+                });
+                
+                // Close menu when a link is clicked
+                document.querySelectorAll('.nav-menu a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navMenu.classList.remove('show');
+                    });
+                });
+                
+                // Close menu when clicking outside (optional)
+                document.addEventListener('click', function(event) {
+                    if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                        navMenu.classList.remove('show');
+                    }
+                });
+            }
         });
 
         // Get job details from URL or sessionStorage (example)
@@ -1689,7 +1703,7 @@
             }
         });
 
-        // NEW: CV file upload handler
+        // CV file upload handler
         document.getElementById('cv').addEventListener('change', function(e) {
             if (e.target.files[0]) {
                 const file = e.target.files[0];
