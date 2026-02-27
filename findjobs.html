@@ -280,10 +280,10 @@
             cursor: pointer;
         }
 
-        /* Hero Section - Single image carousel */
+        /* Hero Section - Single image carousel covering marked area */
         .hero-section {
             position: relative;
-            padding: 3rem 0;
+            padding: 3rem 0 2rem; /* Slightly reduced bottom padding to bring search closer */
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             overflow: hidden;
         }
@@ -307,18 +307,17 @@
             z-index: 2;
         }
 
-        /* Single image container */
+        /* Single image container - now full width within container */
         .sliding-images-container {
             display: block;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem; /* Reduced from 3rem to bring image and search closer */
             width: 100%;
         }
 
         .sliding-image {
-            width: 100%;
-            max-width: 800px;
-            height: 350px;
+            width: 100%;               /* Full width within container */
+            height: 450px;              /* Increased height for desktop */
             border-radius: 20px;
             position: relative;
             overflow: hidden;
@@ -347,14 +346,14 @@
         }
 
         .sliding-image .image-overlay h3 {
-            font-size: 1.8rem;
+            font-size: 2rem;            /* Slightly larger */
             font-weight: 700;
             margin-bottom: 0.3rem;
             color: var(--accent);
         }
 
         .sliding-image .image-overlay p {
-            font-size: 1rem;
+            font-size: 1.1rem;
             opacity: 0.9;
         }
 
@@ -1334,7 +1333,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Mobile Responsive - updated for single image */
+        /* Mobile Responsive - updated for larger image */
         @media (max-width: 1200px) {
             .jobs-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1346,7 +1345,7 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             .sliding-image {
-                height: 300px;
+                height: 380px;          /* Taller on tablet */
             }
         }
 
@@ -1382,19 +1381,19 @@
             }
 
             .hero-section {
-                padding: 2rem 0;
+                padding: 2rem 0 1.5rem;
             }
 
             .sliding-image {
-                height: 220px;
+                height: 300px;          /* Taller on mobile */
             }
 
             .sliding-image .image-overlay h3 {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
             }
 
             .sliding-image .image-overlay p {
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
 
             .search-section {
@@ -1548,15 +1547,15 @@
 
         @media (max-width: 480px) {
             .sliding-image {
-                height: 180px;
+                height: 250px;          /* Still tall on very small screens */
             }
 
             .sliding-image .image-overlay h3 {
-                font-size: 1.1rem;
+                font-size: 1.3rem;
             }
 
             .sliding-image .image-overlay p {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
             }
 
             /* Keep search horizontal even on very small screens */
@@ -1593,7 +1592,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section - Single Image Carousel -->
+    <!-- Hero Section - Single Image Carousel covering marked area -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
