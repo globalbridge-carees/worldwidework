@@ -1318,7 +1318,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section with automatic background slideshow (updated images) -->
+    <!-- Hero Section with automatic background slideshow (expanded & diverse) -->
     <section class="hero">
         <!-- Background images container -->
         <div class="hero-bg-slides" id="heroBgSlides"></div>
@@ -1620,16 +1620,20 @@
             }
         }
 
-        // Hero background slideshow with updated images
+        // Hero background slideshow with expanded & diverse images
         (function() {
             const heroBgContainer = document.getElementById('heroBgSlides');
-            // Updated array of background image URLs – aligned with job categories
+            // Expanded array of background image URLs – representing key job categories with diversity
             const bgImages = [
-                'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=1920&q=80', // Factory Work
+                'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=1920&q=80', // Factory Work (diverse)
                 'https://images.unsplash.com/photo-1559831746-6e5f6a0c3b3f?w=1920&q=80', // Caregiver (Black female with elderly White woman)
                 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?w=1920&q=80', // Security Guard (diverse)
                 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1920&q=80', // Construction (Black male)
-                'https://images.unsplash.com/photo-1622253692010-d3f2e563df3c?w=1920&q=80'  // Healthcare (Black female nurse)
+                'https://images.unsplash.com/photo-1622253692010-d3f2e563df3c?w=1920&q=80', // Healthcare (Black female nurse)
+                'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1920&q=80', // Diverse office/professional
+                'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1920&q=80', // Cleaner (diverse)
+                'https://images.unsplash.com/photo-1513828586372-2cd91eb3857c?w=1920&q=80', // Driver / delivery (diverse)
+                'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1920&q=80'  // Diverse team meeting
             ];
 
             // Create slide divs
@@ -1656,8 +1660,8 @@
                 currentIndex = nextIndex;
             }
 
-            // Change every 5 seconds
-            setInterval(nextSlide, 5000);
+            // Change every 4 seconds (increased frequency)
+            setInterval(nextSlide, 4000);
         })();
 
         // AUTH CHECK and USER MENU
@@ -1713,3 +1717,4 @@
     </script>
 </body>
 </html>
+
