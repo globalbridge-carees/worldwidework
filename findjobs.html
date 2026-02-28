@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -280,10 +281,10 @@
             cursor: pointer;
         }
 
-        /* Hero Section - Single image carousel covering marked area */
+        /* Hero Section - 3D Book Flip */
         .hero-section {
             position: relative;
-            padding: 3rem 0 2rem; /* Slightly reduced bottom padding to bring search closer */
+            padding: 3rem 0 2rem;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             overflow: hidden;
         }
@@ -307,33 +308,56 @@
             z-index: 2;
         }
 
-        /* Single image container - now full width within container */
-        .sliding-images-container {
-            display: block;
-            text-align: center;
-            margin-bottom: 2rem; /* Reduced from 3rem to bring image and search closer */
+        /* Hero flip container */
+        .hero-images {
             width: 100%;
-        }
-
-        .sliding-image {
-            width: 100%;               /* Full width within container */
-            height: 450px;              /* Increased height for desktop */
+            height: 450px;
             border-radius: 20px;
-            position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow-2xl);
-            margin: 0 auto;
-            animation: fadeIn 0.8s ease;
+            position: relative;
+            margin-bottom: 2rem;
+            perspective: 1200px;
         }
 
-        .sliding-image img {
+        .flip-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s ease-in-out;
+            transform-origin: left center;
+        }
+
+        .flip-container.flip {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front, .flip-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .flip-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .flip-back {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front img, .flip-back img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 20px;
+            display: block;
         }
 
-        .sliding-image .image-overlay {
+        .image-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -343,21 +367,22 @@
             padding: 1.5rem;
             border-radius: 0 0 20px 20px;
             text-align: center;
+            pointer-events: none;
         }
 
-        .sliding-image .image-overlay h3 {
-            font-size: 2rem;            /* Slightly larger */
+        .image-overlay h3 {
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.3rem;
             color: var(--accent);
         }
 
-        .sliding-image .image-overlay p {
+        .image-overlay p {
             font-size: 1.1rem;
             opacity: 0.9;
         }
 
-        /* Search Section - unchanged */
+        /* Search Section */
         .search-section {
             max-width: 800px;
             margin: 0 auto;
@@ -1333,7 +1358,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Mobile Responsive - updated for larger image */
+        /* Mobile Responsive - updated for flip container */
         @media (max-width: 1200px) {
             .jobs-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1344,8 +1369,8 @@
             .footer-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
-            .sliding-image {
-                height: 380px;          /* Taller on tablet */
+            .hero-images {
+                height: 380px;
             }
         }
 
@@ -1384,15 +1409,15 @@
                 padding: 2rem 0 1.5rem;
             }
 
-            .sliding-image {
-                height: 300px;          /* Taller on mobile */
+            .hero-images {
+                height: 300px;
             }
 
-            .sliding-image .image-overlay h3 {
+            .image-overlay h3 {
                 font-size: 1.5rem;
             }
 
-            .sliding-image .image-overlay p {
+            .image-overlay p {
                 font-size: 1rem;
             }
 
@@ -1546,15 +1571,15 @@
         }
 
         @media (max-width: 480px) {
-            .sliding-image {
-                height: 250px;          /* Still tall on very small screens */
+            .hero-images {
+                height: 250px;
             }
 
-            .sliding-image .image-overlay h3 {
+            .image-overlay h3 {
                 font-size: 1.3rem;
             }
 
-            .sliding-image .image-overlay p {
+            .image-overlay p {
                 font-size: 0.9rem;
             }
 
@@ -1592,12 +1617,12 @@
         </div>
     </nav>
 
-    <!-- Hero Section - Single Image Carousel covering marked area -->
+    <!-- Hero Section - 3D Book Flip Carousel -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <!-- Single Image Container -->
-                <div class="sliding-images-container" id="heroImagesContainer"></div>
+                <!-- Flip container will be injected here by JavaScript -->
+                <div class="hero-images" id="heroImagesContainer"></div>
 
                 <!-- Search Section -->
                 <div class="search-section">
@@ -1737,7 +1762,7 @@
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        // Hero Images Array - 5 professional images
+        // ========== HERO 3D FLIP CAROUSEL ==========
         const heroImages = [
             {
                 url: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
@@ -1766,34 +1791,49 @@
             }
         ];
 
-        // Only one image displayed at a time
-        const IMAGES_PER_ROW = 1;
+        let flipContainer, frontSide, backSide;
+        let currentIndex, nextIndex;
+        let flipInterval;
+        let flipInProgress = false;
+        let isPaused = false;
 
-        // Store current image index
-        let currentIndex;
+        function initHeroFlip() {
+            const container = document.getElementById('heroImagesContainer');
+            container.innerHTML = ''; // clear any existing content
 
-        // Get container
-        const heroContainer = document.getElementById('heroImagesContainer');
+            // Create wrapper with class hero-images (already has it)
+            // But we already have hero-images on the container, so we just need flip container inside
+            flipContainer = document.createElement('div');
+            flipContainer.className = 'flip-container';
 
-        // Initialize with a random image
-        function initHeroImages() {
-            heroContainer.innerHTML = '';
-            const imgDiv = document.createElement('div');
-            imgDiv.className = 'sliding-image';
-            imgDiv.setAttribute('data-slot', 0);
-            heroContainer.appendChild(imgDiv);
-            
+            frontSide = document.createElement('div');
+            frontSide.className = 'flip-front';
+            backSide = document.createElement('div');
+            backSide.className = 'flip-back';
+
+            flipContainer.appendChild(frontSide);
+            flipContainer.appendChild(backSide);
+            container.appendChild(flipContainer);
+
+            // Set initial random indices
             currentIndex = Math.floor(Math.random() * heroImages.length);
-            updateImageSlot(0, currentIndex);
+            do {
+                nextIndex = Math.floor(Math.random() * heroImages.length);
+            } while (nextIndex === currentIndex && heroImages.length > 1);
+
+            // Populate both sides
+            populateSide(frontSide, currentIndex);
+            populateSide(backSide, nextIndex);
+
+            // Hover pause
+            container.addEventListener('mouseenter', stopFlipRotation);
+            container.addEventListener('mouseleave', startFlipRotation);
         }
 
-        // Update the image slot
-        function updateImageSlot(slotIndex, imageIndex) {
-            const slot = document.querySelector(`.sliding-image[data-slot="${slotIndex}"]`);
-            if (!slot) return;
+        function populateSide(sideElement, imageIndex) {
             const image = heroImages[imageIndex];
-            slot.innerHTML = `
-                <img src="${image.url}" alt="${image.title}">
+            sideElement.innerHTML = `
+                <img src="${image.url}" alt="${image.title}" loading="lazy">
                 <div class="image-overlay">
                     <h3>${image.title}</h3>
                     <p>${image.description}</p>
@@ -1801,36 +1841,53 @@
             `;
         }
 
-        // Change to a random new image (avoid immediate repeat)
-        function changeRandomImage() {
-            let newImageIndex;
+        function flipToNext() {
+            if (flipInProgress || isPaused) return;
+            flipInProgress = true;
+
+            // Determine next-next index (to preload after flip)
+            let nextNextIndex;
             do {
-                newImageIndex = Math.floor(Math.random() * heroImages.length);
-            } while (newImageIndex === currentIndex && heroImages.length > 1);
-            currentIndex = newImageIndex;
-            updateImageSlot(0, newImageIndex);
+                nextNextIndex = Math.floor(Math.random() * heroImages.length);
+            } while (nextNextIndex === nextIndex || (heroImages.length > 2 && nextNextIndex === currentIndex));
+
+            // Apply flip class to start transition
+            flipContainer.classList.add('flip');
+
+            // After transition, reset and update images
+            setTimeout(() => {
+                // After flip, the back side is visible. We set front to the image that was in back,
+                // and back to the next-next image.
+                populateSide(frontSide, nextIndex);
+                populateSide(backSide, nextNextIndex);
+
+                // Update indices
+                currentIndex = nextIndex;
+                nextIndex = nextNextIndex;
+
+                // Remove flip class (no transition)
+                flipContainer.classList.remove('flip');
+
+                flipInProgress = false;
+            }, 1000); // match transition duration
         }
 
-        // Pause on hover
-        let intervalId;
-        function startImageRotation() {
-            if (intervalId) clearInterval(intervalId);
-            intervalId = setInterval(changeRandomImage, 5000); // 5 seconds
+        function startFlipRotation() {
+            if (flipInterval) clearInterval(flipInterval);
+            isPaused = false;
+            flipInterval = setInterval(flipToNext, 5000); // 5 seconds
         }
 
-        function stopImageRotation() {
-            clearInterval(intervalId);
+        function stopFlipRotation() {
+            isPaused = true;
+            clearInterval(flipInterval);
         }
 
-        // Event listeners for hover
-        heroContainer.addEventListener('mouseenter', stopImageRotation);
-        heroContainer.addEventListener('mouseleave', startImageRotation);
+        // Initialize hero flip on page load
+        initHeroFlip();
+        startFlipRotation();
 
-        // Initialize and start
-        initHeroImages();
-        startImageRotation();
-
-        // Job data (18 jobs) - unchanged
+        // ========== JOB LISTINGS (unchanged) ==========
         const jobs = [
             { id:1, title:"Senior Care Giver", company:"Golden Care Center", logo:"GC", location:"Dubai, UAE", type:"Full Time", experience:"3+ Years", salary:"$2,200/month", description:"Experienced care giver needed for elderly patients. Must have first aid certification and minimum 3 years experience. Accommodation provided.", tags:["Elderly Care","First Aid","CPR","Live-in"], featured:true, urgent:false, category:"healthcare", posted:"2 days ago" },
             { id:2, title:"Registered Nurse", company:"Mediclinic Hospital", logo:"MH", location:"Abu Dhabi, UAE", type:"Full Time", experience:"2+ Years", salary:"$3,500/month", description:"Registered nurse needed for leading hospital. Must have DHA license and ICU experience. Competitive benefits package.", tags:["DHA License","ICU","Emergency","Bachelor's"], featured:true, urgent:false, category:"healthcare", posted:"1 day ago" },
