@@ -429,7 +429,7 @@
             opacity: 0.9;
         }
 
-        /* Categories Section – Parallelogram cards */
+        /* Categories Section – 2 columns, extra compact with FLOATING ANIMATION */
         .categories {
             padding: 1.5rem 0;
             background: var(--white);
@@ -452,7 +452,7 @@
             font-size: 0.8rem;
         }
 
-        /* FLOATING ANIMATION - preserved */
+        /* FLOATING ANIMATION - Makes boxes move as user scrolls */
         @keyframes floatVertical {
             0% { transform: translateY(0px); }
             25% { transform: translateY(-5px); }
@@ -468,31 +468,28 @@
         }
 
         .category-card {
-            padding: 1.5rem 0.5rem;
-            text-align: center;
+            padding: 1rem 0.5rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
             cursor: pointer;
+            text-align: center;
+            box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
             z-index: 1;
             animation: floatVertical 4s ease-in-out infinite;
             will-change: transform;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            color: white;
-            
-            /* Parallelogram shape */
-            clip-path: polygon(10% 0%, 90% 0%, 80% 100%, 0% 100%);
         }
 
-        /* Different gradient backgrounds per card (same colors) */
-        .category-card:nth-child(1) { background: linear-gradient(135deg, #1e3a5f, #2b4c7c); } /* deep blue */
-        .category-card:nth-child(2) { background: linear-gradient(135deg, #6d28d9, #8b5cf6); } /* purple */
-        .category-card:nth-child(3) { background: linear-gradient(135deg, #0f766e, #14b8a6); } /* teal */
-        .category-card:nth-child(4) { background: linear-gradient(135deg, #b45309, #f59e0b); } /* orange */
-        .category-card:nth-child(5) { background: linear-gradient(135deg, #be123c, #fb7185); } /* pink */
-        .category-card:nth-child(6) { background: linear-gradient(135deg, #1e40af, #3b82f6); } /* blue */
-        .category-card:nth-child(7) { background: linear-gradient(135deg, #047857, #10b981); } /* green */
-        .category-card:nth-child(8) { background: linear-gradient(135deg, #7c2d12, #ea580c); } /* deep orange */
+        /* Different timing for each card to create wave effect */
+        .category-card:nth-child(1) { animation: floatVertical 4.2s ease-in-out infinite; background: linear-gradient(135deg, #667eea, #764ba2); }
+        .category-card:nth-child(2) { animation: floatVertical 4.5s ease-in-out infinite; background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .category-card:nth-child(3) { animation: floatVertical 3.8s ease-in-out infinite; background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .category-card:nth-child(4) { animation: floatVertical 4.3s ease-in-out infinite; background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .category-card:nth-child(5) { animation: floatVertical 4.7s ease-in-out infinite; background: linear-gradient(135deg, #fa709a, #fee140); }
+        .category-card:nth-child(6) { animation: floatVertical 4.1s ease-in-out infinite; background: linear-gradient(135deg, #30cfd0, #330867); }
+        .category-card:nth-child(7) { animation: floatVertical 3.9s ease-in-out infinite; background: linear-gradient(135deg, #a8edea, #fed6e3); }
+        .category-card:nth-child(8) { animation: floatVertical 4.4s ease-in-out infinite; background: linear-gradient(135deg, #f6d365, #fda085); }
 
         .category-card:hover {
             transform: scale(1.02);
@@ -1269,14 +1266,9 @@
                 margin: 0 auto;
             }
             
-            /* Categories grid stays 2 columns on mobile */
+            /* Categories grid stays 2 columns on mobile as per your design */
             .categories-grid {
                 gap: 0.6rem;
-            }
-            /* Slightly adjust parallelogram for smaller screens */
-            .category-card {
-                clip-path: polygon(8% 0%, 92% 0%, 84% 100%, 0% 100%);
-                padding: 1.2rem 0.5rem;
             }
         }
     </style>
@@ -1350,7 +1342,7 @@
         </div>
     </section>
 
-    <!-- Categories – Parallelogram cards -->
+    <!-- Categories – 2 columns, compact with FLOATING ANIMATION -->
     <section class="categories">
         <div class="container">
             <div class="section-header">
@@ -1725,4 +1717,6 @@
     </script>
 </body>
 </html>
+
+
 
