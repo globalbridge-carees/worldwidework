@@ -538,6 +538,69 @@
             font-size: 0.7rem;
         }
 
+        /* NEW SECTION: Popular Job Categories with images */
+        .popular-jobs {
+            padding: 1.5rem 0;
+            background: var(--gray-50);
+        }
+
+        .popular-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .popular-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 200px;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .popular-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .popular-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .popular-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .popular-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1rem;
+            color: white;
+        }
+
+        .popular-overlay h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .popular-overlay p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
         /* Featured Jobs – extra compact with enhanced pulse and attractive colors */
         .featured-jobs {
             padding: 1.5rem 0;
@@ -1270,6 +1333,18 @@
             .categories-grid {
                 gap: 0.6rem;
             }
+
+            /* Popular grid becomes 2 columns on mobile */
+            .popular-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .popular-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -1389,6 +1464,58 @@
                     <div class="category-icon"><i class="fas fa-shopping-cart"></i></div>
                     <h4>Retail</h4>
                     <p>945 jobs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Popular Job Categories with images -->
+    <section class="popular-jobs">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Job Categories</h2>
+                <p>Explore top opportunities with real images</p>
+            </div>
+            <div class="popular-grid">
+                <!-- Factory Work -->
+                <div class="popular-card" onclick="window.location.href='findjobs.html?category=factory'">
+                    <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80" alt="Factory Work">
+                    <div class="popular-overlay">
+                        <h3>Factory Work</h3>
+                        <p>432 jobs available</p>
+                    </div>
+                </div>
+                <!-- Home Nurse Assistant -->
+                <div class="popular-card" onclick="window.location.href='findjobs.html?category=healthcare'">
+                    <img src="https://images.unsplash.com/photo-1584515933487-7798240d8b3b?w=600&q=80" alt="Home Nurse Assistant">
+                    <div class="popular-overlay">
+                        <h3>Home Nurse Assistant</h3>
+                        <p>278 jobs available</p>
+                    </div>
+                </div>
+                <!-- Care Giver -->
+                <div class="popular-card" onclick="window.location.href='findjobs.html?category=healthcare'">
+                    <img src="https://images.unsplash.com/photo-1559831746-6e5f6a0c3b3f?w=600&q=80" alt="Care Giver">
+                    <div class="popular-overlay">
+                        <h3>Care Giver</h3>
+                        <p>245 jobs available</p>
+                    </div>
+                </div>
+                <!-- Cleaner -->
+                <div class="popular-card" onclick="window.location.href='findjobs.html?category=domestic'">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80" alt="Cleaner">
+                    <div class="popular-overlay">
+                        <h3>Cleaner</h3>
+                        <p>312 jobs available</p>
+                    </div>
+                </div>
+                <!-- Construction -->
+                <div class="popular-card" onclick="window.location.href='findjobs.html?category=construction'">
+                    <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&q=80" alt="Construction">
+                    <div class="popular-overlay">
+                        <h3>Construction</h3>
+                        <p>345 jobs available</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1713,4 +1840,3 @@
     </script>
 </body>
 </html>
-
