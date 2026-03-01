@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* (All styles unchanged from the previous compressed version) */
+        /* Reset & Variables */
         * {
             margin: 0;
             padding: 0;
@@ -21,48 +21,35 @@
         }
 
         body {
-            background: #f0f5fa;
+            background: #f8fafc;
             color: #1e293b;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         :root {
             --primary: #0f2b4b;
             --primary-dark: #0a1f36;
             --primary-light: #1e3a6a;
-            --primary-glow: rgba(15, 43, 75, 0.3);
-            
             --accent: #f59e0b;
             --accent-dark: #d97706;
             --accent-light: #fbbf24;
-            --accent-glow: rgba(245, 158, 11, 0.4);
-            
             --success: #10b981;
-            --success-dark: #059669;
-            --success-light: #34d399;
-            --success-glow: rgba(16, 185, 129, 0.4);
-            
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
-            --gray-900: #0f172a;
-            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
             --white: #ffffff;
-            
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-            
             --shadow-accent: 0 10px 15px -3px rgba(245, 158, 11, 0.3);
-            --shadow-primary: 0 10px 15px -3px rgba(15, 43, 75, 0.3);
         }
 
         .container {
@@ -72,27 +59,18 @@
         }
 
         /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @keyframes pulse-glow {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 var(--accent-glow); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(245,158,11,0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245,158,11,0); }
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
         }
 
-        @keyframes verified-pulse {
-            0% { transform: scale(1); background: var(--success); }
-            50% { transform: scale(1.1); background: var(--success-light); }
-            100% { transform: scale(1); background: var(--success); }
-        }
-
-        @keyframes card-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .pulse-btn { animation: pulse-glow 2s infinite; }
-        .pulse-verified { animation: verified-pulse 2s infinite; }
-
-        /* Navigation */
+        /* Navigation (unchanged but polished) */
         .navbar {
             background: var(--white);
             padding: 0.8rem 0;
@@ -151,21 +129,22 @@
             color: var(--gray-600);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            padding: 0.5rem 0;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            position: relative;
         }
 
         .nav-menu a:hover { color: var(--accent); }
-        .nav-menu a.active { color: var(--primary); font-weight: 700; position: relative; }
+        .nav-menu a.active { color: var(--primary); font-weight: 700; }
         .nav-menu a.active::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -4px;
             left: 0;
             width: 100%;
             height: 3px;
             background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 3px;
         }
 
         .dashboard-link {
@@ -183,10 +162,10 @@
             cursor: pointer;
         }
 
-        /* Hero Section – compressed */
+        /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 2rem 0;
+            padding: 3rem 0;
             position: relative;
             overflow: hidden;
         }
@@ -198,9 +177,8 @@
             right: -10%;
             width: 60%;
             height: 150%;
-            background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
             border-radius: 50%;
-            animation: pulse-glow 6s infinite;
         }
 
         .hero-content {
@@ -213,39 +191,36 @@
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
             background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(4px);
             padding: 0.4rem 1.2rem;
-            border-radius: 30px;
-            margin-bottom: 1rem;
+            border-radius: 40px;
+            margin-bottom: 1.5rem;
             border: 1px solid rgba(255,255,255,0.2);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
-        .hero-badge i { color: var(--accent); font-size: 0.9rem; }
+        .hero-badge i { color: var(--accent); }
 
         .hero-content h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             line-height: 1.2;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
-
         .hero-highlight { color: var(--accent); }
 
         .hero-content p {
-            font-size: 0.95rem;
-            margin-bottom: 0;
-            opacity: 0.9;
+            font-size: 1rem;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
+            opacity: 0.9;
         }
 
-        /* Search Section */
+        /* Search & Filter Section */
         .search-section {
-            padding: 1.5rem 0;
+            padding: 2rem 0 1rem;
             background: var(--white);
             border-bottom: 1px solid var(--gray-200);
             position: sticky;
@@ -253,18 +228,20 @@
             z-index: 99;
         }
 
-        .search-wrapper { max-width: 600px; margin: 0 auto; }
+        .search-wrapper {
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
 
         .search-container {
             display: flex;
             background: var(--white);
             border: 1px solid var(--gray-200);
-            border-radius: 40px;
+            border-radius: 50px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             box-shadow: var(--shadow-sm);
         }
-
         .search-container:focus-within {
             border-color: var(--accent);
             box-shadow: var(--shadow-accent);
@@ -274,21 +251,20 @@
             flex: 1;
             display: flex;
             align-items: center;
-            padding: 0 1rem;
+            padding: 0 1.2rem;
         }
-
         .search-input-wrapper i {
             color: var(--accent);
-            font-size: 1rem;
             margin-right: 0.5rem;
+            font-size: 1rem;
         }
-
         .search-input {
             width: 100%;
-            padding: 0.7rem 0;
+            padding: 0.9rem 0;
             border: none;
             outline: none;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            background: transparent;
         }
         .search-input::placeholder { color: var(--gray-400); }
 
@@ -296,95 +272,125 @@
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             color: var(--white);
             border: none;
-            padding: 0 1.5rem;
+            padding: 0 2rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: opacity 0.2s;
             white-space: nowrap;
         }
-        .search-btn:hover {
-            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+        .search-btn:hover { opacity: 0.9; }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 2rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .filter-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.9rem;
+            margin-right: 0.3rem;
+        }
+
+        .filter-chip {
+            padding: 0.4rem 1.2rem;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-chip:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .filter-chip.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
         }
 
         /* Companies Section */
         .companies-section {
-            padding: 2.5rem 0;
+            padding: 3rem 0;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
             gap: 1rem;
         }
 
         .section-title h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--primary);
-            margin-bottom: 0.3rem;
             font-weight: 700;
             position: relative;
         }
         .section-title h2::after {
             content: '';
             position: absolute;
-            bottom: -3px;
+            bottom: -5px;
             left: 0;
-            width: 60px;
-            height: 3px;
+            width: 70px;
+            height: 4px;
             background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 2px;
         }
-        .section-title p { color: var(--gray-600); font-size: 0.9rem; }
-
-        .category-filters {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+        .section-title p {
+            color: var(--gray-500);
+            margin-top: 0.3rem;
+            font-size: 0.95rem;
         }
 
-        .filter-btn {
-            padding: 0.5rem 1.2rem;
-            border: 1px solid var(--gray-200);
-            background: var(--white);
+        .results-count {
+            background: var(--gray-100);
+            padding: 0.4rem 1.2rem;
             border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.9rem;
             color: var(--gray-700);
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
-        .filter-btn:hover {
-            background: var(--accent);
-            color: var(--white);
-            border-color: var(--accent);
-        }
-        .filter-btn.active {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
+        .results-count span {
+            font-weight: 700;
+            color: var(--primary);
         }
 
+        /* Company Cards Grid */
         .companies-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.2rem;
-            margin-bottom: 2rem;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.5s ease;
         }
 
-        /* Company Card – compressed */
         .company-card {
             background: var(--white);
-            border-radius: 16px;
-            padding: 1rem;
+            border-radius: 20px;
+            padding: 1.5rem 1rem 1.2rem;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
-            cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             display: flex;
             flex-direction: column;
+            position: relative;
+            cursor: pointer;
         }
         .company-card:hover {
             transform: translateY(-5px);
@@ -392,35 +398,35 @@
             border-color: var(--accent);
         }
 
-        .company-card.featured::after {
+        .company-card.featured::before {
             content: '⭐';
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 12px;
+            right: 12px;
+            font-size: 1rem;
             background: var(--accent);
-            color: var(--white);
-            width: 22px;
-            height: 22px;
+            color: white;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
         }
 
         .company-logo {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.5rem;
+            margin: 0 auto 1rem;
             color: var(--white);
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
         }
 
         .verified-badge {
@@ -429,176 +435,174 @@
             gap: 0.2rem;
             background: var(--success);
             color: var(--white);
-            padding: 0.2rem 0.6rem;
+            padding: 0.2rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-bottom: 0.3rem;
-            animation: verified-pulse 2s infinite;
-            align-self: center;
+            margin: 0 auto 0.5rem;
+            width: fit-content;
         }
-        .verified-badge i { font-size: 0.65rem; }
+        .verified-badge i { font-size: 0.7rem; }
 
         .company-card h3 {
             color: var(--primary);
-            font-size: 1rem;
-            margin-bottom: 0.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             text-align: center;
+            margin-bottom: 0.2rem;
         }
 
         .company-industry {
             color: var(--accent);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 0.3rem;
             text-align: center;
+            margin-bottom: 0.5rem;
         }
 
         .company-location {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.2rem;
+            gap: 0.3rem;
             color: var(--gray-600);
-            font-size: 0.7rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
         }
-        .company-location i { color: var(--accent); font-size: 0.7rem; }
+        .company-location i { color: var(--accent); }
 
-        .company-stats {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-bottom: 0.5rem;
-            padding: 0.3rem 0;
-            border-top: 1px solid var(--gray-200);
-            border-bottom: 1px solid var(--gray-200);
+        .jobs-count {
+            background: var(--gray-100);
+            border-radius: 30px;
+            padding: 0.4rem 0;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
         }
-
-        .stat {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .stat i { color: var(--accent); font-size: 0.8rem; margin-bottom: 0.1rem; }
-        .stat-value { font-weight: 700; color: var(--primary); font-size: 0.8rem; }
-        .stat-label { font-size: 0.55rem; color: var(--gray-500); }
+        .jobs-count i { color: var(--accent); margin-right: 0.2rem; }
 
         .view-jobs-btn {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: var(--white);
             border: none;
-            padding: 0.5rem 0;
+            padding: 0.7rem 0;
             width: 100%;
-            border-radius: 30px;
+            border-radius: 40px;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            animation: pulse-glow 2s infinite;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
         .view-jobs-btn:hover {
-            animation: none;
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             transform: translateY(-2px);
             box-shadow: var(--shadow-accent);
         }
 
-        /* Featured Companies – compressed */
+        /* Featured Companies Section (unchanged layout, polished) */
         .featured-section {
-            padding: 2.5rem 0;
+            padding: 3rem 0;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         }
         .featured-section h2 {
             text-align: center;
             color: var(--white);
             font-size: 2rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         .featured-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.2rem;
+            gap: 1.5rem;
         }
         .featured-card {
             background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            border-radius: 16px;
-            padding: 1.2rem;
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 1.5rem;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.2);
             cursor: pointer;
-            transition: all 0.3s ease;
-            animation: card-float 4s ease-in-out infinite;
+            transition: all 0.3s;
+            animation: fadeInUp 0.6s ease;
         }
         .featured-card:hover {
             transform: translateY(-5px);
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.15);
             border-color: var(--accent);
         }
         .featured-logo {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: var(--white);
-            border-radius: 16px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.8rem;
+            margin: 0 auto 1rem;
             color: var(--primary);
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-lg);
         }
-        .featured-card h3 { color: var(--white); font-size: 1.1rem; margin-bottom: 0.2rem; }
-        .featured-card p { color: rgba(255,255,255,0.8); font-size: 0.75rem; margin-bottom: 0.5rem; }
+        .featured-card h3 { color: var(--white); font-size: 1.2rem; margin-bottom: 0.3rem; }
+        .featured-card p { color: rgba(255,255,255,0.8); font-size: 0.85rem; margin-bottom: 1rem; }
         .featured-jobs {
-            color: var(--accent);
-            font-size: 0.9rem;
-            font-weight: 700;
-            padding: 0.2rem 1rem;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.2);
+            color: var(--white);
+            padding: 0.3rem 1.2rem;
             border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
-        /* Why Choose Us – compressed */
+        /* Why Choose Us */
         .why-choose-section {
-            padding: 2.5rem 0;
+            padding: 3rem 0;
             background: var(--white);
         }
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
         .benefit-card {
             text-align: center;
-            padding: 1.5rem 0.8rem;
-            background: linear-gradient(135deg, var(--white), var(--gray-50));
-            border-radius: 16px;
+            padding: 2rem 1rem;
+            background: linear-gradient(145deg, var(--white), var(--gray-50));
+            border-radius: 20px;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-        .benefit-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .benefit-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
         .benefit-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            border-radius: 16px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.8rem;
+            margin: 0 auto 1rem;
             color: var(--white);
-            font-size: 1.3rem;
+            font-size: 1.5rem;
         }
-        .benefit-card h3 { color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem; }
-        .benefit-card p { color: var(--gray-600); font-size: 0.8rem; line-height: 1.4; }
+        .benefit-card h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .benefit-card p { color: var(--gray-600); font-size: 0.9rem; line-height: 1.5; }
 
-        /* Pagination – compressed */
+        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -606,10 +610,9 @@
             gap: 0.5rem;
             margin-top: 2rem;
         }
-
         .page-btn {
-            width: 35px;
-            height: 35px;
+            width: 38px;
+            height: 38px;
             border: 1px solid var(--gray-200);
             background: var(--white);
             border-radius: 50%;
@@ -617,9 +620,8 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
             font-weight: 600;
-            font-size: 0.8rem;
             color: var(--gray-700);
         }
         .page-btn:hover {
@@ -638,34 +640,34 @@
             border-radius: 30px;
         }
 
-        /* CTA Section – compressed */
+        /* CTA Section */
         .cta-section {
-            padding: 2.5rem 0;
+            padding: 3rem 0;
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             color: var(--white);
             text-align: center;
         }
-        .cta-section h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
-        .cta-section p { font-size: 0.9rem; margin-bottom: 1.2rem; opacity: 0.9; }
+        .cta-section h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .cta-section p { font-size: 1rem; margin-bottom: 1.5rem; opacity: 0.9; }
         .cta-btn {
             background: var(--white);
             color: var(--primary);
             border: none;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2.5rem;
             border-radius: 40px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             box-shadow: var(--shadow-md);
         }
         .cta-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
 
-        /* Footer */
+        /* Footer (unchanged) */
         .footer {
             background: var(--gray-900);
             color: var(--white);
-            padding: 2.5rem 0 1.5rem;
+            padding: 3rem 0 1.5rem;
         }
         .footer-grid {
             display: grid;
@@ -687,24 +689,21 @@
             font-size: 1.2rem;
         }
         .footer-logo .logo-text { color: var(--white); font-size: 1.2rem; }
-        .footer-col p { color: var(--gray-400); font-size: 0.8rem; line-height: 1.5; }
+        .footer-col p { color: var(--gray-400); font-size: 0.85rem; line-height: 1.5; }
         .footer-col h4 { color: var(--white); margin-bottom: 1rem; font-size: 1rem; }
         .footer-col ul { list-style: none; }
         .footer-col li { margin-bottom: 0.5rem; }
         .footer-col a {
             color: var(--gray-400);
             text-decoration: none;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            transition: color 0.2s;
         }
-        .footer-col a:hover {
-            color: var(--accent);
-            padding-left: 3px;
-        }
+        .footer-col a:hover { color: var(--accent); padding-left: 3px; }
         .social-links { display: flex; gap: 0.8rem; }
         .social-link {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
@@ -712,20 +711,19 @@
             justify-content: center;
             color: var(--white);
             text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            transition: all 0.3s;
         }
         .social-link:hover {
             background: var(--accent);
             color: var(--primary);
-            transform: translateY(-3px) rotate(360deg);
+            transform: translateY(-3px);
         }
         .footer-bottom {
             text-align: center;
             padding-top: 1.5rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             color: var(--gray-400);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
         }
 
         /* Responsive */
@@ -746,13 +744,13 @@
                 left: 0;
                 width: 100%;
                 background: var(--white);
-                padding: 1rem;
+                padding: 1.5rem;
                 box-shadow: var(--shadow-lg);
                 flex-direction: column;
                 align-items: flex-start;
             }
             .nav-menu.show { display: flex; }
-            .hero-content h1 { font-size: 1.6rem; }
+            .hero-content h1 { font-size: 2rem; }
             .companies-grid,
             .featured-grid,
             .benefits-grid,
@@ -760,8 +758,10 @@
                 grid-template-columns: 1fr;
             }
             .search-container { flex-direction: column; border-radius: 20px; }
-            .search-input-wrapper { padding: 0.5rem 1rem; border-bottom: 1px solid var(--gray-200); }
-            .search-btn { padding: 0.7rem; }
+            .search-input-wrapper { padding: 0.8rem 1rem; border-bottom: 1px solid var(--gray-200); }
+            .search-btn { padding: 0.8rem; width: 100%; }
+            .filter-row { flex-direction: column; align-items: stretch; }
+            .filter-group { justify-content: center; }
         }
     </style>
 </head>
@@ -785,12 +785,11 @@
                 <li><a href="companies.html" class="active">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <!-- No auth buttons, no user menu -->
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section (compressed) -->
+    <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
@@ -804,29 +803,50 @@
                     Hiring Now
                 </h1>
                 
-                <p>Find your next opportunity at trusted employers</p>
+                <p>Find your next opportunity at trusted employers worldwide</p>
             </div>
         </div>
     </section>
 
-    <!-- Search Section -->
+    <!-- Search & Filter Section -->
     <section class="search-section">
         <div class="container">
             <div class="search-wrapper">
                 <div class="search-container">
                     <div class="search-input-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="search-input" id="searchInput" placeholder="Search companies...">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search by company name, industry, or location..." oninput="filterCompanies()">
                     </div>
-                    <button class="search-btn" onclick="searchCompanies()">
+                    <button class="search-btn" onclick="filterCompanies()">
                         <i class="fas fa-arrow-right"></i> Search
                     </button>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-group">
+                    <span class="filter-label">Industry:</span>
+                    <button class="filter-chip active" data-industry="all" onclick="setIndustryFilter('all')">All</button>
+                    <button class="filter-chip" data-industry="aviation" onclick="setIndustryFilter('aviation')">Aviation</button>
+                    <button class="filter-chip" data-industry="construction" onclick="setIndustryFilter('construction')">Construction</button>
+                    <button class="filter-chip" data-industry="healthcare" onclick="setIndustryFilter('healthcare')">Healthcare</button>
+                    <button class="filter-chip" data-industry="hospitality" onclick="setIndustryFilter('hospitality')">Hospitality</button>
+                    <button class="filter-chip" data-industry="security" onclick="setIndustryFilter('security')">Security</button>
+                    <button class="filter-chip" data-industry="retail" onclick="setIndustryFilter('retail')">Retail</button>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Location:</span>
+                    <button class="filter-chip active" data-location="all" onclick="setLocationFilter('all')">All</button>
+                    <button class="filter-chip" data-location="uae" onclick="setLocationFilter('uae')">UAE</button>
+                    <button class="filter-chip" data-location="qatar" onclick="setLocationFilter('qatar')">Qatar</button>
+                    <button class="filter-chip" data-location="ksa" onclick="setLocationFilter('ksa')">KSA</button>
+                    <button class="filter-chip" data-location="gcc" onclick="setLocationFilter('gcc')">GCC</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Companies Section (stats removed) -->
+    <!-- Companies Section -->
     <section class="companies-section">
         <div class="container">
             <div class="section-header">
@@ -834,14 +854,8 @@
                     <h2>Featured Companies</h2>
                     <p>Browse trusted employers</p>
                 </div>
-                <div class="category-filters">
-                    <button class="filter-btn active" onclick="filterCompanies('all')">All</button>
-                    <button class="filter-btn" onclick="filterCompanies('healthcare')">Healthcare</button>
-                    <button class="filter-btn" onclick="filterCompanies('construction')">Construction</button>
-                    <button class="filter-btn" onclick="filterCompanies('hospitality')">Hospitality</button>
-                    <button class="filter-btn" onclick="filterCompanies('security')">Security</button>
-                    <button class="filter-btn" onclick="filterCompanies('aviation')">Aviation</button>
-                    <button class="filter-btn" onclick="filterCompanies('retail')">Retail</button>
+                <div class="results-count" id="resultsCount">
+                    <span id="companyCount">24</span> companies found
                 </div>
             </div>
 
@@ -849,14 +863,12 @@
                 <!-- Companies loaded by JS -->
             </div>
 
-            <!-- Pagination -->
+            <!-- Pagination (static for now, can be enhanced) -->
             <div class="pagination">
                 <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
                 <button class="page-btn active">1</button>
                 <button class="page-btn">2</button>
                 <button class="page-btn">3</button>
-                <button class="page-btn">4</button>
-                <button class="page-btn">5</button>
                 <button class="page-btn next">Next <i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
@@ -873,7 +885,7 @@
                     <p>Aviation • Doha, Qatar</p>
                     <span class="featured-jobs">234 jobs</span>
                 </div>
-                <div class="featured-card" onclick="viewCompanyJobs('Emirates')">
+                <div class="featured-card" onclick="viewCompanyJobs('Emirates Group')">
                     <div class="featured-logo">EK</div>
                     <h3>Emirates Group</h3>
                     <p>Aviation • Dubai, UAE</p>
@@ -979,25 +991,69 @@
             document.getElementById('navMenu').classList.toggle('show');
         }
 
-        // Companies data (same as before)
+        // ========== COMPANY DATA ==========
         const companies = [
-            { name: "Qatar Airways", industry: "Aviation", location: "Doha, Qatar", employees: "10k+", jobs: 234, featured: true, verified: true, logo: "QA", category: "aviation" },
-            { name: "Emirates Group", industry: "Aviation", location: "Dubai, UAE", employees: "15k+", jobs: 189, featured: true, verified: true, logo: "EK", category: "aviation" },
-            { name: "Saudi Aramco", industry: "Energy", location: "Dhahran, KSA", employees: "20k+", jobs: 156, featured: true, verified: true, logo: "SA", category: "energy" },
-            { name: "DP World", industry: "Logistics", location: "Dubai, UAE", employees: "8k+", jobs: 98, featured: false, verified: true, logo: "DP", category: "logistics" },
-            { name: "Jumeirah Group", industry: "Hospitality", location: "Dubai, UAE", employees: "5k+", jobs: 45, featured: false, verified: true, logo: "JG", category: "hospitality" },
-            { name: "Careem", industry: "Technology", location: "Dubai, UAE", employees: "2k+", jobs: 67, featured: false, verified: true, logo: "CM", category: "technology" },
-            { name: "Al Habtoor Group", industry: "Construction", location: "Dubai, UAE", employees: "7k+", jobs: 89, featured: false, verified: true, logo: "AH", category: "construction" },
-            { name: "Mediclinic", industry: "Healthcare", location: "Abu Dhabi, UAE", employees: "3k+", jobs: 56, featured: false, verified: true, logo: "MC", category: "healthcare" },
-            { name: "G4S Security", industry: "Security", location: "Multiple", employees: "12k+", jobs: 234, featured: false, verified: true, logo: "G4", category: "security" },
-            { name: "Lulu Hypermarket", industry: "Retail", location: "GCC", employees: "6k+", jobs: 145, featured: false, verified: true, logo: "LH", category: "retail" },
-            { name: "Royal Hotel", industry: "Hospitality", location: "Doha, Qatar", employees: "1.5k+", jobs: 34, featured: false, verified: true, logo: "RH", category: "hospitality" },
-            { name: "SecurePlus", industry: "Security", location: "Qatar", employees: "800+", jobs: 23, featured: false, verified: true, logo: "SP", category: "security" }
+            { name: "Qatar Airways", industry: "Aviation", location: "Doha, Qatar", jobs: 234, featured: true, verified: true, logo: "QA", category: "aviation", locKey: "qatar" },
+            { name: "Emirates Group", industry: "Aviation", location: "Dubai, UAE", jobs: 189, featured: true, verified: true, logo: "EK", category: "aviation", locKey: "uae" },
+            { name: "Saudi Aramco", industry: "Energy", location: "Dhahran, KSA", jobs: 156, featured: true, verified: true, logo: "SA", category: "energy", locKey: "ksa" },
+            { name: "DP World", industry: "Logistics", location: "Dubai, UAE", jobs: 98, featured: false, verified: true, logo: "DP", category: "logistics", locKey: "uae" },
+            { name: "Jumeirah Group", industry: "Hospitality", location: "Dubai, UAE", jobs: 45, featured: false, verified: true, logo: "JG", category: "hospitality", locKey: "uae" },
+            { name: "Careem", industry: "Technology", location: "Dubai, UAE", jobs: 67, featured: false, verified: true, logo: "CM", category: "technology", locKey: "uae" },
+            { name: "Al Habtoor Group", industry: "Construction", location: "Dubai, UAE", jobs: 89, featured: false, verified: true, logo: "AH", category: "construction", locKey: "uae" },
+            { name: "Mediclinic", industry: "Healthcare", location: "Abu Dhabi, UAE", jobs: 56, featured: false, verified: true, logo: "MC", category: "healthcare", locKey: "uae" },
+            { name: "G4S Security", industry: "Security", location: "Multiple, GCC", jobs: 234, featured: false, verified: true, logo: "G4", category: "security", locKey: "gcc" },
+            { name: "Lulu Hypermarket", industry: "Retail", location: "GCC", jobs: 145, featured: false, verified: true, logo: "LH", category: "retail", locKey: "gcc" },
+            { name: "Royal Hotel", industry: "Hospitality", location: "Doha, Qatar", jobs: 34, featured: false, verified: true, logo: "RH", category: "hospitality", locKey: "qatar" },
+            { name: "SecurePlus", industry: "Security", location: "Doha, Qatar", jobs: 23, featured: false, verified: true, logo: "SP", category: "security", locKey: "qatar" },
+            { name: "Alshaya Group", industry: "Retail", location: "Kuwait", jobs: 112, featured: false, verified: true, logo: "AG", category: "retail", locKey: "gcc" },
+            { name: "Parsons", industry: "Construction", location: "Riyadh, KSA", jobs: 76, featured: false, verified: true, logo: "PA", category: "construction", locKey: "ksa" },
+            { name: "Aster Pharmacy", industry: "Healthcare", location: "Dubai, UAE", jobs: 41, featured: false, verified: true, logo: "AP", category: "healthcare", locKey: "uae" },
+            { name: "Transguard", industry: "Security", location: "Dubai, UAE", jobs: 203, featured: false, verified: true, logo: "TG", category: "security", locKey: "uae" },
+            { name: "Accor Hotels", industry: "Hospitality", location: "Doha, Qatar", jobs: 67, featured: false, verified: true, logo: "AC", category: "hospitality", locKey: "qatar" },
+            { name: "Carrefour", industry: "Retail", location: "Dubai, UAE", jobs: 89, featured: false, verified: true, logo: "CR", category: "retail", locKey: "uae" },
+            { name: "Emirates Steel", industry: "Construction", location: "Abu Dhabi, UAE", jobs: 52, featured: false, verified: true, logo: "ES", category: "construction", locKey: "uae" },
+            { name: "NMC Healthcare", industry: "Healthcare", location: "Abu Dhabi, UAE", jobs: 118, featured: false, verified: true, logo: "NM", category: "healthcare", locKey: "uae" },
+            { name: "QatarEnergy", industry: "Energy", location: "Doha, Qatar", jobs: 97, featured: true, verified: true, logo: "QE", category: "energy", locKey: "qatar" },
+            { name: "Etihad Airways", industry: "Aviation", location: "Abu Dhabi, UAE", jobs: 143, featured: true, verified: true, logo: "EY", category: "aviation", locKey: "uae" },
+            { name: "Majid Al Futtaim", industry: "Retail", location: "Dubai, UAE", jobs: 122, featured: false, verified: true, logo: "MA", category: "retail", locKey: "uae" },
+            { name: "KBR", industry: "Construction", location: "Al Khobar, KSA", jobs: 64, featured: false, verified: true, logo: "KB", category: "construction", locKey: "ksa" }
         ];
 
-        function displayCompanies() {
+        // State
+        let currentIndustry = 'all';
+        let currentLocation = 'all';
+        let searchTerm = '';
+
+        // Helper: map location key to filter
+        function matchesLocation(company, locKey) {
+            if (locKey === 'all') return true;
+            return company.locKey === locKey;
+        }
+
+        // Helper: check if company matches search term
+        function matchesSearch(company, term) {
+            if (!term) return true;
+            term = term.toLowerCase();
+            return company.name.toLowerCase().includes(term) ||
+                   company.industry.toLowerCase().includes(term) ||
+                   company.location.toLowerCase().includes(term);
+        }
+
+        // Filter companies based on current state
+        function getFilteredCompanies() {
+            return companies.filter(c => {
+                const industryMatch = currentIndustry === 'all' || c.category === currentIndustry;
+                const locationMatch = matchesLocation(c, currentLocation);
+                const searchMatch = matchesSearch(c, searchTerm);
+                return industryMatch && locationMatch && searchMatch;
+            });
+        }
+
+        // Render companies
+        function renderCompanies() {
+            const filtered = getFilteredCompanies();
             const grid = document.getElementById('companiesGrid');
-            grid.innerHTML = companies.map(company => `
+            grid.innerHTML = filtered.map(company => `
                 <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
                     <div class="company-logo">${company.logo}</div>
                     ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
@@ -1006,77 +1062,47 @@
                     <div class="company-location">
                         <i class="fas fa-map-marker-alt"></i> ${company.location}
                     </div>
-                    <div class="company-stats">
-                        <div class="stat">
-                            <i class="fas fa-briefcase"></i>
-                            <span class="stat-value">${company.jobs}</span>
-                            <span class="stat-label">Jobs</span>
-                        </div>
-                        <div class="stat">
-                            <i class="fas fa-users"></i>
-                            <span class="stat-value">${company.employees}</span>
-                            <span class="stat-label">Emp</span>
-                        </div>
+                    <div class="jobs-count">
+                        <i class="fas fa-briefcase"></i> ${company.jobs} open jobs
                     </div>
-                    <button class="view-jobs-btn pulse-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
+                    <button class="view-jobs-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
                         View Jobs <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             `).join('');
+
+            document.getElementById('companyCount').textContent = filtered.length;
         }
 
-        // Navigate to findjobs.html filtered by company
+        // Filter control functions
+        function setIndustryFilter(industry) {
+            currentIndustry = industry;
+            document.querySelectorAll('[data-industry]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.industry === industry);
+            });
+            renderCompanies();
+        }
+
+        function setLocationFilter(location) {
+            currentLocation = location;
+            document.querySelectorAll('[data-location]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.location === location);
+            });
+            renderCompanies();
+        }
+
+        function filterCompanies() {
+            searchTerm = document.getElementById('searchInput').value;
+            renderCompanies();
+        }
+
+        // Navigate to findjobs.html with company filter
         function viewCompanyJobs(name) {
             window.location.href = `findjobs.html?company=${encodeURIComponent(name)}`;
         }
 
-        function searchCompanies() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            alert('Searching for: ' + searchTerm);
-        }
-
-        function filterCompanies(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (category === 'all') {
-                displayCompanies();
-            } else {
-                const filtered = companies.filter(c => c.category === category);
-                const grid = document.getElementById('companiesGrid');
-                grid.innerHTML = filtered.map(company => `
-                    <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
-                        <div class="company-logo">${company.logo}</div>
-                        ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
-                        <h3>${company.name}</h3>
-                        <div class="company-industry">${company.industry}</div>
-                        <div class="company-location">
-                            <i class="fas fa-map-marker-alt"></i> ${company.location}
-                        </div>
-                        <div class="company-stats">
-                            <div class="stat">
-                                <i class="fas fa-briefcase"></i>
-                                <span class="stat-value">${company.jobs}</span>
-                                <span class="stat-label">Jobs</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-users"></i>
-                                <span class="stat-value">${company.employees}</span>
-                                <span class="stat-label">Emp</span>
-                            </div>
-                        </div>
-                        <button class="view-jobs-btn pulse-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
-                            View Jobs <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // No auth check – page is public
-        // No user menu injection
-
-        displayCompanies();
+        // Initial render
+        renderCompanies();
     </script>
 </body>
 </html>
