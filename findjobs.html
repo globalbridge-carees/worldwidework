@@ -1155,7 +1155,7 @@
             font-size: 0.9rem;
         }
 
-        /* Job Details Modal - unchanged */
+        /* ========== IMPROVED JOB DETAILS MODAL ========== */
         .modal {
             display: none;
             position: fixed;
@@ -1176,40 +1176,47 @@
 
         .modal-content {
             background: var(--white);
-            border-radius: 24px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 85vh;
+            border-radius: 28px;
+            max-width: 700px;
+            width: 95%;
+            max-height: 90vh;
             overflow-y: auto;
             position: relative;
             animation: slideIn 0.3s ease;
             box-shadow: var(--shadow-2xl);
+            scrollbar-width: thin;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: var(--gray-100);
+            border-radius: 10px;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
         }
 
         .modal-header {
-            padding: 1.5rem;
-            border-bottom: 2px solid var(--gray-200);
+            padding: 1rem 1.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             position: sticky;
             top: 0;
             background: var(--white);
-            border-radius: 24px 24px 0 0;
+            border-radius: 28px 28px 0 0;
             z-index: 10;
-        }
-
-        .modal-header h2 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            font-weight: 700;
+            border-bottom: none;
         }
 
         .close-modal {
             background: var(--gray-100);
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1217,7 +1224,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             color: var(--gray-600);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            flex-shrink: 0;
         }
 
         .close-modal:hover {
@@ -1227,90 +1235,229 @@
         }
 
         .modal-body {
-            padding: 1.5rem;
+            padding: 0 1.5rem 1.5rem;
         }
 
-        .detail-section {
-            margin-bottom: 1.5rem;
+        /* Job Title & Company Row */
+        .job-header-compact {
+            margin-bottom: 1rem;
         }
-
-        .detail-section h3 {
+        .job-title-lg {
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--primary);
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .company-row {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
-
-        .detail-section h3 i {
+        .company-name-lg {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        .verified-badge-lg {
+            background: var(--success);
+            color: white;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .job-location-salary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            color: var(--gray-600);
+        }
+        .job-location-salary i {
             color: var(--accent);
+            width: 1.2rem;
+        }
+        .job-type-badge {
+            background: var(--accent-light);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 0.5rem;
         }
 
-        .detail-grid {
+        /* Employer Card */
+        .employer-card {
+            background: var(--gray-50);
+            border-radius: 20px;
+            padding: 1rem 1.2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid var(--gray-200);
+        }
+        .employer-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .employer-info h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .employer-meta {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+
+        /* Overview Grid */
+        .overview-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             background: var(--gray-50);
-            padding: 1rem;
-            border-radius: 16px;
+            padding: 1.2rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--gray-200);
         }
-
-        .detail-item-large {
+        .overview-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            color: var(--gray-700);
+            gap: 0.6rem;
         }
-
-        .detail-item-large i {
-            width: 24px;
+        .overview-item i {
+            width: 1.5rem;
             color: var(--accent);
             font-size: 1.1rem;
         }
-
-        .description-text {
-            background: var(--gray-50);
-            padding: 1rem;
-            border-radius: 16px;
-            line-height: 1.6;
-            color: var(--gray-700);
+        .overview-item div strong {
+            font-size: 0.9rem;
         }
-
-        .tags-container {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .tag-large {
-            background: linear-gradient(135deg, var(--gray-100), var(--white));
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
+        .overview-item div span {
             font-size: 0.85rem;
-            color: var(--gray-700);
-            border: 1px solid var(--gray-200);
-            font-weight: 500;
+            color: var(--gray-600);
         }
 
+        /* Description Sections */
+        .desc-section {
+            margin: 1.5rem 0;
+        }
+        .desc-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .desc-section h3 i {
+            color: var(--accent);
+        }
+        .desc-section p {
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .desc-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .desc-section li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
+        .desc-section li i {
+            color: var(--success);
+            margin-top: 0.2rem;
+        }
+
+        /* Skills Tags */
+        .skills-section {
+            margin: 1.5rem 0;
+        }
+        .skills-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .skills-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .tags-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .skill-tag {
+            background: linear-gradient(135deg, var(--gray-100), var(--white));
+            border: 1px solid var(--gray-200);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .skill-tag:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .more-tags {
+            background: var(--gray-200);
+            color: var(--gray-700);
+            cursor: pointer;
+        }
+        .hidden-tags {
+            display: none;
+            margin-top: 0.5rem;
+        }
+
+        /* Modal Footer */
         .modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--gray-200);
+            padding: 1rem 1.5rem 1.5rem;
+            border-top: none;
             display: flex;
             gap: 1rem;
             position: sticky;
             bottom: 0;
             background: var(--white);
-            border-radius: 0 0 24px 24px;
+            border-radius: 0 0 28px 28px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.03);
         }
 
         .modal-btn {
             flex: 1;
-            padding: 0.8rem;
+            padding: 1rem;
             border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.95rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -1320,25 +1467,26 @@
         }
 
         .modal-btn.apply {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             color: var(--white);
-        }
-
-        .modal-btn.apply:hover {
-            transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
         }
 
+        .modal-btn.apply:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
         .modal-btn.save {
-            background: var(--gray-100);
-            color: var(--gray-700);
-            border: 1px solid var(--gray-200);
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--gray-300);
         }
 
         .modal-btn.save:hover {
-            background: var(--accent);
-            color: white;
             border-color: var(--accent);
+            color: var(--accent);
+            background: #fff9f0;
         }
 
         @keyframes slideIn {
@@ -1352,12 +1500,7 @@
             }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Mobile Responsive - updated for flip container */
+        /* Mobile Responsive */
         @media (max-width: 1200px) {
             .jobs-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1561,11 +1704,32 @@
                 margin-left: auto;
             }
             
-            .detail-grid {
+            /* Modal mobile overrides */
+            .modal-content {
+                width: 100%;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+            .modal-header {
+                padding: 0.75rem 1rem;
+            }
+            .modal-body {
+                padding: 0 1rem 1rem;
+            }
+            .job-title-lg {
+                font-size: 1.6rem;
+            }
+            .overview-grid {
                 grid-template-columns: 1fr;
             }
             .modal-footer {
-                flex-direction: column;
+                padding: 1rem;
+                flex-direction: column-reverse;
+                box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            }
+            .modal-btn {
+                width: 100%;
+                padding: 0.9rem;
             }
         }
 
@@ -1666,23 +1830,17 @@
         </div>
     </section>
 
-    <!-- Job Details Modal -->
+    <!-- Job Details Modal (improved) -->
     <div class="modal" id="jobModal" onclick="closeModalIfOutside(event)">
         <div class="modal-content" id="modalContent">
             <div class="modal-header">
-                <h2 id="modalJobTitle">Job Details</h2>
                 <button class="close-modal" onclick="closeJobModal()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body" id="modalBody"></div>
-            <div class="modal-footer">
-                <button class="modal-btn save" id="modalSaveBtn" onclick="modalSaveJob()">
-                    <i class="far fa-bookmark"></i> Save Job
-                </button>
-                <button class="modal-btn apply" id="modalApplyBtn" onclick="modalApplyJob()">
-                    Apply Now <i class="fas fa-arrow-right"></i>
-                </button>
+            <div class="modal-footer" id="modalFooter">
+                <!-- footer buttons will be re-created dynamically -->
             </div>
         </div>
     </div>
@@ -1800,8 +1958,6 @@
             const container = document.getElementById('heroImagesContainer');
             container.innerHTML = ''; // clear any existing content
 
-            // Create wrapper with class hero-images (already has it)
-            // But we already have hero-images on the container, so we just need flip container inside
             flipContainer = document.createElement('div');
             flipContainer.className = 'flip-container';
 
@@ -1814,17 +1970,14 @@
             flipContainer.appendChild(backSide);
             container.appendChild(flipContainer);
 
-            // Set initial random indices
             currentIndex = Math.floor(Math.random() * heroImages.length);
             do {
                 nextIndex = Math.floor(Math.random() * heroImages.length);
             } while (nextIndex === currentIndex && heroImages.length > 1);
 
-            // Populate both sides
             populateSide(frontSide, currentIndex);
             populateSide(backSide, nextIndex);
 
-            // Hover pause
             container.addEventListener('mouseenter', stopFlipRotation);
             container.addEventListener('mouseleave', startFlipRotation);
         }
@@ -1844,37 +1997,27 @@
             if (flipInProgress || isPaused) return;
             flipInProgress = true;
 
-            // Determine next-next index (to preload after flip)
             let nextNextIndex;
             do {
                 nextNextIndex = Math.floor(Math.random() * heroImages.length);
             } while (nextNextIndex === nextIndex || (heroImages.length > 2 && nextNextIndex === currentIndex));
 
-            // Apply flip class to start transition
             flipContainer.classList.add('flip');
 
-            // After transition, reset and update images
             setTimeout(() => {
-                // After flip, the back side is visible. We set front to the image that was in back,
-                // and back to the next-next image.
                 populateSide(frontSide, nextIndex);
                 populateSide(backSide, nextNextIndex);
-
-                // Update indices
                 currentIndex = nextIndex;
                 nextIndex = nextNextIndex;
-
-                // Remove flip class (no transition)
                 flipContainer.classList.remove('flip');
-
                 flipInProgress = false;
-            }, 1000); // match transition duration
+            }, 1000);
         }
 
         function startFlipRotation() {
             if (flipInterval) clearInterval(flipInterval);
             isPaused = false;
-            flipInterval = setInterval(flipToNext, 5000); // 5 seconds
+            flipInterval = setInterval(flipToNext, 5000);
         }
 
         function stopFlipRotation() {
@@ -1882,11 +2025,10 @@
             clearInterval(flipInterval);
         }
 
-        // Initialize hero flip on page load
         initHeroFlip();
         startFlipRotation();
 
-        // ========== JOB LISTINGS (unchanged) ==========
+        // ========== JOB LISTINGS ==========
         const jobs = [
             { id:1, title:"Senior Care Giver", company:"Golden Care Center", logo:"GC", location:"Dubai, UAE", type:"Full Time", experience:"3+ Years", salary:"$2,200/month", description:"Experienced care giver needed for elderly patients. Must have first aid certification and minimum 3 years experience. Accommodation provided.", tags:["Elderly Care","First Aid","CPR","Live-in"], featured:true, urgent:false, category:"healthcare", posted:"2 days ago" },
             { id:2, title:"Registered Nurse", company:"Mediclinic Hospital", logo:"MH", location:"Abu Dhabi, UAE", type:"Full Time", experience:"2+ Years", salary:"$3,500/month", description:"Registered nurse needed for leading hospital. Must have DHA license and ICU experience. Competitive benefits package.", tags:["DHA License","ICU","Emergency","Bachelor's"], featured:true, urgent:false, category:"healthcare", posted:"1 day ago" },
@@ -1956,6 +2098,7 @@
             updatePagination();
         }
 
+        // ========== IMPROVED JOB DETAILS MODAL ==========
         function showJobDetails(jobId, event) {
             event.stopPropagation();
             const job = jobs.find(j => j.id === jobId);
@@ -1963,62 +2106,130 @@
             
             currentJobId = jobId;
             
-            document.getElementById('modalJobTitle').textContent = job.title;
+            // Helper to get accommodation status from tags
+            const hasAccommodation = job.tags.some(t => t.toLowerCase().includes('accommodation') || t.toLowerCase().includes('live-in'));
+            const accommodationText = hasAccommodation ? 'Provided' : 'Not provided';
             
-            const modalSaveBtn = document.getElementById('modalSaveBtn');
-            modalSaveBtn.innerHTML = savedJobs.includes(jobId) ? 
-                '<i class="fas fa-bookmark"></i> Saved' : 
-                '<i class="far fa-bookmark"></i> Save Job';
+            // Generate deadline (14 days from now)
+            const deadline = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            
+            // Split description into parts
+            const descParts = job.description.split('. ');
+            const aboutRole = descParts[0] + '.';
+            
+            // Skills tags with "show more"
+            const visibleTags = job.tags.slice(0, 5);
+            const hiddenTags = job.tags.slice(5);
             
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = `
-                <div class="detail-section">
-                    <h3><i class="fas fa-building"></i> Company</h3>
-                    <div style="background: var(--gray-50); padding: 1rem; border-radius: 16px;">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                            <div class="company-logo" style="width: 48px; height: 48px; font-size: 1.3rem;">${job.logo}</div>
-                            <div>
-                                <h4 style="color: var(--primary); margin-bottom: 0.2rem;">${job.company}</h4>
-                                <span class="verified-badge"><i class="fas fa-check-circle"></i> Verified Employer</span>
-                            </div>
+                <!-- Header Section -->
+                <div class="job-header-compact">
+                    <h1 class="job-title-lg">${job.title}</h1>
+                    <div class="company-row">
+                        <span class="company-name-lg">${job.company}</span>
+                        <span class="verified-badge-lg"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="job-location-salary">
+                        <span><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
+                        <span><i class="fas fa-money-bill-wave" style="color: var(--success);"></i> ${job.salary}</span>
+                        <span><i class="fas fa-briefcase"></i> ${job.experience}</span>
+                    </div>
+                    <span class="job-type-badge"><i class="fas fa-clock"></i> ${job.type}</span>
+                </div>
+
+                <!-- Employer Card -->
+                <div class="employer-card">
+                    <div class="employer-logo">${job.logo}</div>
+                    <div class="employer-info">
+                        <h4>${job.company}</h4>
+                        <div class="employer-meta">
+                            <i class="fas fa-check-circle" style="color: var(--success);"></i> Verified Employer 
+                            · Member since 2022
                         </div>
                     </div>
                 </div>
-                
-                <div class="detail-section">
-                    <h3><i class="fas fa-info-circle"></i> Job Details</h3>
-                    <div class="detail-grid">
-                        <div class="detail-item-large"><i class="fas fa-map-marker-alt"></i> <span>${job.location}</span></div>
-                        <div class="detail-item-large"><i class="fas fa-clock"></i> <span>${job.type}</span></div>
-                        <div class="detail-item-large"><i class="fas fa-briefcase"></i> <span>${job.experience}</span></div>
-                        <div class="detail-item-large"><i class="fas fa-money-bill-wave" style="color: var(--success);"></i> <span style="color: var(--success); font-weight: 600;">${job.salary}</span></div>
-                    </div>
+
+                <!-- Overview Grid -->
+                <div class="overview-grid">
+                    <div class="overview-item"><i class="fas fa-map-marker-alt"></i> <div><strong>Location</strong><br><span>${job.location}</span></div></div>
+                    <div class="overview-item"><i class="fas fa-money-bill-wave"></i> <div><strong>Salary</strong><br><span>${job.salary}</span></div></div>
+                    <div class="overview-item"><i class="fas fa-briefcase"></i> <div><strong>Experience</strong><br><span>${job.experience}</span></div></div>
+                    <div class="overview-item"><i class="fas fa-home"></i> <div><strong>Accommodation</strong><br><span>${accommodationText}</span></div></div>
+                    <div class="overview-item"><i class="fas fa-calendar-alt"></i> <div><strong>Posted</strong><br><span>${job.posted}</span></div></div>
+                    <div class="overview-item"><i class="fas fa-hourglass-end"></i> <div><strong>Deadline</strong><br><span>${deadline}</span></div></div>
                 </div>
-                
-                <div class="detail-section">
-                    <h3><i class="fas fa-align-left"></i> Description</h3>
-                    <div class="description-text">
-                        ${job.description}
-                    </div>
+
+                <!-- Structured Description -->
+                <div class="desc-section">
+                    <h3><i class="fas fa-info-circle"></i> About the Role</h3>
+                    <p>${aboutRole}</p>
                 </div>
-                
-                <div class="detail-section">
-                    <h3><i class="fas fa-tags"></i> Required Skills</h3>
-                    <div class="tags-container">
-                        ${job.tags.map(tag => `<span class="tag-large">${tag}</span>`).join('')}
-                    </div>
+                <div class="desc-section">
+                    <h3><i class="fas fa-tasks"></i> Responsibilities</h3>
+                    <ul>
+                        ${job.tags.slice(0, 4).map(tag => `<li><i class="fas fa-check-circle" style="color: var(--success);"></i> ${tag} duties as required</li>`).join('')}
+                    </ul>
                 </div>
-                
-                <div class="detail-section">
-                    <h3><i class="fas fa-hourglass-half"></i> Posted</h3>
-                    <div style="background: var(--gray-50); padding: 0.8rem 1rem; border-radius: 16px; color: var(--gray-600);">
-                        <i class="fas fa-calendar-alt" style="color: var(--accent); margin-right: 0.5rem;"></i> ${job.posted}
+                <div class="desc-section">
+                    <h3><i class="fas fa-clipboard-list"></i> Requirements</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle" style="color: var(--success);"></i> ${job.experience} of relevant experience</li>
+                        ${job.tags.slice(0, 3).map(tag => `<li><i class="fas fa-check-circle" style="color: var(--success);"></i> ${tag}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="desc-section">
+                    <h3><i class="fas fa-gift"></i> Benefits</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle" style="color: var(--success);"></i> Competitive salary</li>
+                        ${hasAccommodation ? '<li><i class="fas fa-check-circle" style="color: var(--success);"></i> Free accommodation</li>' : ''}
+                        <li><i class="fas fa-check-circle" style="color: var(--success);"></i> Health insurance</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--success);"></i> Annual leave</li>
+                    </ul>
+                </div>
+
+                <!-- Skills Tags with "more" toggle -->
+                <div class="skills-section">
+                    <div class="skills-header">
+                        <i class="fas fa-tags" style="color: var(--accent);"></i>
+                        <h3>Required Skills</h3>
+                    </div>
+                    <div class="tags-wrapper" id="tagsWrapper">
+                        ${visibleTags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+                        ${hiddenTags.length > 0 ? `<span class="skill-tag more-tags" onclick="toggleHiddenTags()">+${hiddenTags.length} more</span>` : ''}
+                    </div>
+                    <div id="hiddenTagsContainer" class="hidden-tags">
+                        ${hiddenTags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
                     </div>
                 </div>
             `;
             
+            // Update footer buttons
+            const modalFooter = document.getElementById('modalFooter');
+            modalFooter.innerHTML = `
+                <button class="modal-btn save" id="modalSaveBtn" onclick="modalSaveJob()">
+                    <i class="${savedJobs.includes(jobId) ? 'fas' : 'far'} fa-bookmark"></i> ${savedJobs.includes(jobId) ? 'Saved' : 'Save Job'}
+                </button>
+                <button class="modal-btn apply" id="modalApplyBtn" onclick="modalApplyJob()">
+                    Apply Now <i class="fas fa-arrow-right"></i>
+                </button>
+            `;
+            
             document.getElementById('jobModal').classList.add('show');
         }
+
+        // Helper to toggle hidden tags
+        window.toggleHiddenTags = function() {
+            const container = document.getElementById('hiddenTagsContainer');
+            if (container.style.display === 'flex' || container.style.display === 'block') {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'flex';
+                container.style.flexWrap = 'wrap';
+                container.style.gap = '0.5rem';
+                container.style.marginTop = '0.5rem';
+            }
+        };
 
         function closeJobModal() {
             document.getElementById('jobModal').classList.remove('show');
@@ -2129,7 +2340,6 @@
     </script>
 </body>
 </html>
-
 
 
 
