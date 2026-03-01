@@ -1438,6 +1438,44 @@
             margin-top: 0.5rem;
         }
 
+        /* Share Section */
+        .share-section {
+            margin: 1.5rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .share-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--gray-700);
+        }
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .share-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+        .share-btn.whatsapp { background: #25D366; }
+        .share-btn.facebook { background: #1877F2; }
+        .share-btn.copy { background: var(--gray-600); }
+        .share-btn:hover {
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
         /* Modal Footer */
         .modal-footer {
             padding: 1rem 1.5rem 1.5rem;
@@ -2113,7 +2151,7 @@
             // Generate deadline (14 days from now)
             const deadline = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             
-            // Split description into parts
+            // Split description into parts (simple simulation)
             const descParts = job.description.split('. ');
             const aboutRole = descParts[0] + '.';
             
@@ -2202,6 +2240,16 @@
                         ${hiddenTags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
                     </div>
                 </div>
+
+                <!-- Share Section -->
+                <div class="share-section">
+                    <div class="share-title"><i class="fas fa-share-alt"></i> Share this job</div>
+                    <div class="share-buttons">
+                        <a href="https://wa.me/?text=Check%20out%20this%20job%20at%20${job.company}%3A%20${job.title}" target="_blank" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                        <button class="share-btn copy" onclick="copyJobLink()"><i class="fas fa-link"></i></button>
+                    </div>
+                </div>
             `;
             
             // Update footer buttons
@@ -2229,6 +2277,17 @@
                 container.style.gap = '0.5rem';
                 container.style.marginTop = '0.5rem';
             }
+        };
+
+        // Copy job link to clipboard
+        window.copyJobLink = function() {
+            const dummy = document.createElement('input');
+            dummy.value = window.location.href; // current page URL, but ideally job-specific URL
+            document.body.appendChild(dummy);
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            alert('Link copied to clipboard!');
         };
 
         function closeJobModal() {
@@ -2340,6 +2399,7 @@
     </script>
 </body>
 </html>
+
 
 
 
