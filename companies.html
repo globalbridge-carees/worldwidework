@@ -921,4 +921,176 @@
                 { name: "DP World", industry: "Logistics", location: "Dubai, UAE", employees: "8k+", jobs_count: 98, featured: false, verified: true, logo: "DP", category: "logistics" },
                 { name: "Jumeirah Group", industry: "Hospitality", location: "Dubai, UAE", employees: "5k+", jobs_count: 45, featured: false, verified: true, logo: "JG", category: "hospitality" },
                 { name: "Careem", industry: "Technology", location: "Dubai, UAE", employees: "2k+", jobs_count: 67, featured: false, verified: true, logo: "CM", category: "technology" },
-                { name: "Al Habtoor Group", industry: "Construction", location: "Dubai, UAE", employees: "7k+", jobs_count:
+                { name: "Al Habtoor Group", industry: "Construction", location: "Dubai, UAE", employees: "7k+", jobs_count: 89, featured: false, verified: true, logo: "AH", category: "construction" },
+                { name: "Mediclinic", industry: "Healthcare", location: "Abu Dhabi, UAE", employees: "3k+", jobs_count: 56, featured: false, verified: true, logo: "MC", category: "healthcare" },
+                { name: "G4S Security", industry: "Security", location: "Multiple", employees: "12k+", jobs_count: 234, featured: false, verified: true, logo: "G4", category: "security" },
+                { name: "Lulu Hypermarket", industry: "Retail", location: "GCC", employees: "6k+", jobs_count: 145, featured: false, verified: true, logo: "LH", category: "retail" }
+            ];
+            
+            for (const company of sampleCompanies) {
+                const { error } = await supabase.from('companies').insert([company]);
+                if (error) console.error('Error inserting company:', error);
+            }
+        }
+        
+        // Update company count in hero
+        function updateCompanyCount(count) {
+            const badge = document.querySelector('.hero-badge span');
+            if (badge) badge.textContent = `${count}+ Trusted Companies`;
+        }
+        
+        // Populate category filters dynamically
+        function populateCategoryFilters(companies) {
+            const categories = new Set();
+            companies.forEach(c => {
+                if (c.category) categories.add(c.category);
+                if (c.industry) categories.add(c.industry.toLowerCase());
+            });
+            
+            const filterContainer = document.getElementById('categoryFilters');
+            const existingFilters = Array.from(filterContainer.children);
+            existingFilters.forEach(btn => {
+                if (btn.dataset.category !== 'all') btn.remove();
+            });
+            
+            const sortedCategories = Array.from(categories).sort();
+            sortedCategories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+                btn.dataset.category = cat;
+                btn.onclick = () => filterCompanies(cat);
+                filterContainer.appendChild(btn);
+            });
+        }
+        
+        // Display companies in grid
+        function displayCompanies(companies) {
+            const grid = document.getElementById('companiesGrid');
+            if (!companies || companies.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 2rem;">No companies found</div>';
+                return;
+            }
+            
+            grid.innerHTML = companies.map(company => `
+                <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${escapeHtml(company.name)}', '${company.id || ''}')">
+                    <div class="company-logo">${escapeHtml(company.logo || company.name.charAt(0))}</div>
+                    ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
+                    <h3>${escapeHtml(company.name)}</h3>
+                    <div class="company-industry">${escapeHtml(company.industry || company.category || 'General')}</div>
+                    <div class="company-location">
+                        <i class="fas fa-map-marker-alt"></i> ${escapeHtml(company.location || 'Global')}
+                    </div>
+                    <div class="company-stats">
+                        <div class="stat">
+                            <i class="fas fa-briefcase"></i>
+                            <span class="stat-value">${company.jobs_count || 0}</span>
+                            <span class="stat-label">Jobs</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span class="stat-value">${escapeHtml(company.employees || 'N/A')}</span>
+                            <span class="stat-label">Emp</span>
+                        </div>
+                    </div>
+                    <button class="view-jobs-btn" onclick="event.stopPropagation(); viewCompanyJobs('${escapeHtml(company.name)}', '${company.id || ''}')">
+                        View Jobs <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        // Display featured companies
+        function displayFeaturedCompanies(featuredCompanies) {
+            const grid = document.getElementById('featuredGrid');
+            if (!featuredCompanies || featuredCompanies.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; color: white;">No featured companies yet</div>';
+                return;
+            }
+            
+            grid.innerHTML = featuredCompanies.map(company => `
+                <div class="featured-card" onclick="viewCompanyJobs('${escapeHtml(company.name)}', '${company.id || ''}')">
+                    <div class="featured-logo">${escapeHtml(company.logo || company.name.charAt(0))}</div>
+                    <h3>${escapeHtml(company.name)}</h3>
+                    <p>${escapeHtml(company.industry || company.category || 'Industry')} • ${escapeHtml(company.location || 'Global')}</p>
+                    <span class="featured-jobs">${company.jobs_count || 0} jobs</span>
+                </div>
+            `).join('');
+        }
+        
+        // Filter companies
+        function filterCompanies(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category || (category === 'all' && btn.dataset.category === 'all')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            let filtered = allCompanies;
+            if (category !== 'all') {
+                filtered = allCompanies.filter(c => 
+                    (c.category && c.category.toLowerCase() === category) || 
+                    (c.industry && c.industry.toLowerCase() === category)
+                );
+            }
+            
+            if (currentSearchTerm) {
+                filtered = filtered.filter(c => 
+                    c.name.toLowerCase().includes(currentSearchTerm) || 
+                    (c.industry && c.industry.toLowerCase().includes(currentSearchTerm))
+                );
+            }
+            
+            displayCompanies(filtered);
+        }
+        
+        // Search companies
+        function searchCompanies() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            currentSearchTerm = searchTerm;
+            
+            let filtered = allCompanies;
+            if (currentFilter !== 'all') {
+                filtered = allCompanies.filter(c => 
+                    (c.category && c.category.toLowerCase() === currentFilter) || 
+                    (c.industry && c.industry.toLowerCase() === currentFilter)
+                );
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(c => 
+                    c.name.toLowerCase().includes(searchTerm) || 
+                    (c.industry && c.industry.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            displayCompanies(filtered);
+        }
+        
+        // View company jobs
+        function viewCompanyJobs(companyName, companyId) {
+            window.location.href = `findjobs.html?company=${encodeURIComponent(companyName)}`;
+        }
+        
+        // Helper functions
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('show');
+        }
+        
+        // Initialize
+        loadCompanies();
+    </script>
+</body>
+</html>
