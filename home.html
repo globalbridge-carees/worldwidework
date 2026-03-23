@@ -8,6 +8,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         /* COPY ALL THE STYLES FROM YOUR index.html HERE */
         /* This ensures both pages look identical */
@@ -847,6 +850,24 @@
             .cta-section h2 { font-size: 2rem; }
             .cta-buttons { flex-direction: column; }
         }
+
+        /* Toast Notification */
+        .toast-notify {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--gray-800);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -876,7 +897,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">
+            <a href="#" class="logo">
                 <span class="logo-icon">TJ</span>
                 <span class="logo-text">TrueJobs</span>
             </a>
@@ -886,16 +907,20 @@
             </span>
             
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="findjobs.html">Find Jobs</a></li>
-                <li><a href="companies.html">Companies</a></li>
-                <li><a href="resources.html">Resources</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="dashboard.html" class="dashboard-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="auth-buttons">
-                    <button class="btn-outline" onclick="location.href='login.html'">Sign In</button>
-                    <button class="btn-primary" onclick="location.href='signup.html'">Sign Up</button>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Find Jobs</a></li>
+                <li><a href="#">Companies</a></li>
+                <li><a href="#">Resources</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#" class="dashboard-link" id="dashboardLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="auth-buttons" id="authButtons">
+                    <button class="btn-outline" id="signInBtn">Sign In</button>
+                    <button class="btn-primary" id="signUpBtn">Sign Up</button>
+                </li>
+                <li id="userProfile" style="display: none;">
+                    <span id="userEmail" style="color: var(--primary); font-weight: 500;"></span>
+                    <button class="btn-outline" id="logoutBtn" style="margin-left: 1rem;">Logout</button>
                 </li>
             </ul>
         </div>
@@ -957,46 +982,14 @@
             </div>
             
             <div class="categories-grid">
-                <div class="category-card" onclick="location.href='jobs.html?category=healthcare'">
-                    <div class="category-icon"><i class="fas fa-heartbeat"></i></div>
-                    <h4>Healthcare</h4>
-                    <p>2,345 jobs</p>
-                </div>
-                <div class="category-card" onclick="location.href='jobs.html?category=domestic'">
-                    <div class="category-icon"><i class="fas fa-home"></i></div>
-                    <h4>Domestic Work</h4>
-                    <p>1,567 jobs</p>
-                </div>
-                <div class="category-card" onclick="location.href='jobs.html?category=security'">
-                    <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h4>Security</h4>
-                    <p>892 jobs</p>
-                </div>
-                <div class="category-card" onclick="location.href='jobs.html?category=hospitality'">
-                    <div class="category-icon"><i class="fas fa-utensils"></i></div>
-                    <h4>Hospitality</h4>
-                    <p>1,234 jobs</p>
-                </div>
-                <div class="category-card" onclick="location.href='jobs.html?category=construction'">
-                    <div class="category-icon"><i class="fas fa-hard-hat"></i></div>
-                    <h4>Construction</h4>
-                    <p>1,678 jobs</p>
-                </div>
-                <div class="category-card" onclick="location.href='jobs.html?category=education'">
-                    <div class="category-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <h4>Education</h4>
-                    <p>1,123 jobs</p>
-                </div>
-                <div class="category-card" onclick="location.href='jobs.html?category=drivers'">
-                    <div class="category-icon"><i class="fas fa-truck"></i></div>
-                    <h4>Drivers</h4>
-                    <p>756 jobs</p>
-                </div>
-                <div class="category-card" onclick="location.href='jobs.html?category=retail'">
-                    <div class="category-icon"><i class="fas fa-shopping-cart"></i></div>
-                    <h4>Retail</h4>
-                    <p>945 jobs</p>
-                </div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-heartbeat"></i></div><h4>Healthcare</h4><p>2,345 jobs</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-home"></i></div><h4>Domestic Work</h4><p>1,567 jobs</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-shield-alt"></i></div><h4>Security</h4><p>892 jobs</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-utensils"></i></div><h4>Hospitality</h4><p>1,234 jobs</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-hard-hat"></i></div><h4>Construction</h4><p>1,678 jobs</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-chalkboard-teacher"></i></div><h4>Education</h4><p>1,123 jobs</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-truck"></i></div><h4>Drivers</h4><p>756 jobs</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-shopping-cart"></i></div><h4>Retail</h4><p>945 jobs</p></div>
             </div>
         </div>
     </section>
@@ -1008,64 +1001,8 @@
                 <h2>Featured Opportunities</h2>
                 <p>Hand-picked jobs from trusted employers</p>
             </div>
-            
-            <div class="jobs-grid">
-                <!-- Job Card 1 -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <h3 class="job-title">Care Giver <span class="verified-badge">✓</span></h3>
-                    </div>
-                    <div class="company-info"><i class="fas fa-building"></i> Golden Care Center</div>
-                    <div class="job-meta">
-                        <span><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
-                        <span><i class="fas fa-clock"></i> Full-time</span>
-                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,800/mo</span>
-                    </div>
-                    <div class="job-tags">
-                        <span class="tag">Elderly Care</span>
-                        <span class="tag">First Aid</span>
-                        <span class="tag">2+ years</span>
-                    </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <!-- Job Card 2 -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <h3 class="job-title">Security Guard <span class="verified-badge">✓</span></h3>
-                    </div>
-                    <div class="company-info"><i class="fas fa-building"></i> SecurePlus International</div>
-                    <div class="job-meta">
-                        <span><i class="fas fa-map-marker-alt"></i> Doha, Qatar</span>
-                        <span><i class="fas fa-clock"></i> Full-time</span>
-                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,500/mo</span>
-                    </div>
-                    <div class="job-tags">
-                        <span class="tag">SIA Licensed</span>
-                        <span class="tag">CCTV</span>
-                        <span class="tag">1+ year</span>
-                    </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <!-- Job Card 3 -->
-                <div class="job-card">
-                    <div class="job-header">
-                        <h3 class="job-title">Factory Worker <span class="verified-badge">✓</span></h3>
-                    </div>
-                    <div class="company-info"><i class="fas fa-building"></i> Gulf Manufacturing Co.</div>
-                    <div class="job-meta">
-                        <span><i class="fas fa-map-marker-alt"></i> Jeddah, KSA</span>
-                        <span><i class="fas fa-clock"></i> Shift Work</span>
-                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $1,200/mo</span>
-                    </div>
-                    <div class="job-tags">
-                        <span class="tag">Assembly Line</span>
-                        <span class="tag">No Experience</span>
-                        <span class="tag">Accommodation</span>
-                    </div>
-                    <a href="apply.html" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
-                </div>
+            <div class="jobs-grid" id="jobsGrid">
+                <!-- Jobs will be loaded dynamically from Supabase -->
             </div>
         </div>
     </section>
@@ -1074,21 +1011,9 @@
     <section class="features">
         <div class="container">
             <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Verified Employers</h3>
-                    <p>Every employer is thoroughly screened to ensure legitimacy.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon"><i class="fas fa-globe"></i></div>
-                    <h3>Global Opportunities</h3>
-                    <p>Access jobs across 45+ countries worldwide.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                    <h3>Quick Apply</h3>
-                    <p>Apply to multiple jobs with just a few clicks.</p>
-                </div>
+                <div class="feature-item"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Verified Employers</h3><p>Every employer is thoroughly screened to ensure legitimacy.</p></div>
+                <div class="feature-item"><div class="feature-icon"><i class="fas fa-globe"></i></div><h3>Global Opportunities</h3><p>Access jobs across 45+ countries worldwide.</p></div>
+                <div class="feature-item"><div class="feature-icon"><i class="fas fa-bolt"></i></div><h3>Quick Apply</h3><p>Apply to multiple jobs with just a few clicks.</p></div>
             </div>
         </div>
     </section>
@@ -1099,8 +1024,8 @@
             <h2>Ready to Start Your Career Journey?</h2>
             <p>Join thousands of professionals who found their dream jobs through TrueJobs</p>
             <div class="cta-buttons">
-                <button class="btn-white" onclick="location.href='signup.html'">Create Free Account</button>
-                <button class="btn-outline-white" onclick="location.href='findjobs.html'">Browse Jobs</button>
+                <button class="btn-white" id="ctaSignup">Create Free Account</button>
+                <button class="btn-outline-white" id="ctaBrowse">Browse Jobs</button>
             </div>
         </div>
     </section>
@@ -1109,60 +1034,198 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <span class="logo-icon">TJ</span>
-                        <span class="logo-text">TrueJobs</span>
-                    </div>
-                    <p>Your trusted partner for global job opportunities. Connecting skilled professionals with verified employers worldwide.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="findjobs.html">Find Jobs</a></li>
-                        <li><a href="companies.html">Companies</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Categories</h4>
-                    <ul>
-                        <li><a href="#">Healthcare</a></li>
-                        <li><a href="#">Domestic Work</a></li>
-                        <li><a href="#">Security</a></li>
-                        <li><a href="#">Construction</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Use</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+                <div class="footer-col"><div class="footer-logo"><span class="logo-icon">TJ</span><span class="logo-text">TrueJobs</span></div><p>Your trusted partner for global job opportunities. Connecting skilled professionals with verified employers worldwide.</p></div>
+                <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Find Jobs</a></li><li><a href="#">Companies</a></li><li><a href="#">Contact</a></li></ul></div>
+                <div class="footer-col"><h4>Categories</h4><ul><li><a href="#">Healthcare</a></li><li><a href="#">Domestic Work</a></li><li><a href="#">Security</a></li><li><a href="#">Construction</a></li></ul></div>
+                <div class="footer-col"><h4>Support</h4><ul><li><a href="#">Contact Us</a></li><li><a href="#">FAQ</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+                <div class="footer-col"><h4>Follow Us</h4><div class="social-links"><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-twitter"></i></a><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a><a href="#" class="social-link"><i class="fab fa-instagram"></i></a></div></div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 TrueJobs. All rights reserved.</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2026 TrueJobs. All rights reserved.</p></div>
         </div>
     </footer>
 
     <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://your-project.supabase.co';  // Replace with your Supabase URL
+        const SUPABASE_ANON_KEY = 'your-anon-key';  // Replace with your Supabase anon key
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Global state
+        let currentUser = null;
+        
+        // Helper: Show toast message
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notify';
+            toast.style.background = isError ? '#e74c3c' : '#2ecc71';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        // Load jobs from Supabase
+        async function loadJobs() {
+            try {
+                const { data, error } = await supabase
+                    .from('jobs')
+                    .select('*')
+                    .limit(3);
+                
+                if (error) throw error;
+                
+                const jobsGrid = document.getElementById('jobsGrid');
+                if (data && data.length > 0) {
+                    jobsGrid.innerHTML = data.map(job => `
+                        <div class="job-card">
+                            <div class="job-header">
+                                <h3 class="job-title">${escapeHtml(job.title)} <span class="verified-badge">✓</span></h3>
+                            </div>
+                            <div class="company-info"><i class="fas fa-building"></i> ${escapeHtml(job.company)}</div>
+                            <div class="job-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location)}</span>
+                                <span><i class="fas fa-clock"></i> ${escapeHtml(job.type)}</span>
+                                <span class="salary"><i class="fas fa-money-bill-wave"></i> ${escapeHtml(job.salary)}</span>
+                            </div>
+                            <div class="job-tags">
+                                ${job.tags ? job.tags.split(',').map(tag => `<span class="tag">${escapeHtml(tag.trim())}</span>`).join('') : ''}
+                            </div>
+                            <a href="#" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    `).join('');
+                } else {
+                    // Fallback default jobs if no data
+                    jobsGrid.innerHTML = `
+                        <div class="job-card"><div class="job-header"><h3 class="job-title">Care Giver <span class="verified-badge">✓</span></h3></div><div class="company-info"><i class="fas fa-building"></i> Golden Care Center</div><div class="job-meta"><span><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span><span><i class="fas fa-clock"></i> Full-time</span><span class="salary"><i class="fas fa-money-bill-wave"></i> $1,800/mo</span></div><div class="job-tags"><span class="tag">Elderly Care</span><span class="tag">First Aid</span><span class="tag">2+ years</span></div><a href="#" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a></div>
+                        <div class="job-card"><div class="job-header"><h3 class="job-title">Security Guard <span class="verified-badge">✓</span></h3></div><div class="company-info"><i class="fas fa-building"></i> SecurePlus International</div><div class="job-meta"><span><i class="fas fa-map-marker-alt"></i> Doha, Qatar</span><span><i class="fas fa-clock"></i> Full-time</span><span class="salary"><i class="fas fa-money-bill-wave"></i> $1,500/mo</span></div><div class="job-tags"><span class="tag">SIA Licensed</span><span class="tag">CCTV</span><span class="tag">1+ year</span></div><a href="#" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a></div>
+                        <div class="job-card"><div class="job-header"><h3 class="job-title">Factory Worker <span class="verified-badge">✓</span></h3></div><div class="company-info"><i class="fas fa-building"></i> Gulf Manufacturing Co.</div><div class="job-meta"><span><i class="fas fa-map-marker-alt"></i> Jeddah, KSA</span><span><i class="fas fa-clock"></i> Shift Work</span><span class="salary"><i class="fas fa-money-bill-wave"></i> $1,200/mo</span></div><div class="job-tags"><span class="tag">Assembly Line</span><span class="tag">No Experience</span><span class="tag">Accommodation</span></div><a href="#" class="apply-link">Apply Now <i class="fas fa-arrow-right"></i></a></div>
+                    `;
+                }
+            } catch (err) {
+                console.error('Error loading jobs:', err);
+                showToast('Failed to load jobs', true);
+            }
+        }
+        
+        // Update UI based on auth state
+        function updateAuthUI() {
+            const authButtons = document.getElementById('authButtons');
+            const userProfile = document.getElementById('userProfile');
+            const userEmailSpan = document.getElementById('userEmail');
+            const dashboardLink = document.getElementById('dashboardLink');
+            
+            if (currentUser) {
+                authButtons.style.display = 'none';
+                userProfile.style.display = 'flex';
+                userEmailSpan.textContent = currentUser.email;
+                dashboardLink.style.display = 'flex';
+                showToast(`Welcome back, ${currentUser.email}!`);
+            } else {
+                authButtons.style.display = 'flex';
+                userProfile.style.display = 'none';
+                dashboardLink.style.display = 'flex';
+            }
+        }
+        
+        // Sign In with Supabase (simple email/password modal)
+        async function handleSignIn() {
+            const email = prompt('Enter your email:');
+            if (!email) return;
+            const password = prompt('Enter your password:');
+            if (!password) return;
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                currentUser = data.user;
+                updateAuthUI();
+                showToast('Signed in successfully!');
+            } catch (err) {
+                showToast(err.message, true);
+            }
+        }
+        
+        // Sign Up with Supabase
+        async function handleSignUp() {
+            const email = prompt('Enter your email:');
+            if (!email) return;
+            const password = prompt('Choose a password (min 6 chars):');
+            if (!password) return;
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({ email, password });
+                if (error) throw error;
+                if (data.user) {
+                    showToast('Account created! Please verify your email.');
+                } else {
+                    showToast('Sign up successful!');
+                }
+                currentUser = data.user;
+                updateAuthUI();
+            } catch (err) {
+                showToast(err.message, true);
+            }
+        }
+        
+        // Logout
+        async function handleLogout() {
+            try {
+                const { error } = await supabase.auth.signOut();
+                if (error) throw error;
+                currentUser = null;
+                updateAuthUI();
+                showToast('Logged out successfully');
+            } catch (err) {
+                showToast(err.message, true);
+            }
+        }
+        
+        // Check existing session
+        async function checkSession() {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            if (error) {
+                console.error('Session error:', error);
+                return;
+            }
+            if (session) {
+                currentUser = session.user;
+                updateAuthUI();
+            }
+        }
+        
+        // Escape HTML to prevent injection
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // Event listeners
+        document.getElementById('signInBtn').addEventListener('click', handleSignIn);
+        document.getElementById('signUpBtn').addEventListener('click', handleSignUp);
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+        document.getElementById('ctaSignup').addEventListener('click', handleSignUp);
+        document.getElementById('ctaBrowse').addEventListener('click', () => showToast('Browse more jobs coming soon!'));
+        
+        // Initialize
+        checkSession();
+        loadJobs();
+        
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('show');
         }
+        
+        // Simple search handler
+        document.querySelector('.search-btn').addEventListener('click', () => {
+            const keyword = document.querySelector('.search-input').value;
+            if (keyword) showToast(`Searching for "${keyword}" - feature coming soon!`);
+            else showToast('Please enter a job title or keyword');
+        });
     </script>
 </body>
 </html>
