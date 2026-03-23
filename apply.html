@@ -11,6 +11,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         * {
             margin: 0;
@@ -77,7 +80,6 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245,158,11,0); }
         }
 
-        /* Shimmer animation for the CV upload box */
         @keyframes shimmer {
             0% { background-position: -1000px 0; }
             100% { background-position: 1000px 0; }
@@ -509,18 +511,9 @@
             color: var(--accent);
         }
 
-        /* Phone input validation styling */
         .input-wrapper input.error {
             border-color: var(--danger);
             background-color: rgba(239, 68, 68, 0.05);
-        }
-
-        .input-wrapper input.error:focus {
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-        }
-
-        .input-wrapper input.error + i {
-            color: var(--danger);
         }
 
         .error-message {
@@ -530,10 +523,6 @@
             display: flex;
             align-items: center;
             gap: 0.2rem;
-        }
-
-        .error-message i {
-            font-size: 0.7rem;
         }
 
         /* File Upload */
@@ -571,31 +560,12 @@
             margin-bottom: 0.3rem;
         }
 
-        .file-hint {
-            color: var(--gray-400);
-            font-size: 0.7rem;
-        }
-
-        /* Special styling for CV upload box */
         .cv-upload-area {
-            border: 3px dashed;
-            border-image: linear-gradient(135deg, var(--accent), var(--success)) 1;
+            border: 3px dashed var(--success);
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(245, 158, 11, 0.05));
             position: relative;
             overflow: hidden;
             animation: glowPulse 2s infinite;
-        }
-
-        .cv-upload-area::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shimmer 3s infinite;
-            pointer-events: none;
         }
 
         .cv-upload-area i {
@@ -609,7 +579,7 @@
             font-weight: 700;
         }
 
-        .cv-upload-area .boost-badge {
+        .boost-badge {
             display: inline-block;
             background: linear-gradient(135deg, var(--success), var(--accent));
             color: white;
@@ -636,22 +606,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .file-info i {
-            color: var(--success);
-            font-size: 1.2rem;
-        }
-
-        .file-name {
-            font-weight: 500;
-            color: var(--primary);
-            font-size: 0.8rem;
-        }
-
-        .file-size {
-            color: var(--gray-500);
-            font-size: 0.7rem;
         }
 
         .remove-file {
@@ -782,12 +736,7 @@
 
         .nav-btn.submit {
             background: linear-gradient(135deg, var(--success), var(--success-light));
-            color: var(--white);
             animation: pulse 2s infinite;
-        }
-
-        .nav-btn.submit:hover {
-            transform: scale(1.02);
         }
 
         /* Success Modal */
@@ -832,7 +781,6 @@
             margin: 0 auto 1rem;
             color: var(--white);
             font-size: 2rem;
-            animation: pulse 2s infinite;
         }
 
         .modal-content h2 {
@@ -870,21 +818,11 @@
             color: var(--white);
         }
 
-        .modal-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
         .modal-btn.secondary {
             background: var(--gray-200);
             color: var(--gray-700);
         }
 
-        .modal-btn.secondary:hover {
-            background: var(--gray-300);
-        }
-
-        /* Footer */
         .footer {
             text-align: center;
             margin-top: 2rem;
@@ -893,7 +831,6 @@
             font-size: 0.8rem;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 600px) {
             body {
                 padding: 1rem 0.5rem;
@@ -929,28 +866,8 @@
             .job-meta {
                 justify-content: center;
             }
-            .deadline-badge {
-                align-self: center;
-            }
             .progress-step .step-label {
                 display: none;
-            }
-            .progress-step .step-number {
-                margin-bottom: 0;
-            }
-            .section-header {
-                flex-wrap: wrap;
-            }
-            .section-header h2 {
-                font-size: 1.2rem;
-            }
-            .form-label {
-                font-size: 0.8rem;
-            }
-            .input-wrapper input,
-            .input-wrapper select,
-            .input-wrapper textarea {
-                font-size: 16px;
             }
             .modal-actions {
                 flex-direction: column;
@@ -966,11 +883,9 @@
                 <span class="logo-icon">TJ</span>
                 <span class="logo-text">TrueJobs</span>
             </a>
-            
             <span class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
             </span>
-            
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="findjobs.html">Find Jobs</a></li>
@@ -995,9 +910,7 @@
                     <div class="company">
                         <i class="fas fa-building"></i>
                         <span id="companyName">Mediclinic Hospital</span>
-                        <span class="verified-badge">
-                            <i class="fas fa-check-circle"></i> Verified
-                        </span>
+                        <span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>
                     </div>
                     <div class="job-meta">
                         <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
@@ -1015,22 +928,10 @@
         <!-- Progress Bar -->
         <div class="progress-section">
             <div class="progress-steps">
-                <div class="progress-step active" id="step1">
-                    <div class="step-number">1</div>
-                    <div class="step-label">Personal</div>
-                </div>
-                <div class="progress-step" id="step2">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Experience</div>
-                </div>
-                <div class="progress-step" id="step3">
-                    <div class="step-number">3</div>
-                    <div class="step-label">Documents</div>
-                </div>
-                <div class="progress-step" id="step4">
-                    <div class="step-number">4</div>
-                    <div class="step-label">Review</div>
-                </div>
+                <div class="progress-step active" id="step1"><div class="step-number">1</div><div class="step-label">Personal</div></div>
+                <div class="progress-step" id="step2"><div class="step-number">2</div><div class="step-label">Experience</div></div>
+                <div class="progress-step" id="step3"><div class="step-number">3</div><div class="step-label">Documents</div></div>
+                <div class="progress-step" id="step4"><div class="step-number">4</div><div class="step-label">Review</div></div>
             </div>
         </div>
 
@@ -1039,376 +940,62 @@
             <!-- STEP 1: Personal Information -->
             <div class="form-section active" id="section1">
                 <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div>
-                        <h2>Personal Information</h2>
-                        <p>Tell us about yourself</p>
-                    </div>
+                    <div class="section-icon"><i class="fas fa-user"></i></div>
+                    <div><h2>Personal Information</h2><p>Tell us about yourself</p></div>
                 </div>
-
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-user"></i> First Name <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="firstName" placeholder="First name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-user"></i> Last Name <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="lastName" placeholder="Last name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-envelope"></i> Email <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" placeholder="you@example.com">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-phone"></i> Phone <span class="required">*</span>
-                            <span style="font-size:0.7rem; color:var(--gray-500);">(include country code)</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-phone"></i>
-                            <input type="tel" id="phone" placeholder="+1 234 567 8900">
-                        </div>
-                        <div class="error-message" id="phoneError" style="display: none;">
-                            <i class="fas fa-exclamation-circle"></i> Please include your country code (e.g., +1, +44, +254)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-calendar"></i> Date of Birth <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-calendar"></i>
-                            <input type="text" id="dob" placeholder="DD/MM/YYYY" maxlength="10">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-map-marker-alt"></i> Country <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-globe"></i>
-                            <select id="country">
-                                <option value="">Select country</option>
-                                <!-- Middle East -->
-                                <option value="uae">United Arab Emirates</option>
-                                <option value="qatar">Qatar</option>
-                                <option value="ksa">Saudi Arabia</option>
-                                <option value="kuwait">Kuwait</option>
-                                <option value="oman">Oman</option>
-                                <option value="bahrain">Bahrain</option>
-                                <option value="jordan">Jordan</option>
-                                <option value="lebanon">Lebanon</option>
-                                <option value="iraq">Iraq</option>
-                                <option value="yemen">Yemen</option>
-                                <option value="palestine">Palestine</option>
-                                <option value="syria">Syria</option>
-                                
-                                <!-- North Africa -->
-                                <option value="egypt">Egypt</option>
-                                <option value="libya">Libya</option>
-                                <option value="tunisia">Tunisia</option>
-                                <option value="algeria">Algeria</option>
-                                <option value="morocco">Morocco</option>
-                                <option value="sudan">Sudan</option>
-                                
-                                <!-- East Africa -->
-                                <option value="kenya">Kenya</option>
-                                <option value="tanzania">Tanzania</option>
-                                <option value="uganda">Uganda</option>
-                                <option value="rwanda">Rwanda</option>
-                                <option value="burundi">Burundi</option>
-                                <option value="ethiopia">Ethiopia</option>
-                                <option value="somalia">Somalia</option>
-                                <option value="djibouti">Djibouti</option>
-                                <option value="eritrea">Eritrea</option>
-                                <option value="south sudan">South Sudan</option>
-                                
-                                <!-- West Africa -->
-                                <option value="nigeria">Nigeria</option>
-                                <option value="ghana">Ghana</option>
-                                <option value="senegal">Senegal</option>
-                                <option value="mali">Mali</option>
-                                <option value="cote d'ivoire">Côte d'Ivoire</option>
-                                <option value="cameroon">Cameroon</option>
-                                <option value="liberia">Liberia</option>
-                                <option value="sierra leone">Sierra Leone</option>
-                                <option value="guinea">Guinea</option>
-                                <option value="burkina faso">Burkina Faso</option>
-                                <option value="benin">Benin</option>
-                                <option value="togo">Togo</option>
-                                <option value="niger">Niger</option>
-                                <option value="mauritania">Mauritania</option>
-                                <option value="gambia">Gambia</option>
-                                <option value="guinea-bissau">Guinea-Bissau</option>
-                                <option value="cape verde">Cape Verde</option>
-                                
-                                <!-- Central Africa -->
-                                <option value="drc">DR Congo</option>
-                                <option value="congo">Congo</option>
-                                <option value="angola">Angola</option>
-                                <option value="gabon">Gabon</option>
-                                <option value="equatorial guinea">Equatorial Guinea</option>
-                                <option value="chad">Chad</option>
-                                <option value="central african republic">Central African Republic</option>
-                                
-                                <!-- Southern Africa -->
-                                <option value="south africa">South Africa</option>
-                                <option value="zimbabwe">Zimbabwe</option>
-                                <option value="zambia">Zambia</option>
-                                <option value="malawi">Malawi</option>
-                                <option value="mozambique">Mozambique</option>
-                                <option value="botswana">Botswana</option>
-                                <option value="namibia">Namibia</option>
-                                <option value="eswatini">Eswatini</option>
-                                <option value="lesotho">Lesotho</option>
-                                <option value="madagascar">Madagascar</option>
-                                <option value="mauritius">Mauritius</option>
-                                <option value="comoros">Comoros</option>
-                                <option value="seychelles">Seychelles</option>
-                                
-                                <!-- Other -->
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">
-                            <i class="fas fa-map-marker-alt"></i> Current Address
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-home"></i>
-                            <input type="text" id="address" placeholder="Street address, city">
-                        </div>
-                    </div>
+                    <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> First Name <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="firstName" placeholder="First name"></div></div>
+                    <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Last Name <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="lastName" placeholder="Last name"></div></div>
+                    <div class="form-group"><label class="form-label"><i class="fas fa-envelope"></i> Email <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="email" placeholder="you@example.com"></div></div>
+                    <div class="form-group"><label class="form-label"><i class="fas fa-phone"></i> Phone <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-phone"></i><input type="tel" id="phone" placeholder="+1 234 567 8900"></div><div class="error-message" id="phoneError" style="display: none;"><i class="fas fa-exclamation-circle"></i> Please include your country code</div></div>
+                    <div class="form-group"><label class="form-label"><i class="fas fa-calendar"></i> Date of Birth <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-calendar"></i><input type="text" id="dob" placeholder="DD/MM/YYYY"></div></div>
+                    <div class="form-group"><label class="form-label"><i class="fas fa-map-marker-alt"></i> Country <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-globe"></i><select id="country"><option value="">Select country</option><option value="UAE">United Arab Emirates</option><option value="Qatar">Qatar</option><option value="Saudi Arabia">Saudi Arabia</option><option value="Kuwait">Kuwait</option><option value="Kenya">Kenya</option><option value="Egypt">Egypt</option><option value="Nigeria">Nigeria</option><option value="South Africa">South Africa</option></select></div></div>
                 </div>
             </div>
 
             <!-- STEP 2: Experience -->
             <div class="form-section" id="section2">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div>
-                        <h2>Work Experience</h2>
-                        <p>Professional background</p>
-                    </div>
-                </div>
-
+                <div class="section-header"><div class="section-icon"><i class="fas fa-briefcase"></i></div><div><h2>Work Experience</h2><p>Professional background</p></div></div>
                 <div class="form-grid">
-                    <div class="form-group full-width">
-                        <label class="form-label">
-                            <i class="fas fa-clock"></i> Years of Experience <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-chart-line"></i>
-                            <select id="experience">
-                                <option value="">Select</option>
-                                <option value="0-1">Less than 1 year</option>
-                                <option value="1-2">1 - 2 years</option>
-                                <option value="3-5">3 - 5 years</option>
-                                <option value="5-10">5 - 10 years</option>
-                                <option value="10+">10+ years</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-briefcase"></i> Current Position <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-user-tie"></i>
-                            <input type="text" id="position" placeholder="e.g. Senior Nurse">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-building"></i> Company Name
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-building"></i>
-                            <input type="text" id="currentCompany" placeholder="Current/last company">
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">
-                            <i class="fas fa-tags"></i> Skills <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-code"></i>
-                            <input type="text" id="skills" placeholder="e.g. Patient Care, ICU, Leadership">
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">
-                            <i class="fas fa-file-alt"></i> Cover Letter <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-pen"></i>
-                            <textarea id="coverLetter" placeholder="Why you're the perfect candidate..."></textarea>
-                        </div>
-                    </div>
+                    <div class="form-group full-width"><label class="form-label"><i class="fas fa-clock"></i> Years of Experience <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-chart-line"></i><select id="experience"><option value="">Select</option><option value="0-1">Less than 1 year</option><option value="1-2">1 - 2 years</option><option value="3-5">3 - 5 years</option><option value="5-10">5 - 10 years</option><option value="10+">10+ years</option></select></div></div>
+                    <div class="form-group"><label class="form-label"><i class="fas fa-briefcase"></i> Current Position <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-user-tie"></i><input type="text" id="position" placeholder="e.g. Senior Nurse"></div></div>
+                    <div class="form-group"><label class="form-label"><i class="fas fa-building"></i> Company Name</label><div class="input-wrapper"><i class="fas fa-building"></i><input type="text" id="currentCompany" placeholder="Current/last company"></div></div>
+                    <div class="form-group full-width"><label class="form-label"><i class="fas fa-tags"></i> Skills <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-code"></i><input type="text" id="skills" placeholder="e.g. Patient Care, ICU, Leadership"></div></div>
+                    <div class="form-group full-width"><label class="form-label"><i class="fas fa-file-alt"></i> Cover Letter <span class="required">*</span></label><div class="input-wrapper"><i class="fas fa-pen"></i><textarea id="coverLetter" placeholder="Why you're the perfect candidate..."></textarea></div></div>
                 </div>
             </div>
 
             <!-- STEP 3: Documents -->
             <div class="form-section" id="section3">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fas fa-file-upload"></i>
-                    </div>
-                    <div>
-                        <h2>Upload Documents</h2>
-                        <p>National ID & certificates</p>
-                    </div>
-                </div>
-
-                <!-- National ID Upload (required) - with camera capture -->
-                <div class="file-upload-area" onclick="document.getElementById('nationalId').click()">
-                    <input type="file" id="nationalId" style="display: none;" accept="image/*" capture="environment">
-                    <i class="fas fa-id-card"></i>
-                    <h4>Upload National ID <span class="required">*</span></h4>
-                    <p>Take a photo or choose from gallery</p>
-                    <div class="file-hint">Image format (max 5MB)</div>
-                </div>
+                <div class="section-header"><div class="section-icon"><i class="fas fa-file-upload"></i></div><div><h2>Upload Documents</h2><p>National ID & certificates</p></div></div>
+                <div class="file-upload-area" onclick="document.getElementById('nationalId').click()"><input type="file" id="nationalId" style="display: none;" accept="image/*"><i class="fas fa-id-card"></i><h4>Upload National ID <span class="required">*</span></h4><p>Take a photo or choose from gallery</p></div>
                 <div id="nationalId-info" style="display: none;"></div>
-
-                <!-- Certificates Upload (optional) -->
-                <div class="file-upload-area" onclick="document.getElementById('certificates').click()" style="margin-top: 0.5rem;">
-                    <input type="file" id="certificates" style="display: none;" multiple accept="image/*" capture="environment">
-                    <i class="fas fa-images"></i>
-                    <h4>Upload Certificates (Optional)</h4>
-                    <p>Take photos or choose from gallery</p>
-                    <div class="file-hint">Image format, multiple allowed (max 5MB each)</div>
-                </div>
-                <div id="certificates-info" style="display: none;"></div>
-
-                <!-- NEW: CV/Resume Upload (Optional) - with boost message -->
-                <div class="file-upload-area cv-upload-area" onclick="document.getElementById('cv').click()" style="margin-top: 0.5rem;">
-                    <input type="file" id="cv" style="display: none;" accept=".pdf,.doc,.docx" multiple>
-                    <i class="fas fa-file-pdf"></i>
-                    <h4>Upload CV/Resume <span style="color: var(--success);">(Highly Recommended)</span></h4>
-                    <p>Showcase your professional experience</p>
-                    <div class="boost-badge">
-                        <i class="fas fa-star"></i> +80% higher chance of getting hired! <i class="fas fa-star"></i>
-                    </div>
-                    <div class="file-hint">PDF, DOC, DOCX format (max 5MB)</div>
-                </div>
+                <div class="file-upload-area cv-upload-area" onclick="document.getElementById('cv').click()" style="margin-top: 0.5rem;"><input type="file" id="cv" style="display: none;" accept=".pdf,.doc,.docx"><i class="fas fa-file-pdf"></i><h4>Upload CV/Resume <span style="color: var(--success);">(Recommended)</span></h4><div class="boost-badge"><i class="fas fa-star"></i> +80% higher chance of getting hired!</div></div>
                 <div id="cv-info" style="display: none;"></div>
             </div>
 
             <!-- STEP 4: Review -->
             <div class="form-section" id="section4">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div>
-                        <h2>Review Application</h2>
-                        <p>Verify before submitting</p>
-                    </div>
-                </div>
-
-                <div class="review-section">
-                    <div class="review-item">
-                        <div class="review-label">Full Name:</div>
-                        <div class="review-value" id="reviewName">-</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-label">Email:</div>
-                        <div class="review-value" id="reviewEmail">-</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-label">Phone:</div>
-                        <div class="review-value" id="reviewPhone">-</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-label">Country:</div>
-                        <div class="review-value" id="reviewCountry">-</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-label">Experience:</div>
-                        <div class="review-value" id="reviewExperience">-</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-label">Position:</div>
-                        <div class="review-value" id="reviewPosition">-</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-label">Skills:</div>
-                        <div class="review-value" id="reviewSkills">-</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-label">National ID:</div>
-                        <div class="review-value" id="reviewNationalId">Not uploaded</div>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-label">CV/Resume:</div>
-                        <div class="review-value" id="reviewCv">Not uploaded</div>
-                    </div>
-                </div>
-
-                <div class="terms-group">
-                    <input type="checkbox" id="terms">
-                    <label for="terms">
-                        I confirm information is accurate and agree to the 
-                        <a href="terms.html">Terms</a> & <a href="privacy.html">Privacy</a>
-                    </label>
-                </div>
+                <div class="section-header"><div class="section-icon"><i class="fas fa-check-circle"></i></div><div><h2>Review Application</h2><p>Verify before submitting</p></div></div>
+                <div class="review-section" id="reviewContent"></div>
+                <div class="terms-group"><input type="checkbox" id="terms"><label for="terms">I confirm information is accurate and agree to the <a href="#">Terms</a> & <a href="#">Privacy</a></label></div>
             </div>
 
-            <!-- Navigation Buttons -->
             <div class="form-navigation">
-                <button class="nav-btn prev" onclick="prevStep()" id="prevBtn">
-                    <i class="fas fa-arrow-left"></i> Previous
-                </button>
-                <button class="nav-btn next" id="nextBtn">
-                    Next <i class="fas fa-arrow-right"></i>
-                </button>
+                <button class="nav-btn prev" onclick="prevStep()" id="prevBtn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="nav-btn next" id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>&copy; 2026 TrueJobs. All rights reserved.</p>
-    </div>
+    <div class="footer"><p>&copy; 2026 TrueJobs. All rights reserved.</p></div>
 
     <!-- Success Modal -->
     <div class="modal" id="successModal" onclick="closeModalIfOutside(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="success-icon">
-                <i class="fas fa-check"></i>
-            </div>
+            <div class="success-icon"><i class="fas fa-check"></i></div>
             <h2>Application Submitted!</h2>
-            <p>Your application has been sent. A confirmation email has been sent to your inbox.</p>
+            <p>Your application has been saved to our database. You can track it in your dashboard.</p>
             <div class="modal-actions">
                 <button class="modal-btn secondary" onclick="goToJobs()">Browse Jobs</button>
                 <button class="modal-btn primary" onclick="goToDashboard()">Dashboard</button>
@@ -1416,131 +1003,30 @@
         </div>
     </div>
 
-    <!-- EmailJS Library -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
     <script>
-        // ========== MOBILE MENU TOGGLE ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menuToggle');
-            const navMenu = document.getElementById('navMenu');
-            
-            if (menuToggle && navMenu) {
-                menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    navMenu.classList.toggle('show');
-                });
-                
-                // Close menu when a link is clicked
-                document.querySelectorAll('.nav-menu a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navMenu.classList.remove('show');
-                    });
-                });
-                
-                // Close menu when clicking outside (optional)
-                document.addEventListener('click', function(event) {
-                    if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                        navMenu.classList.remove('show');
-                    }
-                });
-            }
-        });
-
-        // Get job details from URL or sessionStorage (example)
+        // ==================== SUPABASE CONFIGURATION ====================
+        const SUPABASE_URL = 'https://your-project.supabase.co';  // Replace with your Supabase URL
+        const SUPABASE_ANON_KEY = 'your-anon-key';  // Replace with your Supabase anon key
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Get job details from URL
         const urlParams = new URLSearchParams(window.location.search);
         let jobTitle = urlParams.get('job') || 'Senior Nurse';
         let companyName = urlParams.get('company') || 'Mediclinic Hospital';
-
+        let jobId = urlParams.get('jobId') || null;
+        
         document.getElementById('jobTitle').textContent = jobTitle;
         document.getElementById('companyName').textContent = companyName;
-
-        // Set logo based on company
-        const logo = document.getElementById('companyLogo');
-        if (companyName.includes('Mediclinic')) logo.textContent = 'MC';
-        else if (companyName.includes('American')) logo.textContent = 'AH';
-        else if (companyName.includes('Cleveland')) logo.textContent = 'CC';
-        else logo.textContent = companyName.charAt(0);
-
-        // Auto-format date of birth (DD/MM/YYYY)
-        const dobInput = document.getElementById('dob');
-        dobInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 2 && value.length <= 4) {
-                value = value.slice(0,2) + '/' + value.slice(2);
-            } else if (value.length > 4) {
-                value = value.slice(0,2) + '/' + value.slice(2,4) + '/' + value.slice(4,8);
-            }
-            e.target.value = value;
-        });
-
-        // Phone number validation with country code detection
-        const phoneInput = document.getElementById('phone');
-        const phoneError = document.getElementById('phoneError');
-
-        phoneInput.addEventListener('input', function() {
-            const value = phoneInput.value.trim();
-            // Check if it starts with + and has at least 8 characters after
-            if (value && !value.startsWith('+')) {
-                phoneInput.classList.add('error');
-                phoneError.style.display = 'flex';
-            } else {
-                phoneInput.classList.remove('error');
-                phoneError.style.display = 'none';
-            }
-        });
-
-        phoneInput.addEventListener('blur', function() {
-            const value = phoneInput.value.trim();
-            if (value && !value.startsWith('+')) {
-                phoneInput.classList.add('error');
-                phoneError.style.display = 'flex';
-            }
-        });
-
+        document.getElementById('companyLogo').textContent = companyName.charAt(0);
+        
         // Progress tracking
         let currentStep = 1;
-
-        function nextStep() {
-            if (!validateStep(currentStep)) return;
-
-            document.getElementById(`section${currentStep}`).classList.remove('active');
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${currentStep}`).classList.add('completed');
-            
-            currentStep++;
-            document.getElementById(`section${currentStep}`).classList.add('active');
-            document.getElementById(`step${currentStep}`).classList.add('active');
-
-            updateButtons();
-            
-            if (currentStep === 4) populateReview();
-        }
-
-        function prevStep() {
-            document.getElementById(`section${currentStep}`).classList.remove('active');
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            
-            currentStep--;
-            document.getElementById(`section${currentStep}`).classList.add('active');
-            document.getElementById(`step${currentStep}`).classList.add('active');
-            document.getElementById(`step${currentStep}`).classList.remove('completed');
-
-            updateButtons();
-        }
-
+        
         function updateButtons() {
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
-
-            if (currentStep === 1) {
-                prevBtn.disabled = true;
-                prevBtn.style.opacity = '0.5';
-            } else {
-                prevBtn.disabled = false;
-                prevBtn.style.opacity = '1';
-            }
-
+            prevBtn.disabled = currentStep === 1;
+            prevBtn.style.opacity = currentStep === 1 ? '0.5' : '1';
             if (currentStep === 4) {
                 nextBtn.innerHTML = 'Submit Application <i class="fas fa-check"></i>';
                 nextBtn.classList.add('submit');
@@ -1549,342 +1035,237 @@
                 nextBtn.classList.remove('submit');
             }
         }
-
+        
+        function nextStep() {
+            if (!validateStep(currentStep)) return;
+            document.getElementById(`section${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.add('completed');
+            currentStep++;
+            document.getElementById(`section${currentStep}`).classList.add('active');
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            updateButtons();
+            if (currentStep === 4) populateReview();
+        }
+        
+        function prevStep() {
+            document.getElementById(`section${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`section${currentStep}`).classList.add('active');
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.getElementById(`step${currentStep}`).classList.remove('completed');
+            updateButtons();
+        }
+        
         function validateStep(step) {
-            switch(step) {
-                case 1:
-                    const firstName = document.getElementById('firstName').value;
-                    const lastName = document.getElementById('lastName').value;
-                    const email = document.getElementById('email').value;
-                    const phone = document.getElementById('phone').value;
-                    const dob = document.getElementById('dob').value;
-                    const country = document.getElementById('country').value;
-
-                    if (!firstName || !lastName || !email || !phone || !dob || !country) {
-                        alert('Please fill in all required fields');
-                        return false;
-                    }
-                    if (!email.includes('@')) {
-                        alert('Please enter a valid email address');
-                        return false;
-                    }
-                    
-                    // Validate phone has country code
-                    if (!phone.startsWith('+')) {
-                        alert('Please include your country code in the phone number (e.g., +1, +44, +254)');
-                        phoneInput.classList.add('error');
-                        phoneError.style.display = 'flex';
-                        return false;
-                    }
-                    
-                    const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
-                    if (!datePattern.test(dob)) {
-                        alert('Please enter date of birth in DD/MM/YYYY format');
-                        return false;
-                    }
-                    return true;
-
-                case 2:
-                    const experience = document.getElementById('experience').value;
-                    const position = document.getElementById('position').value;
-                    const skills = document.getElementById('skills').value;
-                    const coverLetter = document.getElementById('coverLetter').value;
-
-                    if (!experience || !position || !skills || !coverLetter) {
-                        alert('Please fill in all required fields');
-                        return false;
-                    }
-                    return true;
-
-                case 3:
-                    const nationalId = document.getElementById('nationalId').files.length;
-                    if (nationalId === 0) {
-                        alert('Please upload your National ID');
-                        return false;
-                    }
-                    return true;
-
-                default:
-                    return true;
+            if (step === 1) {
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const dob = document.getElementById('dob').value;
+                const country = document.getElementById('country').value;
+                if (!firstName || !lastName || !email || !phone || !dob || !country) {
+                    alert('Please fill in all required fields');
+                    return false;
+                }
+                if (!phone.startsWith('+')) {
+                    alert('Please include your country code in the phone number');
+                    return false;
+                }
+                return true;
             }
+            if (step === 2) {
+                const experience = document.getElementById('experience').value;
+                const position = document.getElementById('position').value;
+                const skills = document.getElementById('skills').value;
+                const coverLetter = document.getElementById('coverLetter').value;
+                if (!experience || !position || !skills || !coverLetter) {
+                    alert('Please fill in all required fields');
+                    return false;
+                }
+                return true;
+            }
+            if (step === 3) {
+                if (document.getElementById('nationalId').files.length === 0) {
+                    alert('Please upload your National ID');
+                    return false;
+                }
+                return true;
+            }
+            return true;
         }
-
+        
         function populateReview() {
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            document.getElementById('reviewName').textContent = `${firstName} ${lastName}`;
-            document.getElementById('reviewEmail').textContent = document.getElementById('email').value;
-            document.getElementById('reviewPhone').textContent = document.getElementById('phone').value;
-            
-            const country = document.getElementById('country').value;
-            const countryNames = {
-                'uae': 'United Arab Emirates', 'qatar': 'Qatar', 'ksa': 'Saudi Arabia',
-                'kuwait': 'Kuwait', 'oman': 'Oman', 'bahrain': 'Bahrain', 'jordan': 'Jordan',
-                'lebanon': 'Lebanon', 'iraq': 'Iraq', 'yemen': 'Yemen', 'palestine': 'Palestine',
-                'syria': 'Syria', 'egypt': 'Egypt', 'libya': 'Libya', 'tunisia': 'Tunisia',
-                'algeria': 'Algeria', 'morocco': 'Morocco', 'sudan': 'Sudan', 'kenya': 'Kenya',
-                'tanzania': 'Tanzania', 'uganda': 'Uganda', 'rwanda': 'Rwanda', 'burundi': 'Burundi',
-                'ethiopia': 'Ethiopia', 'somalia': 'Somalia', 'djibouti': 'Djibouti',
-                'eritrea': 'Eritrea', 'south sudan': 'South Sudan', 'nigeria': 'Nigeria',
-                'ghana': 'Ghana', 'senegal': 'Senegal', 'mali': 'Mali',
-                "cote d'ivoire": "Côte d'Ivoire", 'cameroon': 'Cameroon', 'liberia': 'Liberia',
-                'sierra leone': 'Sierra Leone', 'guinea': 'Guinea', 'burkina faso': 'Burkina Faso',
-                'benin': 'Benin', 'togo': 'Togo', 'niger': 'Niger', 'mauritania': 'Mauritania',
-                'gambia': 'Gambia', 'guinea-bissau': 'Guinea-Bissau', 'cape verde': 'Cape Verde',
-                'drc': 'DR Congo', 'congo': 'Congo', 'angola': 'Angola', 'gabon': 'Gabon',
-                'equatorial guinea': 'Equatorial Guinea', 'chad': 'Chad',
-                'central african republic': 'Central African Republic', 'south africa': 'South Africa',
-                'zimbabwe': 'Zimbabwe', 'zambia': 'Zambia', 'malawi': 'Malawi',
-                'mozambique': 'Mozambique', 'botswana': 'Botswana', 'namibia': 'Namibia',
-                'eswatini': 'Eswatini', 'lesotho': 'Lesotho', 'madagascar': 'Madagascar',
-                'mauritius': 'Mauritius', 'comoros': 'Comoros', 'seychelles': 'Seychelles',
-                'other': 'Other'
-            };
-            document.getElementById('reviewCountry').textContent = countryNames[country] || country;
-
-            const exp = document.getElementById('experience').value;
-            const expNames = {
-                '0-1': 'Less than 1 year', '1-2': '1 - 2 years', '3-5': '3 - 5 years',
-                '5-10': '5 - 10 years', '10+': '10+ years'
-            };
-            document.getElementById('reviewExperience').textContent = expNames[exp] || exp;
-            
-            document.getElementById('reviewPosition').textContent = document.getElementById('position').value;
-            document.getElementById('reviewSkills').textContent = document.getElementById('skills').value;
-            
-            const nationalIdFile = document.getElementById('nationalId').files[0];
-            document.getElementById('reviewNationalId').textContent = nationalIdFile ? nationalIdFile.name : 'Not uploaded';
-            
-            const cvFile = document.getElementById('cv').files[0];
-            document.getElementById('reviewCv').textContent = cvFile ? cvFile.name : 'Not uploaded';
+            const reviewDiv = document.getElementById('reviewContent');
+            reviewDiv.innerHTML = `
+                <div class="review-item"><div class="review-label">Full Name:</div><div class="review-value">${document.getElementById('firstName').value} ${document.getElementById('lastName').value}</div></div>
+                <div class="review-item"><div class="review-label">Email:</div><div class="review-value">${document.getElementById('email').value}</div></div>
+                <div class="review-item"><div class="review-label">Phone:</div><div class="review-value">${document.getElementById('phone').value}</div></div>
+                <div class="review-item"><div class="review-label">Country:</div><div class="review-value">${document.getElementById('country').value}</div></div>
+                <div class="review-item"><div class="review-label">Experience:</div><div class="review-value">${document.getElementById('experience').value} years</div></div>
+                <div class="review-item"><div class="review-label">Position:</div><div class="review-value">${document.getElementById('position').value}</div></div>
+                <div class="review-item"><div class="review-label">Skills:</div><div class="review-value">${document.getElementById('skills').value}</div></div>
+                <div class="review-item"><div class="review-label">Cover Letter:</div><div class="review-value">${document.getElementById('coverLetter').value.substring(0, 100)}${document.getElementById('coverLetter').value.length > 100 ? '...' : ''}</div></div>
+                <div class="review-item"><div class="review-label">National ID:</div><div class="review-value">${document.getElementById('nationalId').files[0]?.name || 'Not uploaded'}</div></div>
+                <div class="review-item"><div class="review-label">CV/Resume:</div><div class="review-value">${document.getElementById('cv').files[0]?.name || 'Not uploaded'}</div></div>
+            `;
         }
-
-        // File upload handlers
-        document.getElementById('nationalId').addEventListener('change', function(e) {
+        
+        // File upload handlers (store base64 for Supabase)
+        let nationalIdBase64 = null;
+        let cvBase64 = null;
+        
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+        
+        document.getElementById('nationalId').addEventListener('change', async function(e) {
             if (e.target.files[0]) {
                 const file = e.target.files[0];
+                nationalIdBase64 = await fileToBase64(file);
                 const info = document.getElementById('nationalId-info');
                 info.style.display = 'block';
-                info.innerHTML = `
-                    <div class="uploaded-file">
-                        <div class="file-info">
-                            <i class="fas fa-id-card"></i>
-                            <div>
-                                <div class="file-name">${file.name}</div>
-                                <div class="file-size">${(file.size / 1024).toFixed(1)} KB</div>
-                            </div>
-                        </div>
-                        <i class="fas fa-times remove-file" onclick="this.parentElement.remove(); document.getElementById('nationalId').value = ''; this.parentElement.style.display='none'"></i>
-                    </div>
-                `;
+                info.innerHTML = `<div class="uploaded-file"><div class="file-info"><i class="fas fa-id-card"></i><div><div class="file-name">${file.name}</div><div class="file-size">${(file.size/1024).toFixed(1)} KB</div></div></div><i class="fas fa-times remove-file" onclick="this.parentElement.remove(); document.getElementById('nationalId').value = ''; nationalIdBase64 = null"></i></div>`;
             }
         });
-
-        document.getElementById('certificates').addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                const files = e.target.files;
-                const info = document.getElementById('certificates-info');
-                info.style.display = 'block';
-                let html = '';
-                for (let i = 0; i < files.length; i++) {
-                    html += `
-                        <div class="uploaded-file">
-                            <div class="file-info">
-                                <i class="fas fa-file-image"></i>
-                                <div>
-                                    <div class="file-name">${files[i].name}</div>
-                                    <div class="file-size">${(files[i].size / 1024).toFixed(1)} KB</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-                info.innerHTML = html;
-            }
-        });
-
-        // CV file upload handler
-        document.getElementById('cv').addEventListener('change', function(e) {
+        
+        document.getElementById('cv').addEventListener('change', async function(e) {
             if (e.target.files[0]) {
                 const file = e.target.files[0];
+                cvBase64 = await fileToBase64(file);
                 const info = document.getElementById('cv-info');
                 info.style.display = 'block';
-                info.innerHTML = `
-                    <div class="uploaded-file">
-                        <div class="file-info">
-                            <i class="fas fa-file-pdf"></i>
-                            <div>
-                                <div class="file-name">${file.name}</div>
-                                <div class="file-size">${(file.size / 1024).toFixed(1)} KB</div>
-                            </div>
-                        </div>
-                        <i class="fas fa-times remove-file" onclick="this.parentElement.remove(); document.getElementById('cv').value = ''; this.parentElement.style.display='none'"></i>
-                    </div>
-                `;
+                info.innerHTML = `<div class="uploaded-file"><div class="file-info"><i class="fas fa-file-pdf"></i><div><div class="file-name">${file.name}</div><div class="file-size">${(file.size/1024).toFixed(1)} KB</div></div></div><i class="fas fa-times remove-file" onclick="this.parentElement.remove(); document.getElementById('cv').value = ''; cvBase64 = null"></i></div>`;
             }
         });
-
-        // ========== EMAILJS INTEGRATION ==========
-        // Initialize EmailJS with your public key
-        (function() {
-            emailjs.init("N-29tB7_gzyZCM1uL");
-        })();
-
-        // Function to send confirmation email
-        function sendConfirmationEmail(applicationData) {
-            // Prepare the template parameters
-            const templateParams = {
-                to_name: applicationData.firstName,
-                to_email: applicationData.email,
-                job_title: applicationData.jobTitle,
-                company_name: applicationData.companyName,
-                application_date: new Date().toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                }),
-                dashboard_link: 'https://truejobs.com/dashboard.html',
-                from_name: 'TrueJobs Team'
-            };
-
-            // Send email using EmailJS
-            return emailjs.send(
-                'service_ts2kgyl',
-                'template_zcspc4o',
-                templateParams
-            );
-        }
-
-        // Function to save application to localStorage for dashboard
-        function saveApplicationToDashboard(data) {
-            // Get existing applications
-            let applications = JSON.parse(localStorage.getItem('applications')) || [];
-            
-            // Create new application object
-            const newApplication = {
-                id: Date.now(),
-                title: data.jobTitle,
-                company: data.companyName,
-                status: 'Under Review',
-                date: new Date().toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric',
-                    year: 'numeric'
-                }),
-                firstName: data.firstName,
-                lastName: data.lastName,
-                email: data.email,
-                phone: data.phone
-            };
-            
-            // Add to applications array
-            applications.unshift(newApplication);
-            
-            // Save back to localStorage
-            localStorage.setItem('applications', JSON.stringify(applications));
-            
-            // Increment profile views
-            let profileViews = parseInt(localStorage.getItem('profileViews')) || 0;
-            profileViews += 1;
-            localStorage.setItem('profileViews', profileViews.toString());
-        }
-
-        // Updated submitApplication function with email
-        function submitApplication() {
+        
+        // Submit to Supabase
+        async function submitApplication() {
             if (!document.getElementById('terms').checked) {
                 alert('Please accept the terms and conditions');
                 return;
             }
-
-            // Collect application data
-            const applicationData = {
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                jobTitle: document.getElementById('jobTitle').textContent,
-                companyName: document.getElementById('companyName').textContent,
-                position: document.getElementById('position').value,
-                experience: document.getElementById('experience').value,
-                skills: document.getElementById('skills').value,
-                coverLetter: document.getElementById('coverLetter').value,
-                applicationDate: new Date().toISOString()
-            };
-
-            // Save to localStorage for dashboard
-            saveApplicationToDashboard(applicationData);
-
-            // Show loading state on button
+            
             const submitBtn = document.getElementById('nextBtn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             submitBtn.disabled = true;
-
-            // Send confirmation email
-            sendConfirmationEmail(applicationData)
-                .then(function(response) {
-                    console.log('Email sent successfully!', response);
-                    
-                    // Show success modal
-                    const modal = document.getElementById('successModal');
-                    modal.classList.add('show');
-                    
-                    // Update modal message to include email confirmation
-                    const modalContent = modal.querySelector('p');
-                    modalContent.innerHTML = 'Your application has been sent.<br>A confirmation email has been sent to your inbox.';
-                })
-                .catch(function(error) {
-                    console.error('Email sending failed:', error);
-                    
-                    // Still show success but with different message
-                    const modal = document.getElementById('successModal');
-                    modal.classList.add('show');
-                    
-                    const modalContent = modal.querySelector('p');
-                    modalContent.innerHTML = 'Your application has been sent.<br>Email confirmation could not be sent, but your application is received.';
-                })
-                .finally(function() {
-                    // Restore button
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    
-                    // Redirect to dashboard after 3 seconds
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 3000);
+            
+            try {
+                // Check if user is logged in
+                const { data: { session } } = await supabase.auth.getSession();
+                let userId = session?.user?.id;
+                
+                const applicationData = {
+                    job_id: jobId,
+                    job_title: jobTitle,
+                    company: companyName,
+                    first_name: document.getElementById('firstName').value,
+                    last_name: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    country: document.getElementById('country').value,
+                    date_of_birth: document.getElementById('dob').value,
+                    experience: document.getElementById('experience').value,
+                    current_position: document.getElementById('position').value,
+                    current_company: document.getElementById('currentCompany').value,
+                    skills: document.getElementById('skills').value,
+                    cover_letter: document.getElementById('coverLetter').value,
+                    national_id_url: nationalIdBase64,
+                    cv_url: cvBase64,
+                    status: 'pending',
+                    applied_at: new Date().toISOString()
+                };
+                
+                if (userId) {
+                    applicationData.user_id = userId;
+                }
+                
+                // Insert into Supabase
+                const { data, error } = await supabase
+                    .from('applications')
+                    .insert([applicationData])
+                    .select();
+                
+                if (error) throw error;
+                
+                // Also update user profile if needed
+                const { error: profileError } = await supabase
+                    .from('user_profiles')
+                    .upsert({
+                        id: userId,
+                        full_name: `${applicationData.first_name} ${applicationData.last_name}`,
+                        phone: applicationData.phone,
+                        location: applicationData.country,
+                        skills: applicationData.skills,
+                        updated_at: new Date().toISOString()
+                    }, { onConflict: 'id' });
+                
+                if (profileError) console.error('Profile update error:', profileError);
+                
+                // Save to localStorage for dashboard
+                const applications = JSON.parse(localStorage.getItem('applications')) || [];
+                applications.unshift({
+                    id: data?.[0]?.id || Date.now(),
+                    title: jobTitle,
+                    company: companyName,
+                    status: 'Under Review',
+                    date: new Date().toLocaleDateString(),
+                    firstName: applicationData.first_name,
+                    lastName: applicationData.last_name,
+                    email: applicationData.email
                 });
-        }
-
-        function goToDashboard() {
-            window.location.href = 'dashboard.html';
-        }
-
-        function goToJobs() {
-            window.location.href = 'findjobs.html';
-        }
-
-        function closeModalIfOutside(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('show');
+                localStorage.setItem('applications', JSON.stringify(applications));
+                
+                const modal = document.getElementById('successModal');
+                modal.classList.add('show');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Error submitting application: ' + error.message);
+                submitBtn.innerHTML = 'Submit Application <i class="fas fa-check"></i>';
+                submitBtn.disabled = false;
             }
         }
-
-        // Handle next button click
-        const nextBtn = document.getElementById('nextBtn');
-        nextBtn.addEventListener('click', function(e) {
+        
+        document.getElementById('nextBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            if (currentStep === 4) {
-                submitApplication();
-            } else {
-                nextStep();
-            }
+            if (currentStep === 4) submitApplication();
+            else nextStep();
         });
-
+        
+        function goToDashboard() { window.location.href = 'dashboard.html'; }
+        function goToJobs() { window.location.href = 'findjobs.html'; }
+        function closeModalIfOutside(event) { if (event.target.classList.contains('modal')) event.target.classList.remove('show'); }
+        
+        // Mobile menu
+        document.getElementById('menuToggle')?.addEventListener('click', () => document.getElementById('navMenu').classList.toggle('show'));
         updateButtons();
+        
+        // Phone validation
+        document.getElementById('phone').addEventListener('input', function() {
+            const error = document.getElementById('phoneError');
+            if (this.value && !this.value.startsWith('+')) error.style.display = 'flex';
+            else error.style.display = 'none';
+        });
+        
+        // Auto-format DOB
+        document.getElementById('dob').addEventListener('input', function(e) {
+            let v = e.target.value.replace(/\D/g, '');
+            if (v.length > 2 && v.length <= 4) v = v.slice(0,2) + '/' + v.slice(2);
+            else if (v.length > 4) v = v.slice(0,2) + '/' + v.slice(2,4) + '/' + v.slice(4,8);
+            e.target.value = v;
+        });
     </script>
 </body>
 </html>
-
-
-
-
