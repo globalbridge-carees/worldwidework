@@ -11,8 +11,10 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
-        /* (All styles unchanged from the previous compressed version) */
         * {
             margin: 0;
             padding: 0;
@@ -87,6 +89,11 @@
         @keyframes card-float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
         }
 
         .pulse-btn { animation: pulse-glow 2s infinite; }
@@ -183,7 +190,22 @@
             cursor: pointer;
         }
 
-        /* Hero Section – compressed */
+        /* Loading Spinner */
+        .loading-spinner {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray-500);
+        }
+        .loading-spinner i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             padding: 2rem 0;
@@ -374,7 +396,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Company Card – compressed */
         .company-card {
             background: var(--white);
             border-radius: 16px;
@@ -385,6 +406,7 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         .company-card:hover {
             transform: translateY(-5px);
@@ -399,13 +421,13 @@
             right: 8px;
             background: var(--accent);
             color: var(--white);
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
         }
 
         .company-logo {
@@ -434,7 +456,6 @@
             font-size: 0.65rem;
             font-weight: 600;
             margin-bottom: 0.3rem;
-            animation: verified-pulse 2s infinite;
             align-self: center;
         }
         .verified-badge i { font-size: 0.65rem; }
@@ -496,16 +517,14 @@
             font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            animation: pulse-glow 2s infinite;
         }
         .view-jobs-btn:hover {
-            animation: none;
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             transform: translateY(-2px);
             box-shadow: var(--shadow-accent);
         }
 
-        /* Featured Companies – compressed */
+        /* Featured Section */
         .featured-section {
             padding: 2.5rem 0;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -530,7 +549,6 @@
             border: 1px solid rgba(255,255,255,0.2);
             cursor: pointer;
             transition: all 0.3s ease;
-            animation: card-float 4s ease-in-out infinite;
         }
         .featured-card:hover {
             transform: translateY(-5px);
@@ -562,7 +580,7 @@
             border-radius: 30px;
         }
 
-        /* Why Choose Us – compressed */
+        /* Why Choose Us */
         .why-choose-section {
             padding: 2.5rem 0;
             background: var(--white);
@@ -598,47 +616,7 @@
         .benefit-card h3 { color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem; }
         .benefit-card p { color: var(--gray-600); font-size: 0.8rem; line-height: 1.4; }
 
-        /* Pagination – compressed */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .page-btn {
-            width: 35px;
-            height: 35px;
-            border: 1px solid var(--gray-200);
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: var(--gray-700);
-        }
-        .page-btn:hover {
-            background: var(--accent);
-            color: var(--white);
-            border-color: var(--accent);
-        }
-        .page-btn.active {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-        }
-        .page-btn.next {
-            width: auto;
-            padding: 0 1.2rem;
-            border-radius: 30px;
-        }
-
-        /* CTA Section – compressed */
+        /* CTA Section */
         .cta-section {
             padding: 2.5rem 0;
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
@@ -785,26 +763,23 @@
                 <li><a href="companies.html" class="active">Companies</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="about.html">About</a></li>
-                <!-- No auth buttons, no user menu -->
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section (compressed) -->
+    <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
                     <i class="fas fa-shield-alt"></i>
-                    <span>Trusted by 1,200+ Companies</span>
+                    <span id="companyCount">Trusted by Top Companies</span>
                 </div>
-                
                 <h1>
                     Discover <span class="hero-highlight">Top Companies</span><br>
                     Hiring Now
                 </h1>
-                
-                <p>Find your next opportunity at trusted employers</p>
+                <p>Find your next opportunity at trusted employers worldwide</p>
             </div>
         </div>
     </section>
@@ -816,7 +791,7 @@
                 <div class="search-container">
                     <div class="search-input-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="search-input" id="searchInput" placeholder="Search companies...">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search companies by name or industry...">
                     </div>
                     <button class="search-btn" onclick="searchCompanies()">
                         <i class="fas fa-arrow-right"></i> Search
@@ -826,7 +801,7 @@
         </div>
     </section>
 
-    <!-- Companies Section (stats removed) -->
+    <!-- Companies Section -->
     <section class="companies-section">
         <div class="container">
             <div class="section-header">
@@ -834,57 +809,23 @@
                     <h2>Featured Companies</h2>
                     <p>Browse trusted employers</p>
                 </div>
-                <div class="category-filters">
-                    <button class="filter-btn active" onclick="filterCompanies('all')">All</button>
-                    <button class="filter-btn" onclick="filterCompanies('healthcare')">Healthcare</button>
-                    <button class="filter-btn" onclick="filterCompanies('construction')">Construction</button>
-                    <button class="filter-btn" onclick="filterCompanies('hospitality')">Hospitality</button>
-                    <button class="filter-btn" onclick="filterCompanies('security')">Security</button>
-                    <button class="filter-btn" onclick="filterCompanies('aviation')">Aviation</button>
-                    <button class="filter-btn" onclick="filterCompanies('retail')">Retail</button>
+                <div class="category-filters" id="categoryFilters">
+                    <button class="filter-btn active" data-category="all" onclick="filterCompanies('all')">All</button>
                 </div>
             </div>
 
             <div class="companies-grid" id="companiesGrid">
-                <!-- Companies loaded by JS -->
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination">
-                <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">4</button>
-                <button class="page-btn">5</button>
-                <button class="page-btn next">Next <i class="fas fa-chevron-right"></i></button>
+                <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading companies...</div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Companies -->
-    <section class="featured-section">
+    <!-- Featured Section (Dynamic from Supabase) -->
+    <section class="featured-section" id="featuredSection">
         <div class="container">
             <h2>🌟 Featured Employers</h2>
-            <div class="featured-grid">
-                <div class="featured-card" onclick="viewCompanyJobs('Qatar Airways')">
-                    <div class="featured-logo">QA</div>
-                    <h3>Qatar Airways</h3>
-                    <p>Aviation • Doha, Qatar</p>
-                    <span class="featured-jobs">234 jobs</span>
-                </div>
-                <div class="featured-card" onclick="viewCompanyJobs('Emirates')">
-                    <div class="featured-logo">EK</div>
-                    <h3>Emirates Group</h3>
-                    <p>Aviation • Dubai, UAE</p>
-                    <span class="featured-jobs">189 jobs</span>
-                </div>
-                <div class="featured-card" onclick="viewCompanyJobs('Saudi Aramco')">
-                    <div class="featured-logo">SA</div>
-                    <h3>Saudi Aramco</h3>
-                    <p>Energy • Dhahran, KSA</p>
-                    <span class="featured-jobs">156 jobs</span>
-                </div>
+            <div class="featured-grid" id="featuredGrid">
+                <div class="loading-spinner" style="color: white;"><i class="fas fa-spinner fa-spin"></i> Loading featured...</div>
             </div>
         </div>
     </section>
@@ -898,23 +839,10 @@
                     <p>We connect employers with the best talent</p>
                 </div>
             </div>
-            
             <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon"><i class="fas fa-users"></i></div>
-                    <h3>Quality Candidates</h3>
-                    <p>Access pre-screened professionals ready to contribute.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
-                    <h3>Fast Hiring</h3>
-                    <p>Receive applications within hours.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon"><i class="fas fa-globe"></i></div>
-                    <h3>Global Reach</h3>
-                    <p>Connect with talent from 45+ countries.</p>
-                </div>
+                <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-users"></i></div><h3>Quality Candidates</h3><p>Access pre-screened professionals ready to contribute.</p></div>
+                <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-bolt"></i></div><h3>Fast Hiring</h3><p>Receive applications within hours.</p></div>
+                <div class="benefit-card"><div class="benefit-icon"><i class="fas fa-globe"></i></div><h3>Global Reach</h3><p>Connect with talent from 45+ countries.</p></div>
             </div>
         </div>
     </section>
@@ -923,7 +851,7 @@
     <section class="cta-section">
         <div class="container">
             <h2>Ready to Hire?</h2>
-            <p>Join 1,200+ companies finding great talent</p>
+            <p>Join leading companies finding great talent</p>
             <button class="cta-btn" onclick="location.href='post-job.html'">
                 Post a Job <i class="fas fa-arrow-right"></i>
             </button>
@@ -935,150 +863,62 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <div class="footer-logo">
-                        <span class="logo-icon">TJ</span>
-                        <span class="logo-text">TrueJobs</span>
-                    </div>
+                    <div class="footer-logo"><span class="logo-icon">TJ</span><span class="logo-text">TrueJobs</span></div>
                     <p>Your trusted partner for global job opportunities.</p>
                 </div>
-                <div class="footer-col">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="findjobs.html">Find Jobs</a></li>
-                        <li><a href="companies.html">Companies</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>For Employers</h4>
-                    <ul>
-                        <li><a href="post-job.html">Post a Job</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="resources.html">Resources</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+                <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="about.html">About Us</a></li><li><a href="findjobs.html">Find Jobs</a></li><li><a href="companies.html">Companies</a></li></ul></div>
+                <div class="footer-col"><h4>For Employers</h4><ul><li><a href="post-job.html">Post a Job</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
+                <div class="footer-col"><h4>Follow Us</h4><div class="social-links"><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-twitter"></i></a><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a></div></div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 TrueJobs. All rights reserved.</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2026 TrueJobs. All rights reserved.</p></div>
         </div>
     </footer>
 
     <script>
-        function toggleMenu() {
-            document.getElementById('navMenu').classList.toggle('show');
-        }
-
-        // Companies data (same as before)
-        const companies = [
-            { name: "Qatar Airways", industry: "Aviation", location: "Doha, Qatar", employees: "10k+", jobs: 234, featured: true, verified: true, logo: "QA", category: "aviation" },
-            { name: "Emirates Group", industry: "Aviation", location: "Dubai, UAE", employees: "15k+", jobs: 189, featured: true, verified: true, logo: "EK", category: "aviation" },
-            { name: "Saudi Aramco", industry: "Energy", location: "Dhahran, KSA", employees: "20k+", jobs: 156, featured: true, verified: true, logo: "SA", category: "energy" },
-            { name: "DP World", industry: "Logistics", location: "Dubai, UAE", employees: "8k+", jobs: 98, featured: false, verified: true, logo: "DP", category: "logistics" },
-            { name: "Jumeirah Group", industry: "Hospitality", location: "Dubai, UAE", employees: "5k+", jobs: 45, featured: false, verified: true, logo: "JG", category: "hospitality" },
-            { name: "Careem", industry: "Technology", location: "Dubai, UAE", employees: "2k+", jobs: 67, featured: false, verified: true, logo: "CM", category: "technology" },
-            { name: "Al Habtoor Group", industry: "Construction", location: "Dubai, UAE", employees: "7k+", jobs: 89, featured: false, verified: true, logo: "AH", category: "construction" },
-            { name: "Mediclinic", industry: "Healthcare", location: "Abu Dhabi, UAE", employees: "3k+", jobs: 56, featured: false, verified: true, logo: "MC", category: "healthcare" },
-            { name: "G4S Security", industry: "Security", location: "Multiple", employees: "12k+", jobs: 234, featured: false, verified: true, logo: "G4", category: "security" },
-            { name: "Lulu Hypermarket", industry: "Retail", location: "GCC", employees: "6k+", jobs: 145, featured: false, verified: true, logo: "LH", category: "retail" },
-            { name: "Royal Hotel", industry: "Hospitality", location: "Doha, Qatar", employees: "1.5k+", jobs: 34, featured: false, verified: true, logo: "RH", category: "hospitality" },
-            { name: "SecurePlus", industry: "Security", location: "Qatar", employees: "800+", jobs: 23, featured: false, verified: true, logo: "SP", category: "security" }
-        ];
-
-        function displayCompanies() {
-            const grid = document.getElementById('companiesGrid');
-            grid.innerHTML = companies.map(company => `
-                <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
-                    <div class="company-logo">${company.logo}</div>
-                    ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
-                    <h3>${company.name}</h3>
-                    <div class="company-industry">${company.industry}</div>
-                    <div class="company-location">
-                        <i class="fas fa-map-marker-alt"></i> ${company.location}
-                    </div>
-                    <div class="company-stats">
-                        <div class="stat">
-                            <i class="fas fa-briefcase"></i>
-                            <span class="stat-value">${company.jobs}</span>
-                            <span class="stat-label">Jobs</span>
-                        </div>
-                        <div class="stat">
-                            <i class="fas fa-users"></i>
-                            <span class="stat-value">${company.employees}</span>
-                            <span class="stat-label">Emp</span>
-                        </div>
-                    </div>
-                    <button class="view-jobs-btn pulse-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
-                        View Jobs <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        // Navigate to findjobs.html filtered by company
-        function viewCompanyJobs(name) {
-            window.location.href = `findjobs.html?company=${encodeURIComponent(name)}`;
-        }
-
-        function searchCompanies() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            alert('Searching for: ' + searchTerm);
-        }
-
-        function filterCompanies(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (category === 'all') {
-                displayCompanies();
-            } else {
-                const filtered = companies.filter(c => c.category === category);
-                const grid = document.getElementById('companiesGrid');
-                grid.innerHTML = filtered.map(company => `
-                    <div class="company-card ${company.featured ? 'featured' : ''}" onclick="viewCompanyJobs('${company.name}')">
-                        <div class="company-logo">${company.logo}</div>
-                        ${company.verified ? '<div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
-                        <h3>${company.name}</h3>
-                        <div class="company-industry">${company.industry}</div>
-                        <div class="company-location">
-                            <i class="fas fa-map-marker-alt"></i> ${company.location}
-                        </div>
-                        <div class="company-stats">
-                            <div class="stat">
-                                <i class="fas fa-briefcase"></i>
-                                <span class="stat-value">${company.jobs}</span>
-                                <span class="stat-label">Jobs</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-users"></i>
-                                <span class="stat-value">${company.employees}</span>
-                                <span class="stat-label">Emp</span>
-                            </div>
-                        </div>
-                        <button class="view-jobs-btn pulse-btn" onclick="event.stopPropagation(); viewCompanyJobs('${company.name}')">
-                            View Jobs <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                `).join('');
+        // ==================== SUPABASE CONFIGURATION ====================
+        const SUPABASE_URL = 'https://your-project.supabase.co';  // Replace with your Supabase URL
+        const SUPABASE_ANON_KEY = 'your-anon-key';  // Replace with your Supabase anon key
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        let allCompanies = [];
+        let currentFilter = 'all';
+        let currentSearchTerm = '';
+        
+        // Load companies from Supabase
+        async function loadCompanies() {
+            try {
+                const { data, error } = await supabase
+                    .from('companies')
+                    .select('*')
+                    .order('featured', { ascending: false })
+                    .order('name', { ascending: true });
+                
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    allCompanies = data;
+                    updateCompanyCount(data.length);
+                    populateCategoryFilters(data);
+                    displayCompanies(allCompanies);
+                    displayFeaturedCompanies(data.filter(c => c.featured === true).slice(0, 3));
+                } else {
+                    // Insert sample companies if none exist
+                    await insertSampleCompanies();
+                    await loadCompanies(); // Reload after insertion
+                }
+            } catch (error) {
+                console.error('Error loading companies:', error);
+                document.getElementById('companiesGrid').innerHTML = '<div class="loading-spinner" style="color: red;">Failed to load companies. Please check your Supabase connection.</div>';
             }
         }
-
-        // No auth check – page is public
-        // No user menu injection
-
-        displayCompanies();
-    </script>
-</body>
-</html>
-
-
+        
+        // Insert sample companies
+        async function insertSampleCompanies() {
+            const sampleCompanies = [
+                { name: "Qatar Airways", industry: "Aviation", location: "Doha, Qatar", employees: "10k+", jobs_count: 234, featured: true, verified: true, logo: "QA", category: "aviation" },
+                { name: "Emirates Group", industry: "Aviation", location: "Dubai, UAE", employees: "15k+", jobs_count: 189, featured: true, verified: true, logo: "EK", category: "aviation" },
+                { name: "Saudi Aramco", industry: "Energy", location: "Dhahran, KSA", employees: "20k+", jobs_count: 156, featured: true, verified: true, logo: "SA", category: "energy" },
+                { name: "DP World", industry: "Logistics", location: "Dubai, UAE", employees: "8k+", jobs_count: 98, featured: false, verified: true, logo: "DP", category: "logistics" },
+                { name: "Jumeirah Group", industry: "Hospitality", location: "Dubai, UAE", employees: "5k+", jobs_count: 45, featured: false, verified: true, logo: "JG", category: "hospitality" },
+                { name: "Careem", industry: "Technology", location: "Dubai, UAE", employees: "2k+", jobs_count: 67, featured: false, verified: true, logo: "CM", category: "technology" },
+                { name: "Al Habtoor Group", industry: "Construction", location: "Dubai, UAE", employees: "7k+", jobs_count:
