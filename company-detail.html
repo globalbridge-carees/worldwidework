@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Mediclinic Hospital - Company Profile | TrueJobs</title>
+    <title>Company Profile - TrueJobs</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         * {
@@ -62,87 +65,33 @@
             padding: 0 1rem;
         }
 
-        @media (min-width: 640px) {
-            .container {
-                padding: 0 1.5rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .container {
-                padding: 0 2rem;
-            }
-        }
+        @media (min-width: 640px) { .container { padding: 0 1.5rem; } }
+        @media (min-width: 1024px) { .container { padding: 0 2rem; } }
 
         /* Animations */
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 15px rgba(245, 158, 11, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-            }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
         }
-
         @keyframes pulse-green {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 15px rgba(16, 185, 129, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-            }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
-
         @keyframes pulse-blue {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(15, 43, 75, 0.7);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 15px rgba(15, 43, 75, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(15, 43, 75, 0);
-            }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 43, 75, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(15, 43, 75, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 43, 75, 0); }
         }
 
-        /* Pulsing Classes */
-        .pulse-btn {
-            animation: pulse 2s infinite;
-        }
-
-        .pulse-verified {
-            animation: pulse-green 2s infinite;
-        }
-
-        .pulse-apply {
-            animation: pulse-blue 2s infinite;
-        }
+        .pulse-btn { animation: pulse 2s infinite; }
+        .pulse-verified { animation: pulse-green 2s infinite; }
+        .pulse-apply { animation: pulse-blue 2s infinite; }
 
         /* Navigation */
         .navbar {
@@ -154,7 +103,6 @@
             box-shadow: var(--shadow-md);
             border-bottom: 2px solid var(--accent);
         }
-
         .nav-container {
             width: 100%;
             max-width: 1280px;
@@ -164,14 +112,7 @@
             justify-content: space-between;
             align-items: center;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            text-decoration: none;
-        }
-
+        .logo { display: flex; align-items: center; gap: 0.4rem; text-decoration: none; }
         .logo-icon {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: var(--accent);
@@ -183,26 +124,12 @@
             justify-content: center;
             font-size: 1.3rem;
             font-weight: 800;
-            box-shadow: var(--shadow-sm);
         }
-
-        .logo-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
+        .logo-text { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
         @media (min-width: 768px) {
-            .logo-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 1.8rem;
-            }
-            .logo-text {
-                font-size: 1.8rem;
-            }
+            .logo-icon { width: 45px; height: 45px; font-size: 1.8rem; }
+            .logo-text { font-size: 1.8rem; }
         }
-
         .nav-menu {
             display: none;
             position: absolute;
@@ -215,157 +142,35 @@
             border-top: 2px solid var(--accent);
             list-style: none;
         }
-
-        .nav-menu.show {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .nav-menu a {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            padding: 0.5rem 0;
-            display: block;
-        }
-
+        .nav-menu.show { display: flex; flex-direction: column; gap: 0.8rem; }
+        .nav-menu a { color: var(--gray-600); text-decoration: none; font-weight: 500; font-size: 0.95rem; padding: 0.5rem 0; display: block; }
         @media (min-width: 768px) {
-            .nav-menu {
-                display: flex;
-                position: static;
-                width: auto;
-                padding: 0;
-                box-shadow: none;
-                border-top: none;
-                flex-direction: row;
-                gap: 1.5rem;
-                background: transparent;
-            }
-            .nav-menu a {
-                padding: 0;
-            }
+            .nav-menu { display: flex; position: static; width: auto; padding: 0; box-shadow: none; border-top: none; flex-direction: row; gap: 1.5rem; background: transparent; }
+            .nav-menu a { padding: 0; }
         }
+        .nav-menu a:hover { color: var(--accent); }
+        .nav-menu a.active { color: var(--primary); font-weight: 600; }
+        .auth-buttons { display: flex; gap: 0.5rem; }
+        .btn-outline { padding: 0.4rem 1rem; border: 1.5px solid var(--gray-300); background: transparent; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; }
+        .btn-primary { padding: 0.4rem 1rem; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--white); border: none; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; }
+        .menu-toggle { display: block; font-size: 1.5rem; color: var(--primary); cursor: pointer; }
+        @media (min-width: 768px) { .menu-toggle { display: none; } }
 
-        .nav-menu a:hover {
-            color: var(--accent);
-        }
+        .back-link { padding: 1rem 0 0.5rem; }
+        .back-link a { color: var(--gray-600); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; }
 
-        .nav-menu a.active {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-outline {
-            padding: 0.4rem 1rem;
-            border: 1.5px solid var(--gray-300);
-            background: transparent;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            padding: 0.4rem 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
-            border: none;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        @media (min-width: 768px) {
-            .btn-outline, .btn-primary {
-                padding: 0.6rem 1.5rem;
-                font-size: 0.95rem;
-            }
-        }
-
-        .menu-toggle {
-            display: block;
-            font-size: 1.5rem;
-            color: var(--primary);
-            cursor: pointer;
-        }
-
-        @media (min-width: 768px) {
-            .menu-toggle {
-                display: none;
-            }
-        }
-
-        /* Back to Companies */
-        .back-link {
-            padding: 1rem 0 0.5rem;
-        }
-
-        .back-link a {
-            color: var(--gray-600);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.9rem;
-        }
-
-        /* ===== NEW ATTRACTIVE COVER IMAGE ===== */
         .company-cover {
             height: 200px;
-            background: linear-gradient(135deg, rgba(15,43,75,0.7), rgba(30,58,106,0.8)), 
-                        url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+            background: linear-gradient(135deg, rgba(15,43,75,0.7), rgba(30,58,106,0.8)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
             border-radius: 24px 24px 0 0;
             position: relative;
             margin-bottom: 4rem;
-            box-shadow: var(--shadow-lg);
         }
+        @media (min-width: 768px) { .company-cover { height: 280px; margin-bottom: 5rem; border-radius: 32px 32px 0 0; } }
+        @media (min-width: 1024px) { .company-cover { height: 350px; margin-bottom: 6rem; } }
 
-        @media (min-width: 768px) {
-            .company-cover {
-                height: 280px;
-                margin-bottom: 5rem;
-                border-radius: 32px 32px 0 0;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .company-cover {
-                height: 350px;
-                margin-bottom: 6rem;
-            }
-        }
-
-        /* Optional overlay text on cover */
-        .cover-text {
-            position: absolute;
-            bottom: 20px;
-            left: 30px;
-            color: var(--white);
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            display: none;
-        }
-
-        @media (min-width: 768px) {
-            .cover-text {
-                display: block;
-            }
-        }
-
-        /* Company Profile Card - PERFECT POSITIONING */
         .profile-card {
             background: var(--white);
             border-radius: 28px;
@@ -376,838 +181,123 @@
             z-index: 20;
             border: 1px solid var(--gray-200);
         }
+        @media (min-width: 768px) { .profile-card { padding: 2.5rem; margin-top: -100px; border-radius: 32px; } }
+        @media (min-width: 1024px) { .profile-card { margin-top: -120px; padding: 3rem; border-radius: 36px; } }
 
-        @media (min-width: 768px) {
-            .profile-card {
-                padding: 2.5rem;
-                margin-top: -100px;
-                border-radius: 32px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .profile-card {
-                margin-top: -120px;
-                padding: 3rem;
-                border-radius: 36px;
-            }
-        }
-
-        /* Profile Header */
-        .profile-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .profile-header {
-                flex-direction: row;
-                align-items: flex-start;
-                gap: 2.5rem;
-            }
-        }
-
+        .profile-header { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+        @media (min-width: 768px) { .profile-header { flex-direction: row; align-items: flex-start; gap: 2.5rem; } }
         .company-logo-large {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent-dark));
-            border-radius: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 2.5rem;
-            font-weight: 700;
-            box-shadow: var(--shadow-xl);
-            flex-shrink: 0;
-            border: 4px solid var(--white);
+            width: 100px; height: 100px; background: linear-gradient(135deg, var(--accent-light), var(--accent-dark));
+            border-radius: 26px; display: flex; align-items: center; justify-content: center; color: var(--white);
+            font-size: 2.5rem; font-weight: 700; box-shadow: var(--shadow-xl); flex-shrink: 0; border: 4px solid var(--white);
         }
-
-        @media (min-width: 768px) {
-            .company-logo-large {
-                width: 120px;
-                height: 120px;
-                font-size: 3rem;
-                border-radius: 30px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .company-logo-large {
-                width: 140px;
-                height: 140px;
-                font-size: 3.5rem;
-                border-radius: 36px;
-            }
-        }
-
-        /* Company Title Section */
-        .company-title-section {
-            flex: 1;
-            width: 100%;
-            text-align: center;
-        }
-
-        @media (min-width: 768px) {
-            .company-title-section {
-                text-align: left;
-            }
-        }
-
-        .company-title-section h1 {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 0.8rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        @media (min-width: 768px) {
-            .company-title-section h1 {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .company-title-section h1 {
-                font-size: 3rem;
-            }
-        }
-
-        /* Badge Wrapper */
-        .company-badge-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1rem;
-        }
-
-        @media (min-width: 640px) {
-            .company-badge-wrapper {
-                flex-direction: row;
-                align-items: center;
-                gap: 1.5rem;
-            }
-        }
-
+        @media (min-width: 768px) { .company-logo-large { width: 120px; height: 120px; font-size: 3rem; } }
+        @media (min-width: 1024px) { .company-logo-large { width: 140px; height: 140px; font-size: 3.5rem; } }
+        
+        .company-title-section { flex: 1; width: 100%; text-align: center; }
+        @media (min-width: 768px) { .company-title-section { text-align: left; } }
+        .company-title-section h1 { font-size: 2rem; color: var(--primary); margin-bottom: 0.8rem; font-weight: 800; }
+        @media (min-width: 768px) { .company-title-section h1 { font-size: 2.5rem; } }
+        
+        .company-badge-wrapper { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+        @media (min-width: 640px) { .company-badge-wrapper { flex-direction: row; gap: 1.5rem; } }
         .verified-badge-large {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
             background: linear-gradient(135deg, var(--success), var(--success-light));
-            color: var(--white);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            white-space: nowrap;
-            box-shadow: var(--shadow-md);
+            color: var(--white); padding: 0.6rem 1.5rem; border-radius: 50px; font-size: 1rem; font-weight: 600;
         }
-
-        .rating-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-700);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .rating-badge i {
-            color: var(--accent);
-        }
-
-        /* Company Meta Row */
-        .company-meta-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.2rem 2rem;
-            margin-top: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .company-meta-row {
-                justify-content: flex-start;
-            }
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-600);
-            font-size: 0.95rem;
-        }
-
-        .meta-item i {
-            color: var(--accent);
-            width: 18px;
-        }
-
-        /* Follow Button */
-        .follow-btn-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        @media (min-width: 768px) {
-            .follow-btn-wrapper {
-                width: auto;
-                align-items: flex-start;
-            }
-        }
-
-        .follow-btn {
-            padding: 0.8rem 2.2rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .follow-btn.following {
-            background: linear-gradient(135deg, var(--success), var(--success-light));
-        }
-
-        .follow-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin: 2rem 0 0.5rem;
-            padding-top: 2rem;
-            border-top: 2px solid var(--gray-200);
-        }
-
-        @media (min-width: 640px) {
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 1.5rem;
-            }
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 1.2rem 0.8rem;
-            background: var(--gray-50);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            background: var(--white);
-        }
-
-        .stat-number {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 0.3rem;
-        }
-
-        @media (min-width: 768px) {
-            .stat-number {
-                font-size: 2rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .stat-number {
-                font-size: 2.4rem;
-            }
-        }
-
-        .stat-label {
-            color: var(--gray-500);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* Main Grid */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        @media (min-width: 1024px) {
-            .main-grid {
-                grid-template-columns: 2fr 1fr;
-                gap: 2rem;
-            }
-        }
-
-        /* Cards */
+        .rating-badge { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gray-700); }
+        .rating-badge i { color: var(--accent); }
+        
+        .company-meta-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem 2rem; margin-top: 1rem; }
+        @media (min-width: 768px) { .company-meta-row { justify-content: flex-start; } }
+        .meta-item { display: flex; align-items: center; gap: 0.5rem; color: var(--gray-600); font-size: 0.95rem; }
+        .meta-item i { color: var(--accent); width: 18px; }
+        
+        .follow-btn { padding: 0.8rem 2.2rem; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--white); border: none; border-radius: 50px; font-weight: 600; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
+        .follow-btn.following { background: linear-gradient(135deg, var(--success), var(--success-light)); }
+        .follow-btn:hover { transform: translateY(-3px); }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0 0.5rem; padding-top: 2rem; border-top: 2px solid var(--gray-200); }
+        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+        .stat-card { text-align: center; padding: 1.2rem 0.8rem; background: var(--gray-50); border-radius: 20px; transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-5px); background: var(--white); }
+        .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
+        @media (min-width: 768px) { .stat-number { font-size: 2rem; } }
+        .stat-label { color: var(--gray-500); font-size: 0.8rem; }
+        
+        .main-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin: 2rem 0; }
+        @media (min-width: 1024px) { .main-grid { grid-template-columns: 2fr 1fr; gap: 2rem; } }
+        
         .about-section, .company-sidebar, .jobs-section, .reviews-section {
-            background: var(--white);
-            border-radius: 24px;
-            padding: 1.8rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-200);
-        }
-
-        @media (min-width: 768px) {
-            .about-section, .company-sidebar, .jobs-section, .reviews-section {
-                padding: 2.2rem;
-                border-radius: 28px;
-            }
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title i {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.1rem;
-        }
-
-        @media (min-width: 768px) {
-            .section-title i {
-                width: 42px;
-                height: 42px;
-                font-size: 1.2rem;
-            }
-        }
-
-        .section-title h2 {
-            color: var(--primary);
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .company-description {
-            color: var(--gray-700);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Info Grid */
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        @media (min-width: 480px) {
-            .info-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--gray-50);
-            border-radius: 14px;
-        }
-
-        .info-item i {
-            width: 36px;
-            height: 36px;
-            background: var(--white);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .info-content h4 {
-            color: var(--gray-500);
-            font-size: 0.8rem;
-            margin-bottom: 0.2rem;
-        }
-
-        .info-content p {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        /* Benefits List */
-        .benefits-list {
-            list-style: none;
-        }
-
-        .benefits-list li {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            align-items: flex-start;
-        }
-
-        .benefits-list li i {
-            color: var(--success);
-            flex-shrink: 0;
-            margin-top: 0.2rem;
-        }
-
-        /* Jobs Grid */
-        .jobs-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.2rem;
-            margin: 1.5rem 0;
-        }
-
-        @media (min-width: 640px) {
-            .jobs-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-        }
-
-        .job-card {
-            background: var(--gray-50);
-            border-radius: 18px;
-            padding: 1.5rem;
-            border: 1px solid var(--gray-200);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .job-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent);
-        }
-
-        .job-card h4 {
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 0.6rem;
-            font-weight: 600;
-        }
-
-        .job-location {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            color: var(--gray-500);
-            font-size: 0.9rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .job-location i {
-            color: var(--accent);
-        }
-
-        .job-type {
-            display: inline-block;
-            padding: 0.3rem 1rem;
-            background: var(--gray-200);
-            border-radius: 30px;
-            font-size: 0.8rem;
-            color: var(--gray-600);
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .job-salary {
-            color: var(--success);
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 1.2rem;
-        }
-
-        /* PULSING APPLY BUTTON */
-        .job-apply-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
-            border: none;
-            padding: 0.8rem;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: pulse-blue 2s infinite;
-            box-shadow: 0 0 0 0 rgba(15, 43, 75, 0.7);
-        }
-
-        .job-apply-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-xl);
-            animation: none;
-        }
-
-        .view-all-link {
-            display: block;
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .view-all-link i {
-            transition: transform 0.3s ease;
-        }
-
-        .view-all-link:hover i {
-            transform: translateX(5px);
-        }
-
-        /* Contact Items */
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--gray-100);
-            font-size: 0.95rem;
-        }
-
-        .contact-item:last-child {
-            border-bottom: none;
-        }
-
-        .contact-item i {
-            width: 30px;
-            color: var(--accent);
-            flex-shrink: 0;
-        }
-
-        /* Social Links */
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            width: 42px;
-            height: 42px;
-            background: var(--gray-100);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            background: var(--accent);
-            color: var(--white);
-            transform: translateY(-5px);
-        }
-
-        /* Map Placeholder */
-        .map-placeholder {
-            width: 100%;
-            height: 140px;
-            background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray-600);
-            font-size: 0.95rem;
-            margin: 1.5rem 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .map-placeholder:hover {
-            background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
-            color: var(--primary);
-        }
-
-        .map-placeholder i {
-            margin-right: 0.5rem;
-            color: var(--accent);
-        }
-
-        /* Reviews Section */
-        .rating-overview {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .rating-overview {
-                flex-direction: row;
-                align-items: center;
-                gap: 2.5rem;
-            }
-        }
-
-        .average-rating {
-            text-align: center;
-            min-width: 140px;
-        }
-
-        .average-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--primary);
-            line-height: 1;
-        }
-
-        .stars {
-            color: var(--accent);
-            font-size: 1.2rem;
-            margin: 0.5rem 0;
-        }
-
-        .rating-bars {
-            flex: 1;
-        }
-
-        .rating-bar-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.6rem;
-            font-size: 0.9rem;
-        }
-
-        .bar-container {
-            flex: 1;
-            height: 8px;
-            background: var(--gray-200);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
-            border-radius: 4px;
-        }
-
-        .review-card {
-            background: var(--gray-50);
-            border-radius: 18px;
-            padding: 1.5rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .reviewer-avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: 600;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .reviewer-info h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.2rem;
-            color: var(--primary);
-        }
-
-        .reviewer-info .position {
-            font-size: 0.85rem;
-            color: var(--gray-500);
-        }
-
-        .review-rating {
-            color: var(--accent);
-            margin-bottom: 0.8rem;
-        }
-
-        .review-text {
-            font-size: 0.95rem;
-            color: var(--gray-700);
-            line-height: 1.6;
-        }
-
-        /* Similar Companies */
-        .similar-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            margin-top: 1.2rem;
-        }
-
-        @media (min-width: 480px) {
-            .similar-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .similar-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        .similar-company-card {
-            background: var(--gray-50);
-            border-radius: 18px;
-            padding: 1.5rem;
-            text-align: center;
-            border: 1px solid var(--gray-200);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .similar-company-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent);
-        }
-
-        .similar-logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            color: var(--white);
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-
-        .similar-company-card h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
-            color: var(--primary);
-        }
-
-        .similar-company-card .industry {
-            font-size: 0.85rem;
-            color: var(--gray-500);
-            margin-bottom: 0.5rem;
-        }
-
-        .similar-company-card .jobs-count {
-            font-size: 0.9rem;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--white);
-            padding: 2rem 0;
-            margin-top: 3rem;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            text-align: center;
-            color: var(--gray-500);
-            font-size: 0.9rem;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .footer-links a {
-            color: var(--gray-500);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-
-        @media (min-width: 768px) {
-            .footer-content {
-                flex-direction: row;
-                justify-content: space-between;
-                text-align: left;
-            }
-        }
-
-        /* Utility Classes */
+            background: var(--white); border-radius: 24px; padding: 1.8rem; box-shadow: var(--shadow-lg); border: 1px solid var(--gray-200);
+        }
+        .section-title { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem; }
+        .section-title i { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-light), var(--accent)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.1rem; }
+        .section-title h2 { color: var(--primary); font-size: 1.3rem; font-weight: 600; }
+        .company-description { color: var(--gray-700); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.5rem 0; }
+        @media (min-width: 480px) { .info-grid { grid-template-columns: repeat(2, 1fr); } }
+        .info-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gray-50); border-radius: 14px; }
+        .info-item i { width: 36px; height: 36px; background: var(--white); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.1rem; flex-shrink: 0; }
+        .info-content h4 { color: var(--gray-500); font-size: 0.8rem; margin-bottom: 0.2rem; }
+        .info-content p { color: var(--primary); font-weight: 600; font-size: 0.95rem; }
+        
+        .benefits-list { list-style: none; }
+        .benefits-list li { display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.95rem; align-items: flex-start; }
+        .benefits-list li i { color: var(--success); flex-shrink: 0; margin-top: 0.2rem; }
+        
+        .jobs-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; margin: 1.5rem 0; }
+        @media (min-width: 640px) { .jobs-grid { grid-template-columns: repeat(2, 1fr); } }
+        .job-card { background: var(--gray-50); border-radius: 18px; padding: 1.5rem; border: 1px solid var(--gray-200); transition: all 0.3s ease; cursor: pointer; }
+        .job-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
+        .job-card h4 { color: var(--primary); font-size: 1.2rem; margin-bottom: 0.6rem; font-weight: 600; }
+        .job-location { display: flex; align-items: center; gap: 0.3rem; color: var(--gray-500); font-size: 0.9rem; margin-bottom: 0.8rem; }
+        .job-location i { color: var(--accent); }
+        .job-type { display: inline-block; padding: 0.3rem 1rem; background: var(--gray-200); border-radius: 30px; font-size: 0.8rem; color: var(--gray-600); margin-bottom: 1rem; }
+        .job-salary { color: var(--success); font-weight: 700; font-size: 1.1rem; margin-bottom: 1.2rem; }
+        .job-apply-btn { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--white); border: none; padding: 0.8rem; border-radius: 40px; font-weight: 600; font-size: 0.95rem; width: 100%; cursor: pointer; transition: all 0.3s ease; animation: pulse-blue 2s infinite; }
+        .job-apply-btn:hover { transform: scale(1.05); animation: none; }
+        .view-all-link { display: block; text-align: center; margin-top: 1.5rem; color: var(--accent); text-decoration: none; font-weight: 600; }
+        
+        .contact-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--gray-100); font-size: 0.95rem; }
+        .contact-item i { width: 30px; color: var(--accent); }
+        .social-links { display: flex; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap; }
+        .social-link { width: 42px; height: 42px; background: var(--gray-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); text-decoration: none; transition: all 0.3s ease; }
+        .social-link:hover { background: var(--accent); color: var(--white); transform: translateY(-5px); }
+        
+        .map-placeholder { width: 100%; height: 140px; background: linear-gradient(135deg, var(--gray-100), var(--gray-200)); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--gray-600); cursor: pointer; margin: 1.5rem 0; }
+        
+        .similar-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.2rem; }
+        @media (min-width: 480px) { .similar-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .similar-grid { grid-template-columns: repeat(4, 1fr); } }
+        .similar-company-card { background: var(--gray-50); border-radius: 18px; padding: 1.5rem; text-align: center; border: 1px solid var(--gray-200); cursor: pointer; transition: all 0.3s ease; }
+        .similar-company-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .similar-logo { width: 60px; height: 60px; background: linear-gradient(135deg, var(--accent-light), var(--accent)); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--white); font-weight: 700; font-size: 1.5rem; }
+        .similar-company-card h4 { font-size: 1.1rem; color: var(--primary); }
+        .similar-company-card .industry { font-size: 0.85rem; color: var(--gray-500); }
+        .similar-company-card .jobs-count { font-size: 0.9rem; color: var(--accent); font-weight: 600; }
+        
+        .footer { background: var(--white); padding: 2rem 0; margin-top: 3rem; border-top: 1px solid var(--gray-200); }
+        .footer-content { display: flex; flex-direction: column; gap: 1rem; text-align: center; color: var(--gray-500); }
+        @media (min-width: 768px) { .footer-content { flex-direction: row; justify-content: space-between; text-align: left; } }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+        .footer-links a { color: var(--gray-500); text-decoration: none; }
+        .footer-links a:hover { color: var(--accent); }
+        
+        .loading-spinner { text-align: center; padding: 2rem; color: var(--gray-500); }
+        .loading-spinner i { font-size: 2rem; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .mt-2 { margin-top: 1rem; }
         .mt-3 { margin-top: 1.5rem; }
-        .mt-4 { margin-top: 2rem; }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .text-center { text-align: center; }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">
-                <span class="logo-icon">TJ</span>
-                <span class="logo-text">TrueJobs</span>
-            </a>
-            
-            <span class="menu-toggle" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </span>
-            
+            <a href="index.html" class="logo"><span class="logo-icon">TJ</span><span class="logo-text">TrueJobs</span></a>
+            <span class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></span>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="findjobs.html">Find Jobs</a></li>
@@ -1222,397 +312,368 @@
         </div>
     </nav>
 
-    <!-- Back to Companies -->
     <div class="container back-link">
-        <a href="companies.html">
-            <i class="fas fa-arrow-left"></i> Back to Companies
-        </a>
+        <a href="companies.html"><i class="fas fa-arrow-left"></i> Back to Companies</a>
     </div>
 
-    <!-- ===== NEW ATTRACTIVE COVER IMAGE ===== -->
-    <div class="company-cover">
-        <div class="cover-text">
-            <i class="fas fa-star" style="color: var(--accent);"></i> Top Healthcare Employer 2026
-        </div>
-    </div>
+    <div class="company-cover"></div>
 
-    <!-- Main Content -->
     <div class="container">
-        <!-- Profile Card - PERFECT POSITIONING -->
-        <div class="profile-card">
-            <div class="profile-header">
-                <div class="company-logo-large">MC</div>
-                
-                <div class="company-title-section">
-                    <h1>Mediclinic Hospital</h1>
-                    
-                    <div class="company-badge-wrapper">
-                        <span class="verified-badge-large pulse-verified">
-                            <i class="fas fa-check-circle"></i> Verified Employer
-                        </span>
-                        <span class="rating-badge">
-                            <i class="fas fa-star"></i> 4.5 <span style="color: var(--gray-500);">(128 reviews)</span>
-                        </span>
-                    </div>
-
-                    <div class="company-meta-row">
-                        <span class="meta-item">
-                            <i class="fas fa-building"></i> Healthcare
-                        </span>
-                        <span class="meta-item">
-                            <i class="fas fa-map-marker-alt"></i> Dubai, UAE
-                        </span>
-                        <span class="meta-item">
-                            <i class="fas fa-calendar-alt"></i> Est. 1998
-                        </span>
-                        <span class="meta-item">
-                            <i class="fas fa-globe"></i> 10+ Locations
-                        </span>
-                    </div>
-                </div>
-
-                <div class="follow-btn-wrapper">
-                    <button class="follow-btn" onclick="toggleFollow()" id="followBtn">
-                        <i class="far fa-bookmark"></i> Follow
-                    </button>
-                </div>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Open Jobs</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">5K+</div>
-                    <div class="stat-label">Employees</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">25+</div>
-                    <div class="stat-label">Years</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-label">Hired</div>
-                </div>
-            </div>
+        <div class="profile-card" id="profileCard">
+            <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading company profile...</div>
         </div>
 
-        <!-- Main Grid -->
-        <div class="main-grid">
-            <!-- Left Column -->
-            <div class="about-section">
-                <div class="section-title">
-                    <i class="fas fa-building"></i>
-                    <h2>About Company</h2>
-                </div>
-                
-                <div class="company-description">
-                    <p>Mediclinic Hospital is a leading healthcare provider in the UAE, offering world-class medical services across multiple specialties. With state-of-the-art facilities and a team of highly skilled healthcare professionals, we are committed to providing exceptional patient care.</p>
-                    <p class="mt-2">Our hospital is accredited by Joint Commission International (JCI) and has been recognized as one of the top hospitals in the region.</p>
-                </div>
-
-                <div class="info-grid">
-                    <div class="info-item">
-                        <i class="fas fa-users"></i>
-                        <div class="info-content">
-                            <h4>Company Size</h4>
-                            <p>5,000+ Employees</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-globe"></i>
-                        <div class="info-content">
-                            <h4>Global Locations</h4>
-                            <p>10+ Countries</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-trophy"></i>
-                        <div class="info-content">
-                            <h4>Industry Awards</h4>
-                            <p>25+ Awards</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-clock"></i>
-                        <div class="info-content">
-                            <h4>Founded</h4>
-                            <p>1998 (25+ Years)</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-title mt-3">
-                    <i class="fas fa-heart"></i>
-                    <h2>Why Work With Us</h2>
-                </div>
-                
-                <ul class="benefits-list">
-                    <li><i class="fas fa-check-circle"></i> <span>Competitive tax-free salaries</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>Free accommodation for international staff</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>Annual flight tickets home</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>Comprehensive health insurance</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>30 days annual leave</span></li>
-                </ul>
+        <div class="main-grid" id="mainGrid" style="display: none;">
+            <div>
+                <div class="about-section" id="aboutSection"></div>
+                <div class="jobs-section" id="jobsSection"></div>
+                <div class="reviews-section" id="reviewsSection"></div>
             </div>
+            <div class="company-sidebar" id="sidebarSection"></div>
+        </div>
 
-            <!-- Right Column - Sidebar -->
-            <div class="company-sidebar">
-                <div class="section-title">
-                    <i class="fas fa-address-card"></i>
-                    <h2>Contact Info</h2>
+        <div class="similar-companies mt-3" id="similarSection" style="display: none;">
+            <div class="section-title">
+                <i class="fas fa-building"></i>
+                <h2>Similar Companies</h2>
+            </div>
+            <div id="similarGrid" class="similar-grid"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 TrueJobs. All rights reserved.</p>
+                <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Help</a><a href="#">Contact</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== SUPABASE CONFIGURATION ====================
+        const SUPABASE_URL = 'https://your-project.supabase.co';  // Replace with your Supabase URL
+        const SUPABASE_ANON_KEY = 'your-anon-key';  // Replace with your Supabase anon key
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        let currentCompany = null;
+        let companyJobs = [];
+        
+        // Get company ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const companyId = urlParams.get('id') || 'mediclinic';
+        const companyNameFromUrl = urlParams.get('name') || 'Mediclinic Hospital';
+        
+        async function loadCompanyData() {
+            try {
+                let query;
+                if (companyId && companyId !== 'mediclinic') {
+                    query = supabase.from('companies').select('*').eq('id', companyId);
+                } else {
+                    query = supabase.from('companies').select('*').ilike('name', `%${companyNameFromUrl}%`);
+                }
+                
+                const { data: companyData, error: companyError } = await query;
+                if (companyError) throw companyError;
+                
+                if (companyData && companyData.length > 0) {
+                    currentCompany = companyData[0];
+                    document.title = `${currentCompany.name} - Company Profile | TrueJobs`;
+                } else {
+                    // Fallback to default data
+                    currentCompany = {
+                        id: 'mediclinic',
+                        name: 'Mediclinic Hospital',
+                        industry: 'Healthcare',
+                        location: 'Dubai, UAE',
+                        employees: '5,000+ Employees',
+                        founded: '1998',
+                        description: 'Mediclinic Hospital is a leading healthcare provider in the UAE, offering world-class medical services across multiple specialties. Our hospital is accredited by Joint Commission International (JCI).',
+                        website: 'www.mediclinic.ae',
+                        email: 'careers@mediclinic.ae',
+                        phone: '+971 4 123 4567',
+                        address: 'Sheikh Zayed Road, Dubai',
+                        logo: 'MC',
+                        verified: true,
+                        rating: 4.5,
+                        reviews_count: 128,
+                        jobs_count: 52,
+                        benefits: ['Competitive tax-free salaries', 'Free accommodation', 'Annual flight tickets', 'Health insurance', '30 days annual leave']
+                    };
+                }
+                
+                // Load jobs for this company
+                const { data: jobsData, error: jobsError } = await supabase
+                    .from('jobs')
+                    .select('*')
+                    .ilike('company', `%${currentCompany.name}%`)
+                    .limit(4);
+                
+                if (!jobsError && jobsData) {
+                    companyJobs = jobsData;
+                } else {
+                    companyJobs = getDefaultJobs();
+                }
+                
+                // Load similar companies
+                const { data: similarData, error: similarError } = await supabase
+                    .from('companies')
+                    .select('*')
+                    .neq('id', currentCompany.id)
+                    .eq('industry', currentCompany.industry)
+                    .limit(4);
+                
+                renderAllSections();
+                
+            } catch (error) {
+                console.error('Error loading company:', error);
+                renderAllSections(); // Render with fallback data
+            }
+        }
+        
+        function getDefaultJobs() {
+            return [
+                { id: 1, title: 'Senior Nurse', location: 'Dubai, UAE', type: 'Full Time', salary: '$3,500 - $4,500/mo' },
+                { id: 2, title: 'ICU Nurse', location: 'Dubai, UAE', type: 'Full Time', salary: '$3,200 - $4,000/mo' },
+                { id: 3, title: 'Pediatric Nurse', location: 'Abu Dhabi', type: 'Full Time', salary: '$3,000 - $3,800/mo' },
+                { id: 4, title: 'Nurse Manager', location: 'Dubai, UAE', type: 'Full Time', salary: '$4,500 - $5,500/mo' }
+            ];
+        }
+        
+        function renderAllSections() {
+            document.getElementById('profileCard').innerHTML = renderProfileCard();
+            document.getElementById('aboutSection').innerHTML = renderAboutSection();
+            document.getElementById('jobsSection').innerHTML = renderJobsSection();
+            document.getElementById('reviewsSection').innerHTML = renderReviewsSection();
+            document.getElementById('sidebarSection').innerHTML = renderSidebar();
+            document.getElementById('similarGrid').innerHTML = renderSimilarCompanies();
+            document.getElementById('mainGrid').style.display = 'grid';
+            document.getElementById('similarSection').style.display = 'block';
+        }
+        
+        function renderProfileCard() {
+            const stats = [
+                { number: currentCompany.jobs_count || '50+', label: 'Open Jobs' },
+                { number: currentCompany.employees || '5K+', label: 'Employees' },
+                { number: currentCompany.founded ? (new Date().getFullYear() - parseInt(currentCompany.founded) + '+ Years') : '25+ Years', label: 'Experience' },
+                { number: '10K+', label: 'Hired' }
+            ];
+            
+            return `
+                <div class="profile-header">
+                    <div class="company-logo-large">${currentCompany.logo || currentCompany.name.charAt(0) + (currentCompany.name.split(' ')[1]?.charAt(0) || '')}</div>
+                    <div class="company-title-section">
+                        <h1>${escapeHtml(currentCompany.name)}</h1>
+                        <div class="company-badge-wrapper">
+                            <span class="verified-badge-large pulse-verified"><i class="fas fa-check-circle"></i> Verified Employer</span>
+                            <span class="rating-badge"><i class="fas fa-star"></i> ${currentCompany.rating || 4.5} <span style="color: var(--gray-500);">(${currentCompany.reviews_count || 128} reviews)</span></span>
+                        </div>
+                        <div class="company-meta-row">
+                            <span class="meta-item"><i class="fas fa-building"></i> ${escapeHtml(currentCompany.industry || 'Healthcare')}</span>
+                            <span class="meta-item"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(currentCompany.location || 'Dubai, UAE')}</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> Est. ${escapeHtml(currentCompany.founded || '1998')}</span>
+                            <span class="meta-item"><i class="fas fa-globe"></i> ${currentCompany.locations || '10+ Locations'}</span>
+                        </div>
+                    </div>
+                    <div class="follow-btn-wrapper">
+                        <button class="follow-btn" onclick="toggleFollow()" id="followBtn"><i class="far fa-bookmark"></i> Follow</button>
+                    </div>
                 </div>
-
+                <div class="stats-grid">
+                    ${stats.map(stat => `<div class="stat-card"><div class="stat-number">${stat.number}</div><div class="stat-label">${stat.label}</div></div>`).join('')}
+                </div>
+            `;
+        }
+        
+        function renderAboutSection() {
+            const infoItems = [
+                { icon: 'fas fa-users', label: 'Company Size', value: currentCompany.employees || '5,000+ Employees' },
+                { icon: 'fas fa-globe', label: 'Global Locations', value: '10+ Countries' },
+                { icon: 'fas fa-trophy', label: 'Industry Awards', value: '25+ Awards' },
+                { icon: 'fas fa-clock', label: 'Founded', value: currentCompany.founded || '1998' }
+            ];
+            
+            const benefits = currentCompany.benefits || [
+                'Competitive tax-free salaries', 'Free accommodation for international staff',
+                'Annual flight tickets home', 'Comprehensive health insurance', '30 days annual leave'
+            ];
+            
+            return `
+                <div class="section-title"><i class="fas fa-building"></i><h2>About Company</h2></div>
+                <div class="company-description">
+                    <p>${escapeHtml(currentCompany.description || 'A leading healthcare provider offering world-class medical services across multiple specialties.')}</p>
+                </div>
+                <div class="info-grid">
+                    ${infoItems.map(item => `
+                        <div class="info-item"><i class="${item.icon}"></i><div class="info-content"><h4>${item.label}</h4><p>${item.value}</p></div></div>
+                    `).join('')}
+                </div>
+                <div class="section-title mt-3"><i class="fas fa-heart"></i><h2>Why Work With Us</h2></div>
+                <ul class="benefits-list">
+                    ${benefits.map(b => `<li><i class="fas fa-check-circle"></i> <span>${escapeHtml(b)}</span></li>`).join('')}
+                </ul>
+            `;
+        }
+        
+        function renderJobsSection() {
+            const jobs = companyJobs.slice(0, 4);
+            return `
+                <div class="section-title"><i class="fas fa-briefcase"></i><h2>Open Positions (${currentCompany.jobs_count || '50+'})</h2></div>
+                <div class="jobs-grid">
+                    ${jobs.map(job => `
+                        <div class="job-card" onclick="location.href='job-details.html?id=${job.id}'">
+                            <h4>${escapeHtml(job.title)}</h4>
+                            <div class="job-location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Dubai, UAE')}</div>
+                            <span class="job-type">${escapeHtml(job.type || 'Full Time')}</span>
+                            <div class="job-salary">${escapeHtml(job.salary || 'Competitive')}</div>
+                            <button class="job-apply-btn pulse-apply" onclick="event.stopPropagation(); applyForJob('${job.id}', '${escapeHtml(job.title)}')">Apply Now</button>
+                        </div>
+                    `).join('')}
+                </div>
+                <a href="findjobs.html?company=${encodeURIComponent(currentCompany.name)}" class="view-all-link">View All Jobs <i class="fas fa-arrow-right"></i></a>
+            `;
+        }
+        
+        function renderReviewsSection() {
+            return `
+                <div class="section-title"><i class="fas fa-star"></i><h2>Employee Reviews</h2></div>
+                <div class="rating-overview">
+                    <div class="average-rating">
+                        <div class="average-number">${currentCompany.rating || 4.5}</div>
+                        <div class="stars">★★★★½</div>
+                        <div style="font-size: 0.9rem;">${currentCompany.reviews_count || 128} reviews</div>
+                    </div>
+                    <div class="rating-bars">
+                        ${[70, 20, 7, 2, 1].map((width, i) => `
+                            <div class="rating-bar-item"><span>${5-i}★</span> <div class="bar-container"><div class="bar-fill" style="width: ${width}%"></div></div> <span>${width}%</span></div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header"><div class="reviewer-avatar">SA</div><div class="reviewer-info"><h4>Sarah Ahmed</h4><div class="position">Senior Nurse</div></div></div>
+                    <div class="review-rating">★★★★★</div>
+                    <p class="review-text">"Great place to work! Excellent benefits and supportive management."</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header"><div class="reviewer-avatar">MK</div><div class="reviewer-info"><h4>Mohammed Khalid</h4><div class="position">ICU Nurse</div></div></div>
+                    <div class="review-rating">★★★★½</div>
+                    <p class="review-text">"Competitive salary and great team environment. Highly recommended."</p>
+                </div>
+            `;
+        }
+        
+        function renderSidebar() {
+            return `
+                <div class="section-title"><i class="fas fa-address-card"></i><h2>Contact Info</h2></div>
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Sheikh Zayed Road, Dubai</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+971 4 123 4567</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>careers@mediclinic.ae</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-globe"></i>
-                        <span>www.mediclinic.ae</span>
-                    </div>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>${escapeHtml(currentCompany.address || 'Sheikh Zayed Road, Dubai')}</span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>${escapeHtml(currentCompany.phone || '+971 4 123 4567')}</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>${escapeHtml(currentCompany.email || 'careers@mediclinic.ae')}</span></div>
+                    <div class="contact-item"><i class="fas fa-globe"></i><span>${escapeHtml(currentCompany.website || 'www.mediclinic.ae')}</span></div>
                 </div>
-
                 <div class="social-links">
                     <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                 </div>
-
-                <div class="map-placeholder">
-                    <i class="fas fa-map"></i> View on Google Maps
-                </div>
-
-                <div class="section-title mt-3">
-                    <i class="fas fa-clock"></i>
-                    <h2>Working Hours</h2>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Mon-Fri: 9AM - 6PM</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Jobs Section -->
-        <div class="jobs-section">
-            <div class="section-title">
-                <i class="fas fa-briefcase"></i>
-                <h2>Open Positions (50+)</h2>
-            </div>
-
-            <div class="jobs-grid">
-                <!-- Job Card 1 -->
-                <div class="job-card" onclick="location.href='job-details.html?id=1'">
-                    <h4>Senior Nurse</h4>
-                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</div>
-                    <span class="job-type">Full Time</span>
-                    <div class="job-salary">$3,500 - $4,500/mo</div>
-                    <button class="job-apply-btn pulse-apply" onclick="event.stopPropagation(); applyForJob(1, 'Senior Nurse', 'Mediclinic Hospital')">Apply Now</button>
-                </div>
-
-                <!-- Job Card 2 -->
-                <div class="job-card" onclick="location.href='job-details.html?id=2'">
-                    <h4>ICU Nurse</h4>
-                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</div>
-                    <span class="job-type">Full Time</span>
-                    <div class="job-salary">$3,200 - $4,000/mo</div>
-                    <button class="job-apply-btn pulse-apply" onclick="event.stopPropagation(); applyForJob(2, 'ICU Nurse', 'Mediclinic Hospital')">Apply Now</button>
-                </div>
-
-                <!-- Job Card 3 -->
-                <div class="job-card" onclick="location.href='job-details.html?id=3'">
-                    <h4>Pediatric Nurse</h4>
-                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Abu Dhabi</div>
-                    <span class="job-type">Full Time</span>
-                    <div class="job-salary">$3,000 - $3,800/mo</div>
-                    <button class="job-apply-btn pulse-apply" onclick="event.stopPropagation(); applyForJob(3, 'Pediatric Nurse', 'Mediclinic Hospital')">Apply Now</button>
-                </div>
-
-                <!-- Job Card 4 -->
-                <div class="job-card" onclick="location.href='job-details.html?id=4'">
-                    <h4>Nurse Manager</h4>
-                    <div class="job-location"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</div>
-                    <span class="job-type">Full Time</span>
-                    <div class="job-salary">$4,500 - $5,500/mo</div>
-                    <button class="job-apply-btn pulse-apply" onclick="event.stopPropagation(); applyForJob(4, 'Nurse Manager', 'Mediclinic Hospital')">Apply Now</button>
-                </div>
-            </div>
-
-            <a href="findjobs.html?company=Mediclinic" class="view-all-link">
-                View All 50+ Jobs <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-
-        <!-- Reviews Section -->
-        <div class="reviews-section">
-            <div class="section-title">
-                <i class="fas fa-star"></i>
-                <h2>Employee Reviews</h2>
-            </div>
-
-            <div class="rating-overview">
-                <div class="average-rating">
-                    <div class="average-number">4.5</div>
-                    <div class="stars">★★★★½</div>
-                    <div style="font-size: 0.9rem; color: var(--gray-500);">128 reviews</div>
-                </div>
-
-                <div class="rating-bars">
-                    <div class="rating-bar-item"><span>5★</span> <div class="bar-container"><div class="bar-fill" style="width: 70%"></div></div> <span>70%</span></div>
-                    <div class="rating-bar-item"><span>4★</span> <div class="bar-container"><div class="bar-fill" style="width: 20%"></div></div> <span>20%</span></div>
-                    <div class="rating-bar-item"><span>3★</span> <div class="bar-container"><div class="bar-fill" style="width: 7%"></div></div> <span>7%</span></div>
-                    <div class="rating-bar-item"><span>2★</span> <div class="bar-container"><div class="bar-fill" style="width: 2%"></div></div> <span>2%</span></div>
-                    <div class="rating-bar-item"><span>1★</span> <div class="bar-container"><div class="bar-fill" style="width: 1%"></div></div> <span>1%</span></div>
-                </div>
-            </div>
-
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="reviewer-avatar">SA</div>
-                    <div class="reviewer-info">
-                        <h4>Sarah Ahmed</h4>
-                        <div class="position">Senior Nurse</div>
-                    </div>
-                </div>
-                <div class="review-rating">★★★★★</div>
-                <p class="review-text">"Great place to work! Excellent benefits and supportive management."</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="reviewer-avatar">MK</div>
-                    <div class="reviewer-info">
-                        <h4>Mohammed Khalid</h4>
-                        <div class="position">ICU Nurse</div>
-                    </div>
-                </div>
-                <div class="review-rating">★★★★½</div>
-                <p class="review-text">"Competitive salary and great team environment. Highly recommended."</p>
-            </div>
-        </div>
-
-        <!-- Similar Companies -->
-        <div class="similar-companies mt-3">
-            <div class="section-title">
-                <i class="fas fa-building"></i>
-                <h2>Similar Companies</h2>
-            </div>
-
-            <div class="similar-grid">
-                <div class="similar-company-card" onclick="location.href='company-detail.html?id=2'">
-                    <div class="similar-logo">AH</div>
-                    <h4>American Hospital</h4>
-                    <div class="industry">Healthcare</div>
-                    <div class="jobs-count">35 jobs</div>
-                </div>
-                <div class="similar-company-card" onclick="location.href='company-detail.html?id=3'">
-                    <div class="similar-logo">CC</div>
-                    <h4>Cleveland Clinic</h4>
-                    <div class="industry">Healthcare</div>
-                    <div class="jobs-count">42 jobs</div>
-                </div>
-                <div class="similar-company-card" onclick="location.href='company-detail.html?id=4'">
-                    <div class="similar-logo">KC</div>
-                    <h4>King's College</h4>
-                    <div class="industry">Healthcare</div>
-                    <div class="jobs-count">28 jobs</div>
-                </div>
-                <div class="similar-company-card" onclick="location.href='company-detail.html?id=5'">
-                    <div class="similar-logo">NH</div>
-                    <h4>NMC Healthcare</h4>
-                    <div class="industry">Healthcare</div>
-                    <div class="jobs-count">31 jobs</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2026 TrueJobs. All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                    <a href="#">Help</a>
-                    <a href="#">Contact</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function toggleMenu() {
-            document.getElementById('navMenu').classList.toggle('show');
+                <div class="map-placeholder" onclick="showMap()"><i class="fas fa-map"></i> View on Google Maps</div>
+                <div class="section-title mt-3"><i class="fas fa-clock"></i><h2>Working Hours</h2></div>
+                <div class="contact-item"><i class="fas fa-calendar-alt"></i><span>Mon-Fri: 9AM - 6PM</span></div>
+            `;
         }
-
-        function toggleFollow() {
-            const followBtn = document.getElementById('followBtn');
-            if (followBtn.classList.contains('following')) {
-                followBtn.classList.remove('following');
-                followBtn.innerHTML = '<i class="far fa-bookmark"></i> Follow';
-            } else {
-                followBtn.classList.add('following');
-                followBtn.innerHTML = '<i class="fas fa-check"></i> Following';
-                showNotification('Now following Mediclinic Hospital');
+        
+        function renderSimilarCompanies() {
+            return `<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading similar companies...</div>`;
+        }
+        
+        async function loadSimilarCompanies() {
+            if (!currentCompany) return;
+            try {
+                const { data, error } = await supabase
+                    .from('companies')
+                    .select('*')
+                    .neq('name', currentCompany.name)
+                    .eq('industry', currentCompany.industry || 'Healthcare')
+                    .limit(4);
+                
+                if (!error && data && data.length > 0) {
+                    document.getElementById('similarGrid').innerHTML = data.map(comp => `
+                        <div class="similar-company-card" onclick="location.href='company-detail.html?id=${comp.id}&name=${encodeURIComponent(comp.name)}'">
+                            <div class="similar-logo">${comp.logo || comp.name.charAt(0) + (comp.name.split(' ')[1]?.charAt(0) || '')}</div>
+                            <h4>${escapeHtml(comp.name)}</h4>
+                            <div class="industry">${escapeHtml(comp.industry || 'Healthcare')}</div>
+                            <div class="jobs-count">${comp.jobs_count || '30+'} jobs</div>
+                        </div>
+                    `).join('');
+                } else {
+                    document.getElementById('similarGrid').innerHTML = getDefaultSimilarCompanies();
+                }
+            } catch (error) {
+                document.getElementById('similarGrid').innerHTML = getDefaultSimilarCompanies();
             }
         }
-
-        function applyForJob(id, title, company) {
-            sessionStorage.setItem('applyingFor', JSON.stringify({id, title, company}));
-            showNotification(`Applying for ${title}...`);
+        
+        function getDefaultSimilarCompanies() {
+            const defaults = [
+                { name: 'American Hospital', logo: 'AH', industry: 'Healthcare', jobs: '35 jobs' },
+                { name: 'Cleveland Clinic', logo: 'CC', industry: 'Healthcare', jobs: '42 jobs' },
+                { name: "King's College", logo: 'KC', industry: 'Healthcare', jobs: '28 jobs' },
+                { name: 'NMC Healthcare', logo: 'NH', industry: 'Healthcare', jobs: '31 jobs' }
+            ];
+            return defaults.map(comp => `
+                <div class="similar-company-card" onclick="location.href='company-detail.html?name=${encodeURIComponent(comp.name)}'">
+                    <div class="similar-logo">${comp.logo}</div>
+                    <h4>${comp.name}</h4>
+                    <div class="industry">${comp.industry}</div>
+                    <div class="jobs-count">${comp.jobs}</div>
+                </div>
+            `).join('');
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        function toggleFollow() {
+            const btn = document.getElementById('followBtn');
+            if (btn.classList.contains('following')) {
+                btn.classList.remove('following');
+                btn.innerHTML = '<i class="far fa-bookmark"></i> Follow';
+            } else {
+                btn.classList.add('following');
+                btn.innerHTML = '<i class="fas fa-check"></i> Following';
+                showNotification(`Now following ${currentCompany.name}`);
+            }
+        }
+        
+        function applyForJob(jobId, jobTitle) {
+            showNotification(`Applying for ${jobTitle}...`);
             setTimeout(() => {
-                window.location.href = `apply.html?job=${encodeURIComponent(title)}&company=${encodeURIComponent(company)}`;
+                window.location.href = `apply.html?job=${encodeURIComponent(jobTitle)}&company=${encodeURIComponent(currentCompany.name)}&jobId=${jobId}`;
             }, 800);
         }
-
+        
+        function showMap() { alert('Map feature coming soon!'); }
+        
         function showNotification(message) {
             const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: var(--success);
-                color: white;
-                padding: 0.8rem 1.5rem;
-                border-radius: 50px;
-                box-shadow: var(--shadow-lg);
-                z-index: 9999;
-                font-size: 0.9rem;
-                animation: slideIn 0.3s ease;
-                white-space: nowrap;
-                font-weight: 500;
-            `;
+            notification.style.cssText = `position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--success); color: white; padding: 0.8rem 1.5rem; border-radius: 50px; z-index: 9999; font-weight: 500; animation: slideIn 0.3s ease;`;
             notification.textContent = message;
             document.body.appendChild(notification);
             setTimeout(() => notification.remove(), 2000);
         }
-
-        // Add animation style
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { opacity: 0; transform: translate(-50%, 20px); }
-                to { opacity: 1; transform: translate(-50%, 0); }
-            }
-        `;
-        document.head.appendChild(style);
+        
+        function toggleMenu() { document.getElementById('navMenu').classList.toggle('show'); }
+        
+        loadCompanyData();
+        setTimeout(() => loadSimilarCompanies(), 1000);
     </script>
 </body>
 </html>
-
